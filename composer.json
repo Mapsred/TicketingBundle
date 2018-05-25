@@ -6,10 +6,12 @@
     "php": ">=7.1.0",
     "sensio/framework-extra-bundle": "^5.1",
     "symfony/framework-bundle": "^4.0",
+    "symfony/orm-pack": "^1.0",
     "symfony/security-bundle": "^4.0",
     "symfony/templating": "^4.0",
     "symfony/twig-bundle": "^4.0",
-    "symfony/yaml": "^4.0"
+    "symfony/yaml": "^4.0",
+    "knplabs/doctrine-behaviors": "^1.5"
   },
   "require-dev": {
     "symfony/console": "^4.0",
