@@ -1,6 +1,6 @@
 {
   "name": "maps_red/ticketing-bundle",
-  "type": "project",
+  "type": "symfony-bundle",
   "license": "proprietary",
   "require": {
     "php": ">=7.1.0",
