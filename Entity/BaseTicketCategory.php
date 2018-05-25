@@ -5,17 +5,10 @@ namespace Maps_red\TicketingBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Maps_red\TicketingBundle\Repository\BaseTicketCategoryRepository")
+ * @ORM\MappedSuperclass()
  */
 class BaseTicketCategory
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -30,11 +23,6 @@ class BaseTicketCategory
      * @ORM\Column(type="string", length=255)
      */
     private $role;
-
-    public function getId()
-    {
-        return $this->id;
-    }
 
     public function getName(): ?string
     {

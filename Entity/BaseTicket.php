@@ -6,17 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Maps_red\TicketingBundle\Model\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass="Maps_red\TicketingBundle\Repository\BaseTicketRepository")
+ * @ORM\MappedSuperclass()
  */
 class BaseTicket
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
     /**
      * @ORM\Column(type="text")
      */
@@ -66,11 +59,6 @@ class BaseTicket
      * @ORM\Column(type="datetime")
      */
     private $public_at;
-
-    public function getId()
-    {
-        return $this->id;
-    }
 
     public function getText(): ?string
     {

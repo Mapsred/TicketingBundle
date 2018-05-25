@@ -6,17 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Maps_red\TicketingBundle\Model\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass="Maps_red\TicketingBundle\Repository\BaseTicketCommentRepository")
+ * @ORM\MappedSuperclass()
  */
 class BaseTicketComment
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
     /**
      * @ORM\Column(type="text")
      */
@@ -32,12 +25,7 @@ class BaseTicketComment
      */
     private $author;
 
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function getText(): ?string
+   public function getText(): ?string
     {
         return $this->text;
     }
