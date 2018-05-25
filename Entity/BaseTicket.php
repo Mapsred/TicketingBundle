@@ -3,6 +3,7 @@
 namespace Maps_red\TicketingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Maps_red\TicketingBundle\Model\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="Maps_red\TicketingBundle\Repository\BaseTicketRepository")
@@ -131,12 +132,12 @@ class BaseTicket
         return $this;
     }
 
-    public function getAuthor(): ?User
+    public function getAuthor(): ?UserInterface
     {
         return $this->author;
     }
 
-    public function setAuthor(?User $author): self
+    public function setAuthor(?UserInterface $author): self
     {
         $this->author = $author;
 
@@ -167,12 +168,12 @@ class BaseTicket
         return $this;
     }
 
-    public function getClosedBy(): ?User
+    public function getClosedBy(): ?UserInterface
     {
         return $this->closed_by;
     }
 
-    public function setClosedBy(?User $closed_by): self
+    public function setClosedBy(?UserInterface $closed_by): self
     {
         $this->closed_by = $closed_by;
 
