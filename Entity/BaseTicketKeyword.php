@@ -1,12 +1,12 @@
 <?php
 
-namespace Maps_red\Ticketing\Entity;
+namespace Maps_red\TicketingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 
 /**
- * @ORM\Entity(repositoryClass="Maps_red\Ticketing\Repository\BaseTicketKeywordRepository")
+ * @ORM\Entity(repositoryClass="Maps_red\TicketingBundle\Repository\BaseTicketKeywordRepository")
  */
 class BaseTicketKeyword
 {

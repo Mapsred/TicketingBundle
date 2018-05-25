@@ -1,12 +1,12 @@
 <?php
 
-namespace Maps_red\Ticketing\Entity;
+namespace Maps_red\TicketingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Maps_red\TicketingBundle\Model\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass="Maps_red\Ticketing\Repository\BaseTicketHistoryRepository")
+ * @ORM\Entity(repositoryClass="Maps_red\TicketingBundle\Repository\BaseTicketHistoryRepository")
  */
 class BaseTicketHistory
 {
@@ -23,7 +23,7 @@ class BaseTicketHistory
     private $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Maps_red\Ticketing\Entity\User")
+     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Entity\User")
      */
     private $author;
 

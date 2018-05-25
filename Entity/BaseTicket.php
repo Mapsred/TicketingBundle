@@ -1,11 +1,11 @@
 <?php
 
-namespace Maps_red\Ticketing\Entity;
+namespace Maps_red\TicketingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Maps_red\Ticketing\Repository\BaseTicketRepository")
+ * @ORM\Entity(repositoryClass="Maps_red\TicketingBundle\Repository\BaseTicketRepository")
  */
 class BaseTicket
 {
@@ -42,7 +42,7 @@ class BaseTicket
     private $public;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Maps_red\Ticketing\Entity\User", inversedBy="tickets")
+     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Entity\User", inversedBy="tickets")
      */
     private $author;
 
@@ -57,7 +57,7 @@ class BaseTicket
     private $closed_at;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Maps_red\Ticketing\Entity\User")
+     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Entity\User")
      */
     private $closed_by;
 

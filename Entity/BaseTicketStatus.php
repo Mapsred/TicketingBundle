@@ -1,11 +1,11 @@
 <?php
 
-namespace Maps_red\Ticketing\Entity;
+namespace Maps_red\TicketingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Maps_red\Ticketing\Repository\BaseTicketStatusRepository")
+ * @ORM\Entity(repositoryClass="Maps_red\TicketingBundle\Repository\BaseTicketStatusRepository")
  */
 class BaseTicketStatus
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Maps_red\Ticketing\Repository;
+namespace Maps_red\TicketingBundle\Repository;
 
-use Maps_red\Ticketing\Entity\BaseTicketKeyword;
+use Maps_red\TicketingBundle\Entity\BaseTicketKeyword;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
