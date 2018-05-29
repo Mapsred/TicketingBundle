@@ -1,0 +1,4 @@
+services:
+    Maps_red\TicketingBundle\Form\CreateTicketForm:
+        tags:
+            - { name: form.type }
