@@ -13,10 +13,6 @@ use Maps_red\TicketingBundle\Model\UserInterface;
  */
 class Ticket implements TicketInterface
 {
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $text;
 
     /**
      * @ORM\Column(type="text")
@@ -57,23 +53,6 @@ class Ticket implements TicketInterface
      * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Model\UserInterface")
      */
     private $closed_by;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $public_at;
-
-    public function getText(): ?string
-    {
-        return $this->text;
-    }
-
-    public function setText(string $text): self
-    {
-        $this->text = $text;
-
-        return $this;
-    }
 
     public function getDescription(): ?string
     {
