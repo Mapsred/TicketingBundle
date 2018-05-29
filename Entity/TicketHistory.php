@@ -17,7 +17,7 @@ class TicketHistory implements TicketHistoryInterface
     private $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Interface\UserInterface")
+     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Model\UserInterface")
      */
     private $author;
 

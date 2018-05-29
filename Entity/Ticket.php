@@ -24,12 +24,12 @@ class Ticket implements TicketInterface
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Interface\TicketStatusInteface")
+     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Model\TicketStatusInterface")
      */
     private $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Interface\TicketCategoryInterface")
+     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Model\TicketCategoryInterface")
      */
     private $category;
 
@@ -39,7 +39,7 @@ class Ticket implements TicketInterface
     private $public;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Interface\UserInterface", inversedBy="tickets")
+     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Model\UserInterface", inversedBy="tickets")
      */
     private $author;
 
@@ -54,7 +54,7 @@ class Ticket implements TicketInterface
     private $closed_at;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Interface\UserInterface")
+     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Model\UserInterface")
      */
     private $closed_by;
 
