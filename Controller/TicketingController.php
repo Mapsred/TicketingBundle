@@ -1,7 +1,10 @@
 <?php
+
 namespace Maps_red\TicketingBundle\Controller;
+
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
 class TicketingController extends Controller
 {
     /**
@@ -9,8 +12,8 @@ class TicketingController extends Controller
      */
     public function index()
     {
-        return $this->render('ticketing/index.html.twig', [
-            'controller_name' => 'TicketingController',
+        return $this->render('@Ticketing/ticketing/index.html.twig', [
+            'controller_name' => 'Test',
         ]);
     }
 }

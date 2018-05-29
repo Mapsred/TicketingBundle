@@ -1,0 +1,3 @@
+ticketing_bundle:
+    resource: ../../../Controller/
+    type: annotation
