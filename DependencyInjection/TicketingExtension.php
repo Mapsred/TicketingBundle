@@ -8,7 +8,6 @@
 
 namespace Maps_red\TicketingBundle\DependencyInjection;
 
-use Maps_red\TicketingBundle\Form\CreateTicketForm;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -32,8 +31,16 @@ class TicketingExtension extends Extension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yaml');
 
-        $container->getDefinition(CreateTicketForm::class)
+        $this->addFormArguments($container, $entities);
+    }
+
+    protected function addFormArguments(ContainerBuilder $container, array $entities)
+    {
+        $container->getDefinition('Maps_red\TicketingBundle\Form\CreateTicketForm')
             ->setArguments([$entities['ticket_category'], $entities['ticket']]);
+
+        $container->getDefinition('Maps_red\TicketingBundle\Form\TicketForm')
+            ->setArguments([$entities['ticket']]);
     }
 
 }

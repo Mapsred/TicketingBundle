@@ -2,3 +2,8 @@ services:
     Maps_red\TicketingBundle\Form\CreateTicketForm:
         tags:
             - { name: form.type }
+
+    Maps_red\TicketingBundle\Form\TicketForm:
+        tags:
+            - { name: form.type }
+
