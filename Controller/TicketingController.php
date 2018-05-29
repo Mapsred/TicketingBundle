@@ -1,5 +1,5 @@
 <?php
-namespace App\Controller;
+namespace Maps_red\TicketingBundle\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class TicketingController extends Controller
