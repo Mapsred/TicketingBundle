@@ -3,12 +3,15 @@
 namespace Maps_red\TicketingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Maps_red\TicketingBundle\Model\TicketCategoryInterface;
+use Maps_red\TicketingBundle\Model\TicketInterface;
+use Maps_red\TicketingBundle\Model\TicketStatusInterface;
 use Maps_red\TicketingBundle\Model\UserInterface;
 
 /**
  * @ORM\MappedSuperclass()
  */
-class BaseTicket
+class Ticket implements TicketInterface
 {
     /**
      * @ORM\Column(type="text")
@@ -21,12 +24,12 @@ class BaseTicket
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="BaseTicketStatus")
+     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Interface\TicketStatusInteface")
      */
     private $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity="BaseTicketCategory")
+     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Interface\TicketCategoryInterface")
      */
     private $category;
 
@@ -36,7 +39,7 @@ class BaseTicket
     private $public;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Entity\User", inversedBy="tickets")
+     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Interface\UserInterface", inversedBy="tickets")
      */
     private $author;
 
@@ -51,7 +54,7 @@ class BaseTicket
     private $closed_at;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Interface\UserInterface")
      */
     private $closed_by;
 
@@ -84,24 +87,24 @@ class BaseTicket
         return $this;
     }
 
-    public function getStatus(): ?BaseTicketStatus
+    public function getStatus(): ?TicketStatusInterface
     {
         return $this->status;
     }
 
-    public function setStatus(?BaseTicketStatus $status): self
+    public function setStatus(?TicketStatusInterface $status): self
     {
         $this->status = $status;
 
         return $this;
     }
 
-    public function getCategory(): ?BaseTicketCategory
+    public function getCategory(): ?TicketCategoryInterface
     {
         return $this->category;
     }
 
-    public function setCategory(?BaseTicketCategory $category): self
+    public function setCategory(?TicketCategoryInterface $category): self
     {
         $this->category = $category;
 

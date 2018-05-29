@@ -3,11 +3,12 @@
 namespace Maps_red\TicketingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Maps_red\TicketingBundle\Model\TicketStatusInterface;
 
 /**
  * @ORM\MappedSuperclass()
  */
-class BaseTicketStatus
+class TicketStatus implements TicketStatusInterface
 {
     /**
      * @ORM\Column(type="string", length=255)

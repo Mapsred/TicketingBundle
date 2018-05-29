@@ -3,39 +3,24 @@
 namespace Maps_red\TicketingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Maps_red\TicketingBundle\Model\TicketHistoryInterface;
 use Maps_red\TicketingBundle\Model\UserInterface;
 
 /**
  * @ORM\MappedSuperclass()
  */
-class BaseTicketComment
+class TicketHistory implements TicketHistoryInterface
 {
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $text;
-
     /**
      * @ORM\Column(type="integer")
      */
     private $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Interface\UserInterface")
      */
     private $author;
 
-   public function getText(): ?string
-    {
-        return $this->text;
-    }
-
-    public function setText(string $text): self
-    {
-        $this->text = $text;
-
-        return $this;
-    }
 
     public function getStatus(): ?int
     {

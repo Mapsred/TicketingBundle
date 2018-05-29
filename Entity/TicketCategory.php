@@ -3,11 +3,12 @@
 namespace Maps_red\TicketingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Maps_red\TicketingBundle\Model\TicketCategoryInterface;
 
 /**
  * @ORM\MappedSuperclass()
  */
-class BaseTicketCategory
+class TicketCategory implements TicketCategoryInterface
 {
     /**
      * @ORM\Column(type="string", length=255)

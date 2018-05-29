@@ -4,11 +4,12 @@ namespace Maps_red\TicketingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+use Maps_red\TicketingBundle\Model\TicketKeywordInterface;
 
 /**
  * @ORM\MappedSuperclass()
  */
-class BaseTicketKeyword
+class TicketKeyword implements TicketKeywordInterface
 {
     use ORMBehaviors\Timestampable\Timestampable;
 
