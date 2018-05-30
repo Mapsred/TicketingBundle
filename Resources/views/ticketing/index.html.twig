@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Ticket{% endblock %}
+{% block title %}All Ticket{% endblock %}
 
 {% block body %}
-    <h1>Create new Ticket</h1>
+    <h1>View all Ticket</h1>
 
-    {{ include('@Ticketing/ticketing/_form.html.twig') }}
+    <a href="{{ path('new_ticketing') }}">Create new ticket</a>
 {% endblock %}

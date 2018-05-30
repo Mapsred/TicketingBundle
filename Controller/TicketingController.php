@@ -8,12 +8,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class TicketingController extends Controller
 {
     /**
-     * @Route("/nouveau", name="new_ticketing")
+     * @Route("/allTicketing", name="all_ticketing")
      */
     public function index()
     {
         return $this->render('@Ticketing/ticketing/index.html.twig', [
-            'controller_name' => 'Test',
+        ]);
+    }
+
+    /**
+     * @Route("/nouveau", name="new_ticketing")
+     */
+    public function addTicket()
+    {
+        return $this->render('@Ticketing/ticketing/new.html.twig', [
         ]);
     }
 }
