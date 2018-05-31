@@ -5,6 +5,11 @@ namespace Maps_red\TicketingBundle\Maker;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Doctrine\ORM\Mapping\Column;
 use Maps_red\TicketingBundle\Entity\Ticket;
+use Maps_red\TicketingBundle\Entity\TicketCategory;
+use Maps_red\TicketingBundle\Entity\TicketComment;
+use Maps_red\TicketingBundle\Entity\TicketHistory;
+use Maps_red\TicketingBundle\Entity\TicketKeyword;
+use Maps_red\TicketingBundle\Entity\TicketStatus;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\DependencyBuilder;
 use Symfony\Bundle\MakerBundle\Generator;
@@ -59,7 +64,7 @@ class MakeTicketing extends AbstractMaker
      */
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator)
     {
-        $classes = [Ticket::class];
+        $classes = [Ticket::class, TicketCategory::class, TicketComment::class, TicketHistory::class, TicketKeyword::class, TicketStatus::class];
         foreach ($classes as $classFQN) {
             $regenerate = $input->getOption('regenerate');
             $className = substr($classFQN, strrpos($classFQN, '\\') + 1);
