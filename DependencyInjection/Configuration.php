@@ -25,6 +25,10 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('ticketing');
         $rootNode
             ->children()
+                ->scalarNode('default_status_name')
+                    ->info('The name of the default status')
+                    ->defaultValue('open')
+                ->end()
                 ->arrayNode("entities")
                 ->addDefaultsIfNotSet()
                     ->children()

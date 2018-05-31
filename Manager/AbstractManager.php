@@ -1,5 +1,7 @@
 <?php
 
+namespace Maps_red\TicketingBundle\Manager;
+
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;

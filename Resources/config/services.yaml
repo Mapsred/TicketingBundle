@@ -12,3 +12,6 @@ services:
         tags:
             - { name: maker.command }
 
+    Maps_red\TicketingBundle\Manager\TicketManager:
+        tags:
+            - { name: ticketing.manager, class: 'ticket', default_status_name: true}
