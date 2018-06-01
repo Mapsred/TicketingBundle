@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Maps_red\TicketingBundle\Model\TicketCategoryInterface;
 use Maps_red\TicketingBundle\Model\TicketInterface;
 use Maps_red\TicketingBundle\Model\TicketStatusInterface;
-use Maps_red\TicketingBundle\Model\UserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\MappedSuperclass()
@@ -21,11 +21,13 @@ class Ticket implements TicketInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Model\TicketStatusInterface")
+     * @ORM\JoinColumn(name="status", referencedColumnName="id", nullable=true)
      */
     private $status;
 
     /**
      * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Model\TicketCategoryInterface")
+     * @ORM\JoinColumn(name="category", referencedColumnName="id", nullable=true)
      */
     private $category;
 
@@ -35,7 +37,8 @@ class Ticket implements TicketInterface
     private $public;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Model\UserInterface", inversedBy="tickets")
+     * @ORM\ManyToOne(targetEntity="Symfony\Component\Security\Core\User\UserInterface", inversedBy="tickets")
+     * @ORM\JoinColumn(name="author", referencedColumnName="id", nullable=true)
      */
     private $author;
 
@@ -45,12 +48,13 @@ class Ticket implements TicketInterface
     private $rating;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $closed_at;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Model\UserInterface")
+     * @ORM\ManyToOne(targetEntity="Symfony\Component\Security\Core\User\UserInterface")
+     * @ORM\JoinColumn(name="closed_by", referencedColumnName="id", nullable=true)
      */
     private $closed_by;
 

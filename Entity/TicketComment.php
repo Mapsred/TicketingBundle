@@ -4,7 +4,7 @@ namespace Maps_red\TicketingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Maps_red\TicketingBundle\Model\TicketCommentInterface;
-use Maps_red\TicketingBundle\Model\UserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\MappedSuperclass()
@@ -22,7 +22,7 @@ class TicketComment implements TicketCommentInterface
     private $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Model\UserInterface")
+     * @ORM\ManyToOne(targetEntity="Symfony\Component\Security\Core\User\UserInterface")
      */
     private $author;
 
