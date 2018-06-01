@@ -16,9 +16,25 @@ services:
         tags:
             - { name: ticketing.manager, class: 'ticket', default_status_name: true, enable_history: true}
 
+    Maps_red\TicketingBundle\Manager\TicketCategoryManager:
+        tags:
+            - { name: ticketing.manager, class: 'ticket_category'}
+
+    Maps_red\TicketingBundle\Manager\TicketCommentManager:
+        tags:
+            - { name: ticketing.manager, class: 'ticket_comment'}
+
     Maps_red\TicketingBundle\Manager\TicketHistoryManager:
         tags:
             - { name: ticketing.manager, class: 'ticket_history'}
+
+    Maps_red\TicketingBundle\Manager\TicketKeywordManager:
+        tags:
+            - { name: ticketing.manager, class: 'ticket_keyword'}
+
+    Maps_red\TicketingBundle\Manager\TicketStatusManager:
+        tags:
+            - { name: ticketing.manager, class: 'ticket_status'}
 
     Maps_red\TicketingBundle\EventSubscriber\RequestSubscriber:
         autowire: true
