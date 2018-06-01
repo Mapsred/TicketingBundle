@@ -27,15 +27,20 @@ class TicketHistorySubscriber implements EventSubscriberInterface
     /** @var TicketHistoryManager $ticketHistoryManager */
     private $ticketHistoryManager;
 
+    /** @var bool $enableHistory */
+    private $enableHistory;
+
     /**
      * RequestSubscriber constructor.
      * @param TokenStorageInterface $tokenStorage
      * @param TicketHistoryManager $ticketHistoryManager
+     * @param bool $enableHistory
      */
-    public function __construct(TokenStorageInterface $tokenStorage, TicketHistoryManager $ticketHistoryManager)
+    public function __construct(TokenStorageInterface $tokenStorage, TicketHistoryManager $ticketHistoryManager, bool $enableHistory)
     {
         $this->tokenStorage = $tokenStorage;
         $this->ticketHistoryManager = $ticketHistoryManager;
+        $this->enableHistory = $enableHistory;
     }
 
     /**
@@ -55,7 +60,7 @@ class TicketHistorySubscriber implements EventSubscriberInterface
      */
     public function onTicketingSeen(TicketSeenEvent $event)
     {
-        if (null !== $user = $this->getUser()) {
+        if ($this->enableHistory && null !== $user = $this->getUser()) {
             $this->ticketHistoryManager->setSeen($user, $event->getTicket());
         }
     }
@@ -65,7 +70,7 @@ class TicketHistorySubscriber implements EventSubscriberInterface
      */
     public function onTicketingUnseen(TicketUnseenEvent $event)
     {
-        if (null !== $user = $this->getUser()) {
+        if ($this->enableHistory && null !== $user = $this->getUser()) {
             $this->ticketHistoryManager->setUnseen($user, $event->getTicket());
         }
     }

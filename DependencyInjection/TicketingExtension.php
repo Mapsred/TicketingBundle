@@ -9,7 +9,6 @@
 namespace Maps_red\TicketingBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -29,6 +28,7 @@ class TicketingExtension extends Extension
         $configuration = $this->getConfiguration($configs, $container);
         $config = $this->processConfiguration($configuration, $configs);
         $entities = $config['entities'];
+        $container->setParameter('ticketing.enable_history', $config['enable_history']);
 
         // load bundle's services
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));

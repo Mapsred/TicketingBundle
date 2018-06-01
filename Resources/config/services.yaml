@@ -27,6 +27,8 @@ services:
 
     Maps_red\TicketingBundle\EventSubscriber\TicketHistorySubscriber:
         autowire: true
+        arguments:
+            $enableHistory: "%ticketing.enable_history%"
         tags:
             - { name: kernel.event_subscriber }
 
