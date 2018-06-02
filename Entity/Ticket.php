@@ -7,12 +7,14 @@ use Maps_red\TicketingBundle\Model\TicketCategoryInterface;
 use Maps_red\TicketingBundle\Model\TicketInterface;
 use Maps_red\TicketingBundle\Model\TicketStatusInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 
 /**
  * @ORM\MappedSuperclass()
  */
 class Ticket implements TicketInterface
 {
+    use ORMBehaviors\Timestampable\Timestampable;
 
     /**
      * @ORM\Column(type="text")
@@ -57,6 +59,11 @@ class Ticket implements TicketInterface
      * @ORM\JoinColumn(name="closed_by", referencedColumnName="id", nullable=true)
      */
     private $closed_by;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $public_at;
 
     public function getDescription(): ?string
     {
