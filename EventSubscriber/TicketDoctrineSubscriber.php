@@ -5,8 +5,8 @@ namespace Maps_red\TicketingBundle\EventSubscriber;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
-use Maps_red\TicketingBundle\Entity\Ticket;
 use Maps_red\TicketingBundle\Event\TicketUnseenEvent;
+use Maps_red\TicketingBundle\Model\TicketInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class TicketDoctrineSubscriber implements EventSubscriber
@@ -56,7 +56,7 @@ class TicketDoctrineSubscriber implements EventSubscriber
     {
         $entity = $args->getEntity();
 
-        if ($entity instanceof Ticket) {
+        if ($entity instanceof TicketInterface) {
             $event = new TicketUnseenEvent($entity);
             $this->eventDispatcher->dispatch(TicketUnseenEvent::NAME, $event);
         }

@@ -2,7 +2,6 @@
 
 namespace Maps_red\TicketingBundle\Form;
 
-use Maps_red\TicketingBundle\Entity\Ticket;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
