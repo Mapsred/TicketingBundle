@@ -2,7 +2,6 @@ TicketingBundle
 ============
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 ![Github All Releases](https://img.shields.io/github/downloads/Mapsred/TicketingBundle/total.svg)
-![GitHub release](https://img.shields.io/github/release/Mapsred/TicketingBundle.svg)
 ![GitHub (pre-)release](https://img.shields.io/github/release/Mapsred/TicketingBundle/all.svg)
 
 
