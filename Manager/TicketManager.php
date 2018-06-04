@@ -10,9 +10,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class TicketManager extends AbstractManager
 {
-    /** @var string $defaultStatusName */
-    private $defaultStatusName;
-
     /** @var bool $enableHistory */
     private $enableHistory;
 
@@ -25,13 +22,11 @@ class TicketManager extends AbstractManager
      * TicketManager constructor.
      * @param EntityManagerInterface $manager
      * @param string $class
-     * @param string $defaultStatusName
      * @param bool $enableHistory
      * @param TicketStatusManager $ticketStatusManager
      */
     public function __construct(EntityManagerInterface $manager, string $class, string $defaultStatusName, bool $enableHistory, TicketStatusManager $ticketStatusManager)
     {
-        $this->defaultStatusName = $defaultStatusName;
         $this->enableHistory = $enableHistory;
         parent::__construct($manager, $class);
         $this->ticketStatusManager = $ticketStatusManager;

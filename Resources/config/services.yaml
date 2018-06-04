@@ -18,7 +18,7 @@ services:
 
     Maps_red\TicketingBundle\Manager\TicketManager:
         tags:
-            - { name: ticketing.manager, class: 'ticket', default_status_name: true, enable_history: true}
+            - { name: ticketing.manager, class: 'ticket', enable_history: true}
 
     Maps_red\TicketingBundle\Manager\TicketCategoryManager:
         tags:
@@ -38,7 +38,7 @@ services:
 
     Maps_red\TicketingBundle\Manager\TicketStatusManager:
         tags:
-            - { name: ticketing.manager, class: 'ticket_status'}
+            - { name: ticketing.manager, class: 'ticket_status', default_status_name: true}
 
     Maps_red\TicketingBundle\EventSubscriber\RequestSubscriber:
         autowire: true
