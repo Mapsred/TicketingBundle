@@ -48,4 +48,6 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-
+    Maps_red\TicketingBundle\Utils\TicketingHelper:
+        autowire: true
+        autoconfigure: true
