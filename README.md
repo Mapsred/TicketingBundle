@@ -1,7 +1,7 @@
 TicketingBundle
 ============
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-![Github All Releases](https://img.shields.io/github/downloads/Mapsred/TicketingBundle/total.svg)
+![Packagist download](https://img.shields.io/github/downloads/Mapsred/TicketingBundle/total.svg)
 ![GitHub release](https://img.shields.io/github/release/Mapsred/TicketingBundle.svg)
 ![GitHub (pre-)release](https://img.shields.io/github/release/Mapsred/TicketingBundle/all.svg)
 
@@ -15,7 +15,7 @@ Applications that use Symfony Flex
 Open a command console, enter your project directory and execute:
 
 ```console
-$ composer require mapsred/ticketing-bundle
+$ composer require maps_red/ticketing-bundle
 ```
 
 Applications that don't use Symfony Flex
@@ -27,7 +27,7 @@ Open a command console, enter your project directory and execute the
 following command to download the latest stable version of this bundle:
 
 ```console
-$ composer require mapsred/ticketing-bundle
+$ composer require maps_red/ticketing-bundle
 ```
 
 This command requires you to have Composer installed globally, as explained
