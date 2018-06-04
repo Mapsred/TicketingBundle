@@ -3,6 +3,10 @@ services:
         tags:
             - { name: form.type }
 
+    Maps_red\TicketingBundle\Controller\:
+        resource: '../../Controller'
+        tags: ['controller.service_arguments']
+
     Maps_red\TicketingBundle\Form\TicketForm:
         tags:
             - { name: form.type }

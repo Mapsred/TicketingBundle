@@ -23,7 +23,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CreateTicketForm extends AbstractType
 {
 
-    /** @var string $categoryClass*/
+    /** @var string $categoryClass */
     private $categoryClass;
 
     /**  @var string $ticketClass */
@@ -56,8 +56,7 @@ class CreateTicketForm extends AbstractType
                 'label' => "label.category",
                 'attr' => ['class' => 'select2'],
             ])
-            ->add("text", TextareaType::class, ['label' => "label.text"])
-        ;
+            ->add("description", TextareaType::class, ['label' => "label.text"]);
     }
 
     /**
