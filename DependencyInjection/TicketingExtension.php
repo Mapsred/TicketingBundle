@@ -71,7 +71,7 @@ class TicketingExtension extends Extension
             ->setArguments([$entities['ticket_category'], $entities['ticket']]);
 
         $container->getDefinition('Maps_red\TicketingBundle\Form\TicketForm')
-            ->setArguments([$entities['ticket']]);
+            ->setArguments([$entities['ticket_category'], $entities['ticket']]);
     }
 
 }

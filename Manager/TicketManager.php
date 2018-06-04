@@ -44,7 +44,7 @@ class TicketManager extends AbstractManager
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function createTicket(UserInterface $user, Ticket $ticket){
-        $status = $this->ticketStatusManager->getRepository()->findOneBy(['status' => $this->defaultStatusName]);
+        $status = $this->ticketStatusManager->getRepository()->findOneBy(['name' => $this->defaultStatusName]);
         /** @var TicketStatus $status */
         $ticket
             ->setStatus($status)

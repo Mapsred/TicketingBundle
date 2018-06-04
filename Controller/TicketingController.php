@@ -30,9 +30,9 @@ class TicketingController extends Controller
      */
     public function addTicket(Request $request, TicketManager $ticketManager): \Symfony\Component\HttpFoundation\Response
     {
-        $ticket = new Ticket();
+        $ticket = $ticketManager->newClass();
         $user = $this->getUser();
-        $ticketForm = $this->createForm(TicketForm::class);
+        $ticketForm = $this->createForm(TicketForm::class, $ticket);
         $ticketForm->handleRequest($request);
 
         if($ticketForm->isSubmitted() && $ticketForm->isValid()){
