@@ -11,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class TicketForm extends AbstractType
 {
 
-    /** @var string $categoryClass*/
+    /** @var string $categoryClass */
     private $categoryClass;
 
     /**  @var string $ticketClass */

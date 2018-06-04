@@ -35,9 +35,10 @@ class TicketingController extends Controller
         $ticketForm = $this->createForm(TicketForm::class, $ticket);
         $ticketForm->handleRequest($request);
 
-        if($ticketForm->isSubmitted() && $ticketForm->isValid()){
+        if ($ticketForm->isSubmitted() && $ticketForm->isValid()) {
             $ticketManager->createTicket($user, $ticket);
             $this->addFlash('success', 'The ticket is online !');
+
             return $this->redirectToRoute('all_ticketing');
         }
 
