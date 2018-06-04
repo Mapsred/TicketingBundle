@@ -56,7 +56,7 @@ class CreateTicketForm extends AbstractType
                 'label' => "label.category",
                 'attr' => ['class' => 'select2'],
             ])
-            ->add("text", TextareaType::class, ['label' => "label.text"])
+            ->add("description", TextareaType::class, ['label' => "label.text"])
         ;
     }
 
