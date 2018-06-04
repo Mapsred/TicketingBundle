@@ -41,7 +41,6 @@ class TicketManager extends AbstractManager
     public function createTicket(UserInterface $user, Ticket $ticket)
     {
         $status = $this->ticketStatusManager->getDefaultStatus();
-        /** @var TicketStatus $status */
         $ticket
             ->setStatus($status)
             ->setPublicAt(new \DateTime())
