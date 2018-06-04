@@ -1,9 +1,8 @@
 TicketingBundle
 ============
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-![Packagist download](https://img.shields.io/github/downloads/Mapsred/TicketingBundle/total.svg)
-![GitHub release](https://img.shields.io/github/release/Mapsred/TicketingBundle.svg)
-![GitHub (pre-)release](https://img.shields.io/github/release/Mapsred/TicketingBundle/all.svg)
+![Packagist download](https://img.shields.io/packagist/dt/maps_red/ticketing-bundle.svg)
+![GitHub release](https://img.shields.io/github/release/Mapsred/TicketingBundle/all.svg)
 
 
 Installation
