@@ -25,7 +25,7 @@ class TicketManager extends AbstractManager
      * @param bool $enableHistory
      * @param TicketStatusManager $ticketStatusManager
      */
-    public function __construct(EntityManagerInterface $manager, string $class, string $defaultStatusName, bool $enableHistory, TicketStatusManager $ticketStatusManager)
+    public function __construct(EntityManagerInterface $manager, string $class, bool $enableHistory, TicketStatusManager $ticketStatusManager)
     {
         $this->enableHistory = $enableHistory;
         parent::__construct($manager, $class);
@@ -39,7 +39,7 @@ class TicketManager extends AbstractManager
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function createTicket(UserInterface $user, Ticket $ticket){
-        $status = $this->ticketStatusManager->getRepository()->findOneBy(['name' => $this->defaultStatusName]);
+        $status = $this->ticketStatusManager->getRepository()->findOneBy(['name' => $this->ticketStatusManager->getDefaultStatus()]);
         /** @var TicketStatus $status */
         $ticket
             ->setStatus($status)

@@ -38,8 +38,7 @@ class TicketingController extends Controller
         if($ticketForm->isSubmitted() && $ticketForm->isValid()){
             $ticketManager->createTicket($user, $ticket);
             $this->addFlash('success', 'The ticket is online !');
-            return $this->render('@Ticketing/ticketing/index.html.twig', [
-            ]);
+            return $this->redirectToRoute('all_ticketing');
         }
 
         return $this->render('@Ticketing/ticketing/new.html.twig', [
