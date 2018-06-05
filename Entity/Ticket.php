@@ -39,7 +39,7 @@ class Ticket implements TicketInterface
     private $public;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Symfony\Component\Security\Core\User\UserInterface", inversedBy="tickets")
+     * @ORM\ManyToOne(targetEntity="Symfony\Component\Security\Core\User\UserInterface")
      * @ORM\JoinColumn(name="author", referencedColumnName="id", nullable=true)
      */
     private $author;
