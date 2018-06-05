@@ -82,7 +82,7 @@ class Ticket implements TicketInterface
         return $this->status;
     }
 
-    public function setStatus(?TicketStatusInterface $status): self
+    public function setStatus(?TicketStatusInterface $status): TicketInterface
     {
         $this->status = $status;
 
@@ -106,7 +106,7 @@ class Ticket implements TicketInterface
         return $this->public;
     }
 
-    public function setPublic(bool $public): self
+    public function setPublic(bool $public): TicketInterface
     {
         $this->public = $public;
 
@@ -118,7 +118,7 @@ class Ticket implements TicketInterface
         return $this->author;
     }
 
-    public function setAuthor(?UserInterface $author): self
+    public function setAuthor(?UserInterface $author): TicketInterface
     {
         $this->author = $author;
 
@@ -166,7 +166,7 @@ class Ticket implements TicketInterface
         return $this->public_at;
     }
 
-    public function setPublicAt(\DateTimeInterface $public_at): self
+    public function setPublicAt(\DateTimeInterface $public_at): TicketInterface
     {
         $this->public_at = $public_at;
 
