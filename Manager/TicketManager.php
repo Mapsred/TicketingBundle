@@ -45,10 +45,18 @@ class TicketManager extends AbstractManager
         $status = $this->ticketStatusManager->getDefaultStatus();
         $ticket->setStatus($status)->setAuthor($user);
 
-        if ($this->enableTicketRestriction) {
+        if (!$this->isTicketRestrictionEnabled()) {
             $ticket->setPublicAt(new \DateTime())->setPublic(true);
         }
 
         $this->persistAndFlush($ticket);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTicketRestrictionEnabled(): bool
+    {
+        return $this->enableTicketRestriction;
     }
 }
