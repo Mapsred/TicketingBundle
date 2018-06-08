@@ -28,7 +28,7 @@ class TicketingExtension extends Extension
         $configuration = $this->getConfiguration($configs, $container);
         $config = $this->processConfiguration($configuration, $configs);
         $entities = $config['entities'];
-        $container->setParameter('ticketing.enable_history', $config['enable_history']);
+        $this->setParameters($container, $config);
 
         // load bundle's services
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
@@ -38,6 +38,8 @@ class TicketingExtension extends Extension
 
         // Manage Ticketing Managers
         $this->addManagerArguments($container, $config, $entities);
+        $container->getDefinition('Maps_red\TicketingBundle\EventSubscriber\RequestSubscriber')
+            ->setArgument('$restrictedTicketsRole', $config['restricted_tickets_role']);
     }
 
     /**
@@ -45,7 +47,7 @@ class TicketingExtension extends Extension
      * @param array $config
      * @param array $entities
      */
-    public function addManagerArguments(ContainerBuilder $container, array $config, array $entities)
+    protected function addManagerArguments(ContainerBuilder $container, array $config, array $entities)
     {
         $managers = $container->findTaggedServiceIds('ticketing.manager');
         foreach ($managers as $id => $attributes) {
@@ -72,6 +74,15 @@ class TicketingExtension extends Extension
 
         $container->getDefinition('Maps_red\TicketingBundle\Form\TicketForm')
             ->setArguments([$entities['ticket_category'], $entities['ticket']]);
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     * @param array $config
+     */
+    protected function setParameters(ContainerBuilder $container, array $config)
+    {
+        $container->setParameter('ticketing.enable_history', $config['enable_history']);
     }
 
 }

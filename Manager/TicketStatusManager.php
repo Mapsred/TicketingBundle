@@ -4,6 +4,7 @@ namespace Maps_red\TicketingBundle\Manager;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Maps_red\TicketingBundle\Model\TicketStatusInterface;
+use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 
 class TicketStatusManager extends AbstractManager
 {
@@ -25,8 +26,24 @@ class TicketStatusManager extends AbstractManager
     /**
      * @return TicketStatusInterface|null|object
      */
-    public function getDefaultStatus()
+    public function getDefaultStatus(): TicketStatusInterface
     {
-        return $this->getRepository()->findOneBy(['name' => $this->defaultStatusName]);
+        if (null === $status = $this->getRepository()->findOneBy(['name' => $this->getDefaultStatusName()])) {
+            throw new InvalidArgumentException(sprintf(
+                    "No %s found with the name %s. please check the ticketing.default_status_name parameter.",
+                    $this->getClass(),
+                    $this->getDefaultStatusName())
+            );
+        }
+
+        return $status;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultStatusName(): string
+    {
+        return $this->defaultStatusName;
     }
 }

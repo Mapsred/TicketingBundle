@@ -18,7 +18,7 @@ services:
 
     Maps_red\TicketingBundle\Manager\TicketManager:
         tags:
-            - { name: ticketing.manager, class: 'ticket', enable_history: true}
+            - { name: ticketing.manager, class: 'ticket', enable_history: true, enable_ticket_restriction: true}
 
     Maps_red\TicketingBundle\Manager\TicketCategoryManager:
         tags:
@@ -52,4 +52,6 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-
+    Maps_red\TicketingBundle\Utils\TicketingHelper:
+        autowire: true
+        autoconfigure: true
