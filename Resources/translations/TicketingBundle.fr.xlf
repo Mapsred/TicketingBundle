@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="M7Mgk3g" resname="label.server">
+        <source>label.server</source>
+        <target>Serveur</target>
+      </trans-unit>
+      <trans-unit id="4cEApe1" resname="label.description">
+        <source>label.description</source>
+        <target>Description</target>
+      </trans-unit>
+      <trans-unit id="A9JlQ5K" resname="label.category">
+        <source>label.category</source>
+        <target>Catégorie</target>
+      </trans-unit>
+      <trans-unit id="UQI8T0S" resname="label.text">
+        <source>label.text</source>
+        <target>Texte</target>
+      </trans-unit>
+      <trans-unit id="4Treibl" resname="label.references">
+        <source>label.references</source>
+        <target>Références</target>
+      </trans-unit>
+      <trans-unit id="vK3twvr" resname="All Tickets">
+        <source>All Tickets</source>
+        <target>Tous les tickets</target>
+      </trans-unit>
+      <trans-unit id="W5JwkeM" resname="Create a new ticket">
+        <source>Create a new ticket</source>
+        <target>Ajouter un ticket</target>
+      </trans-unit>
+      <trans-unit id="spw6jhl" resname="View all Tickets">
+        <source>View all Tickets</source>
+        <target>Voir tous les tickets</target>
+      </trans-unit>
+      <trans-unit id="FQn1YfJ" resname="Save">
+        <source>Save</source>
+        <target>Sauvegarder</target>
+      </trans-unit>
+      <trans-unit id=".RY8fxJ" resname="New Ticket">
+        <source>New Ticket</source>
+        <target>Nouveau Ticket</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

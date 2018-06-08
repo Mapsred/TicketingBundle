@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Ticket{% endblock %}
+{% block title %}{{ 'New Ticket'|trans({}, 'TicketingBundle') }}{% endblock %}
 {% block header %}<h1>Tickets</h1>{% endblock %}
 
 {% block body %}
-    <h1>Create new Ticket</h1>
+    <h1>{{ 'Create a new ticket'|trans({}, 'TicketingBundle') }}</h1>
 
     {{ include('@Ticketing/ticketing/_form.html.twig') }}
 
