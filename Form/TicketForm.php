@@ -5,6 +5,7 @@ namespace Maps_red\TicketingBundle\Form;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -31,7 +32,9 @@ class TicketForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('Description')
+            ->add('Description', TextareaType::class, [
+                'label' => "label.description",
+            ])
             ->add('Category', EntityType::class, [
                 'class' => $this->categoryClass,
                 'query_builder' => function (EntityRepository $er) {
@@ -48,7 +51,7 @@ class TicketForm extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => $this->ticketClass,
-            'translation_domain' => 'ticket'
+            'translation_domain' => 'TicketingBundle'
         ]);
     }
 }

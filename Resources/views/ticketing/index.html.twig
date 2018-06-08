@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}All Ticket{% endblock %}
+{% block title %}{{ 'All Tickets'|trans({}, 'TicketingBundle') }} {% endblock %}
 
 {% block body %}
-    <h1>View all Ticket</h1>
+    <h1>{{ 'View all Tickets'|trans({}, 'TicketingBundle') }}</h1>
 
-    <a href="{{ path('new_ticketing') }}">Create new ticket</a>
+    <a href="{{ path('new_ticketing') }}">{{ 'Create a new ticket'|trans({}, 'TicketingBundle') }}</a>
 {% endblock %}
