@@ -62,7 +62,57 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('ticket_status')
                             ->defaultValue('App\Entity\TicketStatus')
                         ->end()
-                    ->end();
+                    ->end()
+                ->end()
+            ->arrayNode('templates')
+            ->addDefaultsIfNotSet()
+                ->children()
+                    ->scalarNode('layout')
+                        ->defaultValue('@Ticketing/base.html.twig')
+                        ->cannotBeEmpty()
+                    ->end()
+                    ->scalarNode('index')
+                        ->defaultValue('@Ticketing/ticketing/index.html.twig')
+                        ->cannotBeEmpty()
+                    ->end()
+                    ->scalarNode('new')
+                        ->defaultValue('@Ticketing/ticketing/new.html.twig')
+                        ->cannotBeEmpty()
+                    ->end()
+                ->end()
+            ->end()
+            ->arrayNode('assets')
+            ->addDefaultsIfNotSet()
+                ->children()
+                    ->arrayNode('stylesheets')
+                        ->defaultValue([
+                            'bundles/ticketing/vendor/css/bootstrap.css',
+                            'bundles/ticketing/vendor/css/bootstrap-datepicker3.css',
+                            'bundles/ticketing/vendor/css/font-awesome.css',
+                            'bundles/ticketing/vendor/css/ionicons.css',
+                            'bundles/ticketing/vendor/css/select2.css',
+                            'bundles/ticketing/css/AdminLTE.css',
+                            'bundles/ticketing/css/helper.css',
+                            'bundles/ticketing/css/skin-ticketing.css',
+                        ])->scalarPrototype()->end()
+                    ->end()
+                    ->arrayNode('javascripts')
+                        ->defaultValue([
+                            'bundles/ticketing/vendor/js/jquery.js',
+                            'bundles/ticketing/vendor/js/bootstrap.js',
+                            'bundles/ticketing/vendor/js/adminlte.js',
+                            'bundles/ticketing/vendor/js/bootstrap-datepicker.js',
+                            'bundles/ticketing/vendor/js/bootstrap-datepicker.fr.js',
+                            'bundles/ticketing/vendor/js/select2.js',
+                            'bundles/ticketing/vendor/js/select2-fr.js',
+                            'bundles/ticketing/js/script.js',
+                        ])->scalarPrototype()->end()
+                    ->end()
+                ->end()
+            ->end()
+        ->end()
+
+        ;
 
         
         return $treeBuilder;

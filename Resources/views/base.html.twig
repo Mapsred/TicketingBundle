@@ -10,7 +10,9 @@
 
     {% block stylesheet %}{% endblock %}
 
-    <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+    {% for stylesheet in getTicketingStylesheets() %}
+        <link rel="stylesheet" href="{{ asset(stylesheet) }}">
+    {% endfor %}
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -25,27 +27,8 @@
 
     {% block head %}{% endblock %}
 </head>
-<!--
-BODY TAG OPTIONS:
-=================
-Apply one or more of the following classes to get the
-desired effect
-|---------------------------------------------------------|
-| SKINS         | skin-blue                               |
-|               | skin-black                              |
-|               | skin-purple                             |
-|               | skin-yellow                             |
-|               | skin-red                                |
-|               | skin-green                              |
-|---------------------------------------------------------|
-|LAYOUT OPTIONS | fixed                                   |
-|               | layout-boxed                            |
-|               | layout-top-nav                          |
-|               | sidebar-collapse                        |
-|               | sidebar-mini                            |
-|---------------------------------------------------------|
--->
-<body class="hold-transition {{ skin_layout }} layout-top-nav">
+
+<body class="hold-transition skin-ticketing layout-top-nav">
 <div class="wrapper">
 
     <header class="main-header">
@@ -67,18 +50,9 @@ desired effect
                 <!-- Navbar Right Menu -->
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
-                        {% if app.user %}
-                            <li>
-                                <a href="{{ path('security_logout') }}">Se déconnecter</a>
-                            </li>
-                        {% else %}
-                            <li>
-                                <a href="{{ path('security_login') }}">Se connecter</a>
-                            </li>
-                            <li>
-                                <a href="{{ path('user_register') }}">S'inscrire</a>
-                            </li>
-                        {% endif %}
+                        {% block navbar %}
+
+                        {% endblock %}
                     </ul>
                 </div>
                 <!-- /.navbar-custom-menu -->
@@ -88,14 +62,15 @@ desired effect
     </header>
     <!-- Full Width Column -->
     <div class="content-wrapper">
-
-        {% for type, messages in app.session.flashbag.all() %}
-            {% for message in messages %}
-                <div class="alert alert-{{ type }}">
-                    {{ message|raw }}
-                </div>
+        {% block flashbag %}
+            {% for type, messages in app.session.flashbag.all() %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ type }}">
+                        {{ message|raw }}
+                    </div>
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
+        {% endblock %}
 
 
         <div class="container">
@@ -114,10 +89,13 @@ desired effect
     <!-- /.content-wrapper -->
     <footer class="main-footer">
         <div class="container">
-            <div class="pull-right hidden-xs">
-                <b>Version</b> 1.0
-            </div>
-            <strong>Copyright &copy; {{ ''|date('Y') }}.</strong> All rights reserved.
+            {% block footer %}
+                <div class="pull-right hidden-xs">
+                    <b>Version</b> 1.0
+                </div>
+                <strong>Copyright &copy; {{ ''|date('Y') }}.</strong> All rights reserved.
+
+            {% endblock %}
         </div>
         <!-- /.container -->
     </footer>
@@ -127,8 +105,9 @@ desired effect
 <!-- REQUIRED JS SCRIPTS -->
 {#<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>#}
 {#<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>#}
-
-<script src="{{ asset('build/app.js') }}"></script>
+{% for javascript in getTicketingJavascripts() %}
+    <script src="{{ asset(javascript) }}"></script>
+{% endfor %}
 
 {% block javascript %}{% endblock %}
 
