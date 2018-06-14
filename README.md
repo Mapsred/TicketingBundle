@@ -7,33 +7,5 @@ TicketingBundle
 ## Installation
 
 1. [Setting up the bundle](docs/1-setting_up_the_bundle.md)
-
-Installation
-============
-
-
-### Step 2: Enable the Bundle
-
-Then, enable the bundle by adding it to the list of registered bundles
-in the `app/AppKernel.php` file of your project:
-
-```php
-<?php
-// app/AppKernel.php
-
-// ...
-class AppKernel extends Kernel
-{
-    public function registerBundles()
-    {
-        $bundles = array(
-            // ...
-            new Maps_red\TicketingBundle\TicketingBundle(),
-        );
-
-        // ...
-    }
-
-    // ...
-}
-```
+2. [Setting up the entities](docs/2-setting_up_the_entities.md)
+3. [Default configuration](docs/3-setting_up_the_configuration.md)

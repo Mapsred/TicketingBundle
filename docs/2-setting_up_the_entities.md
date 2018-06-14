@@ -1,11 +1,15 @@
-# Entity Management
+Step 2 - Entity Management
+=================
 
-To fully use this bundle you need to implement all the interfaces in the ``Model`` folder
-or to extend all the abstract class in the ``Entity`` folder.
+### A - Extending the entities
+
+TicketingBundle use ``Interface`` instead of ``Class`` for its entities. This way you can easily 
+override it from the Interface if need be.
 
 Here is an example to how to extend the ``Ticket`` Entity :
 
 ```php
+<?php
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -13,7 +17,7 @@ use Maps_red\TicketingBundle\Entity\Ticket as BaseTicket;
 
 /**
  * @ORM\Table(name="ticket_tickets")
- * @ORM\Entity(repositoryClass="Maps_red\TicketingBundle\Repository\TicketRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\TicketRepository")
  */
 class Ticket extends BaseTicket
 {
@@ -39,7 +43,11 @@ class Ticket extends BaseTicket
 }
 ```
 
-you need to configure the listener, which tells the DoctrineBundle about the replacement.
+### B - Fill the doctrine configuration
+
+You will also need to explain to doctrine which Interface is which Class with the following configuration.
+
+Feel free to customize it to match to your project as it is only an example.
 
 ```yaml
 # config/packages/doctrine.yaml
@@ -56,3 +64,6 @@ doctrine:
             Maps_red\TicketingBundle\Model\TicketStatusInterface: App\Entity\TicketStatus
             Symfony\Component\Security\Core\User\UserInterface: App\Entity\User
 ```
+
+### Continue to the next step
+[Step 3 - Configuration explaination](3-setting_up_the_configuration.md)

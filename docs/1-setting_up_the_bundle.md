@@ -50,3 +50,4 @@ Import the ``routes.yaml`` routing file into your own routes file.
 ```
 
 ### Continue to the next step
+[Step 2 - Setting up the entities](2-setting_up_the_entities.md)
