@@ -54,14 +54,14 @@ ticketing:
 
 All parameters are optional if you use the bundle the basic way.
 
-But if needs be you can override the default configuration using the the full configuration above.
+But if you need, you can override the default configuration using the the full configuration above.
 
 * ``default_status_name`` : All new created tickets (``Maps_red\TicketingBundle\Model\TicketInteface``) will have a
 status (``Maps_red\TicketingBundle\Model\TicketStatusInteface``). This status will be found by its name with this parameter.
 The default configuration recommends you to create a status with ``open`` as name.
 * ``enable_history`` : This parameter will enable/disable the history management for the ticket. If enabled, 
 all users will have a status of seen/unseen on the ticket list to know if they have not checked a ticket or if it had
-some changes sice the last time they checked it.
+some changes since the last time they checked it.
 * ``enable_ticket_restriction`` : If the parameter is to true, all the new tickets will be restricted to user with the 
 role defined in the ``restricted_tickets_roles`` parameter. Otherwise all tickets will have the ``public`` tag and will 
 be accessible for all users.

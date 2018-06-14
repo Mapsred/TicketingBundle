@@ -37,7 +37,7 @@ class AppKernel extends Kernel
 }
 ```
 
-If you use Symfony 4.x you don't need the previous step thanks to Symfony Flex
+If you use Symfony 4.x you don't need the previous step, thanks to Symfony Flex
 
 ### C - Import the routing
 

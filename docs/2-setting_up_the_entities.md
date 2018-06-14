@@ -47,7 +47,7 @@ class Ticket extends BaseTicket
 
 You will also need to explain to doctrine which Interface is which Class with the following configuration.
 
-Feel free to customize it to match to your project as it is only an example.
+As it is only an example, feel free to customize it to match to your project.
 
 ```yaml
 # config/packages/doctrine.yaml
