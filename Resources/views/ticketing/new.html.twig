@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends getTicketingLayoutTemplate() %}
 
 {% block title %}{{ 'New Ticket'|trans({}, 'TicketingBundle') }}{% endblock %}
 {% block header %}<h1>Tickets</h1>{% endblock %}
