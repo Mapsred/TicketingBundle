@@ -9,6 +9,8 @@
 namespace Maps_red\TicketingBundle\Model;
 
 
+use Symfony\Component\Security\Core\User\UserInterface;
+
 interface TicketHistoryInterface
 {
 
