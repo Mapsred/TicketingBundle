@@ -89,11 +89,11 @@ class Configuration implements ConfigurationInterface
                             'bundles/ticketing/vendor/css/bootstrap.min.css',
                             'bundles/ticketing/vendor/css/bootstrap-datepicker3.min.css',
                             'bundles/ticketing/vendor/css/font-awesome.min.css',
-                            'bundles/ticketing/vendor/css/ionicons.min.css',
                             'bundles/ticketing/vendor/css/select2.min.css',
+                            'bundles/ticketing/vendor/css/ionicons.min.css',
+                            'bundles/ticketing/vendor/css/dataTables.min.css',
                             'bundles/ticketing/css/AdminLTE.min.css',
                             'bundles/ticketing/css/skin-ticketing.min.css',
-                            'bundles/ticketing/css/dataTables.min.css',
                             'bundles/ticketing/css/helper.css',
                         ])->scalarPrototype()->end()
                     ->end()
@@ -106,7 +106,7 @@ class Configuration implements ConfigurationInterface
                             'bundles/ticketing/vendor/js/bootstrap-datepicker.fr.min.js',
                             'bundles/ticketing/vendor/js/select2.min.js',
                             'bundles/ticketing/vendor/js/select2-fr.min.js',
-                            'bundles/ticketing/vendor/js/dataTables.min.css',
+                            'bundles/ticketing/vendor/js/dataTables.min.js',
                             'bundles/ticketing/js/script.js',
                         ])->scalarPrototype()->end()
                     ->end()

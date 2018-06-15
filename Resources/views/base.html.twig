@@ -50,9 +50,18 @@
                 <!-- Navbar Right Menu -->
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
-                        {% block navbar %}
-
-                        {% endblock %}
+                        {% if app.user %}
+                            <li>
+                                <a href="{{ path('security_logout') }}">Se déconnecter</a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a href="{{ path('security_login') }}">Se connecter</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('user_register') }}">S'inscrire</a>
+                            </li>
+                        {% endif %}
                     </ul>
                 </div>
                 <!-- /.navbar-custom-menu -->
@@ -89,13 +98,10 @@
     <!-- /.content-wrapper -->
     <footer class="main-footer">
         <div class="container">
-            {% block footer %}
-                <div class="pull-right hidden-xs">
-                    <b>Version</b> 1.0
-                </div>
-                <strong>Copyright &copy; {{ ''|date('Y') }}.</strong> All rights reserved.
-
-            {% endblock %}
+            <div class="pull-right hidden-xs">
+                <b>Version</b> 1.0
+            </div>
+            <strong>Copyright &copy; {{ ''|date('Y') }}.</strong> All rights reserved.
         </div>
         <!-- /.container -->
     </footer>
