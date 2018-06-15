@@ -8,6 +8,8 @@
 
 namespace Maps_red\TicketingBundle\Controller;
 
+use Maps_red\TicketingBundle\Entity\Ticket;
+use Maps_red\TicketingBundle\Manager\TicketManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,15 +21,23 @@ use Symfony\Component\HttpFoundation\Response;
 class TicketingAjaxController extends Controller
 {
     /**
-     * @Route("/{type}", name="data_table", options={"expose": "true"}, requirements={})
+     * @Route("/{status}", name="data_table", options={"expose": "true"}, requirements={})
      * @param Request $request
-     * @param string $type
+     * @param TicketManager $ticketManager
+     * @param string $status
      * @return Response
      */
-    public function dataTableProcessing(Request $request, string $type)
+    public function dataTableProcessing(Request $request, TicketManager $ticketManager, string $status)
     {
-        var_dump($request->query->all());exit;
+        $results = $ticketManager->handleDataTable($request->query->all(), $status);
 
-        return $this->json([]);
+        return $this->json([
+            'draw' =>$request->query->getInt('draw'),
+            'recordsTotal' => $ticketManager->getRepository()->count([]),
+            'recordsFiltered' => $results['count'],
+            'data' => array_map(function (Ticket $ticket) use($ticketManager) {
+                return array_values($ticketManager->toArray($ticket));
+            }, $results['data']),
+        ]);
     }
 }

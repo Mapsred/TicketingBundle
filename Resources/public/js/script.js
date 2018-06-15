@@ -23,7 +23,7 @@ let Table = {
             "serverSide": true,
             "searchDelay": 350,
             "bDeferRender": true,
-            "ajax": Routing.generate('data_table', {type: status}, false),
+            "ajax": Routing.generate('data_table', {status: status}, false),
             'language': {
                 "sProcessing": "Traitement en cours...",
                 "sSearch": "Rechercher selon n'importe quel critère&nbsp;:",
@@ -48,7 +48,64 @@ let Table = {
             },
             "sPaginationType": "full_numbers",
             "aoColumns": [null, null, null, null, null, null, null],
-            "columnDefs": [],
+            "columnDefs": [
+                {
+                    targets: 0,
+                    name: 'id',
+                    className: "",
+                    render: function (data, type, row) {
+                        return data;
+                    }
+                },
+                {
+                    targets: 1,
+                    name: 'author',
+                    className: "",
+                    render: function (data, type, row) {
+                        return data;
+                    }
+                },
+                {
+                    targets: 2,
+                    name: 'date',
+                    className: "",
+                    render: function (data, type, row) {
+                        return data;
+                    }
+                },
+                {
+                    targets: 3,
+                    name: 'category',
+                    className: "",
+                    render: function (data, type, row) {
+                        return data;
+                    }
+                },
+                {
+                    targets: 4,
+                    name: 'status',
+                    className: "",
+                    render: function (data, type, row) {
+                        return data;
+                    }
+                },
+                {
+                    targets: 5,
+                    name: 'type',
+                    className: "",
+                    render: function (data, type, row) {
+                        return data;
+                    }
+                },
+                {
+                    targets: 6,
+                    name: 'assignated',
+                    className: "",
+                    render: function (data, type, row) {
+                        return data;
+                    }
+                },
+            ],
         });
     },
 };

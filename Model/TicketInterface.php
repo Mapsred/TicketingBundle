@@ -12,6 +12,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 interface TicketInterface
 {
+    public function getId();
+
     public function getStatus(): ?TicketStatusInterface;
 
     public function setStatus(?TicketStatusInterface $status): self;
