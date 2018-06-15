@@ -67,7 +67,7 @@ doctrine:
 
 ### C - Extend the repository
 
-You wil need to extend the repository on your project. You can see an exemple of 'TicketRepository' below. 
+You wil need to extend the repository on your project. You can see the example of ``TicketRepository`` below. 
 
 ````php
 <?php
