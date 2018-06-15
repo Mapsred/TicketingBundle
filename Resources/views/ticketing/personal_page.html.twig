@@ -1,0 +1,46 @@
+{% extends getTicketingLayoutTemplate() %}
+
+{% block title %}{{ 'My tickets'|trans({}, 'TicketingBundle') }}{% endblock %}
+{% block header %}<h1>{{ 'My tickets'|trans({}, 'TicketingBundle') }}</h1>{% endblock %}
+
+{% block body %}
+    <h1>{{ 'List of my tickets'|trans({}, 'TicketingBundle') }}</h1>
+
+    {% for status in status_list %}
+        <div class="box box-{{ status.style }}">
+            <div class="box-header with-border">
+                <h3 class="box-title">{{ status.value }}</h3>
+            </div>
+            <div class="box-body">
+                <table class="table table-bordered table-striped data-table" data-status="{{ status.name }}" data-type="perso">
+                    <thead>
+                    <tr>
+                        <th>Numéro</th>
+                        <th>Auteur</th>
+                        <th>Date</th>
+                        <th>Catégorie</th>
+                        <th>Statut</th>
+                        <th>Type</th>
+                        <th>Assigné à</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {# AJAX CALL FROM DATATABLES.NET #}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th>Numéro</th>
+                        <th>Auteur</th>
+                        <th>Date</th>
+                        <th>Catégorie</th>
+                        <th class="disabled">Statut</th>
+                        <th class="disabled">Type</th>
+                        <th>Assigné à</th>
+                    </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

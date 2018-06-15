@@ -6,15 +6,24 @@ use Doctrine\ORM\Mapping as ORM;
 use Maps_red\TicketingBundle\Model\TicketCategoryInterface;
 use Maps_red\TicketingBundle\Model\TicketInterface;
 use Maps_red\TicketingBundle\Model\TicketStatusInterface;
+use Maps_red\TicketingBundle\Model\Traits\Timestampable;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 
 /**
  * @ORM\MappedSuperclass()
  */
 class Ticket implements TicketInterface
 {
-    use ORMBehaviors\Timestampable\Timestampable;
+    use Timestampable;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
 
     /**
      * @ORM\Column(type="text")
@@ -64,6 +73,11 @@ class Ticket implements TicketInterface
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $public_at;
+
+    public function getId()
+    {
+        return $this->id;
+    }
 
     public function getDescription(): ?string
     {

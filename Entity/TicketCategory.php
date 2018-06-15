@@ -30,7 +30,7 @@ class TicketCategory implements TicketCategoryInterface
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(string $name): TicketCategoryInterface
     {
         $this->name = $name;
 
@@ -42,7 +42,7 @@ class TicketCategory implements TicketCategoryInterface
         return $this->position;
     }
 
-    public function setPosition(int $position): self
+    public function setPosition(int $position): TicketCategoryInterface
     {
         $this->position = $position;
 
@@ -54,7 +54,7 @@ class TicketCategory implements TicketCategoryInterface
         return $this->role;
     }
 
-    public function setRole(string $role): self
+    public function setRole(string $role): TicketCategoryInterface
     {
         $this->role = $role;
 

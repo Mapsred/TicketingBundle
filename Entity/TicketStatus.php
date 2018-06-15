@@ -30,7 +30,7 @@ class TicketStatus implements TicketStatusInterface
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(string $name): TicketStatusInterface
     {
         $this->name = $name;
 
@@ -42,7 +42,7 @@ class TicketStatus implements TicketStatusInterface
         return $this->value;
     }
 
-    public function setValue(string $value): self
+    public function setValue(string $value): TicketStatusInterface
     {
         $this->value = $value;
 
@@ -54,7 +54,7 @@ class TicketStatus implements TicketStatusInterface
         return $this->style;
     }
 
-    public function setStyle(?string $style): self
+    public function setStyle(?string $style): TicketStatusInterface
     {
         $this->style = $style;
 

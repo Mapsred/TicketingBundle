@@ -45,6 +45,14 @@
         <source>New Ticket</source>
         <target>Nouveau Ticket</target>
       </trans-unit>
+      <trans-unit id="bI.35pJ" resname="My tickets">
+        <source>My tickets</source>
+        <target>Mes tickets</target>
+      </trans-unit>
+      <trans-unit id="3UNMlF2" resname="List of my tickets">
+        <source>List of my tickets</source>
+        <target>Liste de mes tickets</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
