@@ -86,25 +86,28 @@ class Configuration implements ConfigurationInterface
                 ->children()
                     ->arrayNode('stylesheets')
                         ->defaultValue([
-                            'bundles/ticketing/vendor/css/bootstrap.css',
-                            'bundles/ticketing/vendor/css/bootstrap-datepicker3.css',
-                            'bundles/ticketing/vendor/css/font-awesome.css',
-                            'bundles/ticketing/vendor/css/ionicons.css',
-                            'bundles/ticketing/vendor/css/select2.css',
-                            'bundles/ticketing/css/AdminLTE.css',
+                            'bundles/ticketing/vendor/css/bootstrap.min.css',
+                            'bundles/ticketing/vendor/css/bootstrap-datepicker3.min.css',
+                            'bundles/ticketing/vendor/css/font-awesome.min.css',
+                            'bundles/ticketing/vendor/css/select2.min.css',
+                            'bundles/ticketing/vendor/css/ionicons.min.css',
+                            'bundles/ticketing/vendor/css/dataTables.bootstrap.min.css',
+                            'bundles/ticketing/css/AdminLTE.min.css',
+                            'bundles/ticketing/css/skin-ticketing.min.css',
                             'bundles/ticketing/css/helper.css',
-                            'bundles/ticketing/css/skin-ticketing.css',
                         ])->scalarPrototype()->end()
                     ->end()
                     ->arrayNode('javascripts')
                         ->defaultValue([
-                            'bundles/ticketing/vendor/js/jquery.js',
-                            'bundles/ticketing/vendor/js/bootstrap.js',
-                            'bundles/ticketing/vendor/js/adminlte.js',
-                            'bundles/ticketing/vendor/js/bootstrap-datepicker.js',
-                            'bundles/ticketing/vendor/js/bootstrap-datepicker.fr.js',
-                            'bundles/ticketing/vendor/js/select2.js',
-                            'bundles/ticketing/vendor/js/select2-fr.js',
+                            'bundles/ticketing/vendor/js/jquery.min.js',
+                            'bundles/ticketing/vendor/js/bootstrap.min.js',
+                            'bundles/ticketing/vendor/js/adminlte.min.js',
+                            'bundles/ticketing/vendor/js/bootstrap-datepicker.min.js',
+                            'bundles/ticketing/vendor/js/bootstrap-datepicker.fr.min.js',
+                            'bundles/ticketing/vendor/js/select2.min.js',
+                            'bundles/ticketing/vendor/js/select2-fr.min.js',
+                            'bundles/ticketing/vendor/js/dataTables.min.js',
+                            'bundles/ticketing/vendor/js/dataTables.bootstrap.min.js',
                             'bundles/ticketing/js/script.js',
                         ])->scalarPrototype()->end()
                     ->end()

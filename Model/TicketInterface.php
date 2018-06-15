@@ -12,7 +12,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 interface TicketInterface
 {
-
     public function getId() : ?int;
 
     public function getDescription() : ?string;

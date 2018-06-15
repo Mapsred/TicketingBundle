@@ -3,7 +3,7 @@
 namespace Maps_red\TicketingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+use Maps_red\TicketingBundle\Model\Traits\Timestampable;
 use Maps_red\TicketingBundle\Model\TicketKeywordInterface;
 
 /**
@@ -11,7 +11,7 @@ use Maps_red\TicketingBundle\Model\TicketKeywordInterface;
  */
 class TicketKeyword implements TicketKeywordInterface
 {
-    use ORMBehaviors\Timestampable\Timestampable;
+    use Timestampable;
 
     /**
      * @ORM\Column(type="string", length=255)

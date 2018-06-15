@@ -11,6 +11,7 @@ namespace Maps_red\TicketingBundle\Model;
 
 interface TicketCategoryInterface
 {
+    public function getName(): ?string;
 
     public function getId() : ?int;
 
@@ -25,5 +26,4 @@ interface TicketCategoryInterface
     public function getRole() : ?string;
 
     public function setRole(string $role): TicketCategoryInterface;
-
 }

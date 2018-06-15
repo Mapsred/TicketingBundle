@@ -35,7 +35,7 @@
         <nav class="navbar navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
-                    <a href="{{ path('homepage') }}" class="navbar-brand"><b></b>Chrono</a>
+                    <a href="{{ path('ticket_perso') }}" class="navbar-brand"><b></b>Chrono</a>
                     {# Mobile button #}
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                             data-target="#navbar-collapse">
@@ -50,9 +50,18 @@
                 <!-- Navbar Right Menu -->
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
-                        {% block navbar %}
-
-                        {% endblock %}
+                        {% if app.user %}
+                            <li>
+                                <a href="{{ path('security_logout') }}">Se déconnecter</a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a href="{{ path('security_login') }}">Se connecter</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('user_register') }}">S'inscrire</a>
+                            </li>
+                        {% endif %}
                     </ul>
                 </div>
                 <!-- /.navbar-custom-menu -->
@@ -89,13 +98,10 @@
     <!-- /.content-wrapper -->
     <footer class="main-footer">
         <div class="container">
-            {% block footer %}
-                <div class="pull-right hidden-xs">
-                    <b>Version</b> 1.0
-                </div>
-                <strong>Copyright &copy; {{ ''|date('Y') }}.</strong> All rights reserved.
-
-            {% endblock %}
+            <div class="pull-right hidden-xs">
+                <b>Version</b> 1.0
+            </div>
+            <strong>Copyright &copy; {{ ''|date('Y') }}.</strong> All rights reserved.
         </div>
         <!-- /.container -->
     </footer>
@@ -103,8 +109,8 @@
 <!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->
-{#<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>#}
-{#<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>#}
+<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 {% for javascript in getTicketingJavascripts() %}
     <script src="{{ asset(javascript) }}"></script>
 {% endfor %}
