@@ -74,7 +74,7 @@ class Ticket implements TicketInterface
      */
     private $public_at;
 
-    public function getId()
+    public function getId() : ?int
     {
         return $this->id;
     }
@@ -84,7 +84,7 @@ class Ticket implements TicketInterface
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(string $description): TicketInterface
     {
         $this->description = $description;
 
@@ -108,7 +108,7 @@ class Ticket implements TicketInterface
         return $this->category;
     }
 
-    public function setCategory(?TicketCategoryInterface $category): self
+    public function setCategory(?TicketCategoryInterface $category): TicketInterface
     {
         $this->category = $category;
 
@@ -144,7 +144,7 @@ class Ticket implements TicketInterface
         return $this->rating;
     }
 
-    public function setRating(?int $rating): self
+    public function setRating(?int $rating): TicketInterface
     {
         $this->rating = $rating;
 
@@ -156,7 +156,7 @@ class Ticket implements TicketInterface
         return $this->closed_at;
     }
 
-    public function setClosedAt(\DateTimeInterface $closed_at): self
+    public function setClosedAt(\DateTimeInterface $closed_at): TicketInterface
     {
         $this->closed_at = $closed_at;
 
@@ -168,7 +168,7 @@ class Ticket implements TicketInterface
         return $this->closed_by;
     }
 
-    public function setClosedBy(?UserInterface $closed_by): self
+    public function setClosedBy(?UserInterface $closed_by): TicketInterface
     {
         $this->closed_by = $closed_by;
 

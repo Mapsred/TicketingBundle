@@ -13,13 +13,17 @@ interface TicketCategoryInterface
 {
     public function getName(): ?string;
 
+    public function getId() : ?int;
+
+    public function getName() : ?string;
+
     public function setName(string $name): TicketCategoryInterface;
 
-    public function getPosition(): ?int;
+    public function getPosition() : ?int;
 
     public function setPosition(int $position): TicketCategoryInterface;
 
-    public function getRole(): ?string;
+    public function getRole() : ?string;
 
     public function setRole(string $role): TicketCategoryInterface;
 }

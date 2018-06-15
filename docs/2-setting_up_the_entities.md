@@ -10,6 +10,7 @@ Here is an example to how to extend the ``Ticket`` Entity :
 
 ```php
 <?php
+
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -21,24 +22,6 @@ use Maps_red\TicketingBundle\Entity\Ticket as BaseTicket;
  */
 class Ticket extends BaseTicket
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
 }
 ```

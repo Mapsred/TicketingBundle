@@ -26,12 +26,26 @@ class TicketComment implements TicketCommentInterface
      */
     private $author;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    public function getId() : ?int
+    {
+        return $this->id;
+    }
+
    public function getText(): ?string
     {
         return $this->text;
     }
 
-    public function setText(string $text): self
+    public function setText(string $text): TicketCommentInterface
     {
         $this->text = $text;
 
@@ -43,7 +57,7 @@ class TicketComment implements TicketCommentInterface
         return $this->status;
     }
 
-    public function setStatus(int $status): self
+    public function setStatus(int $status): TicketCommentInterface
     {
         $this->status = $status;
 
@@ -55,7 +69,7 @@ class TicketComment implements TicketCommentInterface
         return $this->author;
     }
 
-    public function setAuthor(?UserInterface $author): self
+    public function setAuthor(?UserInterface $author): TicketCommentInterface
     {
         $this->author = $author;
 
