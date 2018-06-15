@@ -11,8 +11,6 @@ namespace Maps_red\TicketingBundle\Model;
 
 interface TicketCategoryInterface
 {
-    public function getName(): ?string;
-
     public function getId() : ?int;
 
     public function getName() : ?string;
