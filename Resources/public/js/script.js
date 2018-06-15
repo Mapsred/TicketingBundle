@@ -4,7 +4,6 @@ let Table = {
             let table = Table.initTable(this, $(this).data('status'), $(this).data('type'));
             let parent = $(this).closest('.box-body');
             $(parent).find('.dataTables_wrapper').on('keyup', ".column_search", function () {
-                console.log('test');
                 table.column($(this).parent().index()).search(this.value).draw();
             });
 
@@ -14,7 +13,10 @@ let Table = {
     initTable: function (dataTable, status, type) {
         $(dataTable).find('tfoot th').each(function () {
             let title = $(this).text();
-            $(this).html('<input type="text" class="form-control column_search" style="width: 100%" placeholder="' + title + '" />');
+            let disabled = $(this).hasClass('disabled') ? 'disabled' : '';
+
+            $(this).html('<input type="text" class="form-control column_search" style="width: 100%" ' +
+                'placeholder="' + title + '" ' + disabled + ' />');
         });
 
         return $(dataTable).DataTable({
@@ -68,7 +70,7 @@ let Table = {
                 },
                 {
                     targets: 2,
-                    name: 'date',
+                    name: 'createdAt',
                     className: "",
                     render: function (data, type, row) {
                         return data;

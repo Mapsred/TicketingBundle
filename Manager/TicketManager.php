@@ -60,7 +60,7 @@ class TicketManager extends AbstractManager
         $this->persistAndFlush($ticket);
     }
 
-    public function handleDataTable(array $datas, string $status, string $type)
+    public function handleDataTable(array $datas, string $status, string $type, UserInterface $user)
     {
         $columns = array_combine(
             array_column($datas['columns'], 'name'),
@@ -86,9 +86,9 @@ class TicketManager extends AbstractManager
 
         return [
             'data' => $this->getRepository()
-                ->searchDataTable($globalSearch, $columns, $fields, $order, $datas['start'], $datas['length'], false, $status, $type),
+                ->searchDataTable($globalSearch, $columns, $fields, $order, $datas['start'], $datas['length'], false, $status, $type, $user),
             'count' => $this->getRepository()
-                ->searchDataTable($globalSearch, $columns, $fields, $order, $datas['start'], $datas['length'], true, $status, $type)
+                ->searchDataTable($globalSearch, $columns, $fields, $order, $datas['start'], $datas['length'], true, $status, $type, $user)
         ];
     }
 
@@ -97,7 +97,7 @@ class TicketManager extends AbstractManager
         return [
             'id' => $ticket->getId(),
             'author' => $ticket->getAuthor()->getUsername(),
-            'date' => $ticket->getCreatedAt()->format('d/m/Y'),
+            'createdAt' => $ticket->getCreatedAt()->format('d/m/Y'),
             'category' => $ticket->getCategory()->getName(),
             'status' => $ticket->getStatus()->getValue().' - '.$ticket->getStatus()->getStyle(),
             'type' => $ticket->getPublic() ? "Public" : "Privé",

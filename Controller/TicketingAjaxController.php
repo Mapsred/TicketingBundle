@@ -30,7 +30,7 @@ class TicketingAjaxController extends Controller
      */
     public function dataTableProcessing(Request $request, TicketManager $ticketManager, string $status, string $type)
     {
-        $results = $ticketManager->handleDataTable($request->query->all(), $status, $type);
+        $results = $ticketManager->handleDataTable($request->query->all(), $status, $type, $this->getUser());
 
         return $this->json([
             'draw' =>$request->query->getInt('draw'),
