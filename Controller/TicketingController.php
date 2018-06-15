@@ -20,7 +20,6 @@ class TicketingController extends Controller
      */
     public function persoTicketsAction(TicketStatusManager $ticketStatusManager)
     {
-
         return $this->render("@Ticketing/ticketing/personal_page.html.twig", [
             'status_list' => $ticketStatusManager->getRepository()->findAll()
         ]);
