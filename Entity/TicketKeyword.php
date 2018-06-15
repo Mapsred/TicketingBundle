@@ -18,12 +18,26 @@ class TicketKeyword implements TicketKeywordInterface
      */
     private $name;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    public function getId() : ?int
+    {
+        return $this->id;
+    }
+
     public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(string $name): TicketKeywordInterface
     {
         $this->name = $name;
 

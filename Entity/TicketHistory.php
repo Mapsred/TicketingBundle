@@ -21,13 +21,26 @@ class TicketHistory implements TicketHistoryInterface
      */
     private $author;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    public function getId() : ?int
+    {
+        return $this->id;
+    }
 
     public function getStatus(): ?int
     {
         return $this->status;
     }
 
-    public function setStatus(int $status): self
+    public function setStatus(int $status): TicketHistoryInterface
     {
         $this->status = $status;
 
@@ -39,7 +52,7 @@ class TicketHistory implements TicketHistoryInterface
         return $this->author;
     }
 
-    public function setAuthor(?UserInterface $author): self
+    public function setAuthor(?UserInterface $author): TicketHistoryInterface
     {
         $this->author = $author;
 

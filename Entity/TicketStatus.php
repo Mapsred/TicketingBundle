@@ -25,12 +25,26 @@ class TicketStatus implements TicketStatusInterface
      */
     private $style;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    public function getId() : ?int
+    {
+        return $this->id;
+    }
+
     public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(string $name): TicketStatusInterface
     {
         $this->name = $name;
 
@@ -42,7 +56,7 @@ class TicketStatus implements TicketStatusInterface
         return $this->value;
     }
 
-    public function setValue(string $value): self
+    public function setValue(string $value): TicketStatusInterface
     {
         $this->value = $value;
 
@@ -54,7 +68,7 @@ class TicketStatus implements TicketStatusInterface
         return $this->style;
     }
 
-    public function setStyle(?string $style): self
+    public function setStyle(?string $style): TicketStatusInterface
     {
         $this->style = $style;
 

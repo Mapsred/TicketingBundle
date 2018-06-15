@@ -11,5 +11,15 @@ namespace Maps_red\TicketingBundle\Model;
 
 interface TicketHistoryInterface
 {
-    public function setStatus(int $status);
+
+    public function getId() : ?int;
+
+    public function getStatus(): ?int;
+
+    public function setStatus(int $status): TicketHistoryInterface;
+
+    public function getAuthor(): ?UserInterface;
+
+    public function setAuthor(?UserInterface $author): TicketHistoryInterface;
+
 }
