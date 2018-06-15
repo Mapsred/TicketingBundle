@@ -65,5 +65,33 @@ doctrine:
             Symfony\Component\Security\Core\User\UserInterface: App\Entity\User
 ```
 
+### C - Extend the repository
+
+You wil need to extend the repository on your project. You can see the example of ``TicketRepository`` below. 
+
+````php
+<?php
+
+namespace App\Repository;
+
+use App\Entity\Ticket;
+use Symfony\Bridge\Doctrine\RegistryInterface;
+use Maps_red\TicketingBundle\Repository\TicketRepository as BaseTicketRepository;
+
+/**
+ * @method Ticket|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Ticket|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Ticket[]    findAll()
+ * @method Ticket[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+class TicketRepository extends BaseTicketRepository
+{
+    public function __construct(RegistryInterface $registry)
+    {
+        parent::__construct($registry, Ticket::class);
+    }
+}
+````
+
 ### Continue to the next step
 [Step 3 - Configuration explaination](3-setting_up_the_configuration.md)
