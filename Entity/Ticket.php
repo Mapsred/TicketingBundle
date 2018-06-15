@@ -6,15 +6,15 @@ use Doctrine\ORM\Mapping as ORM;
 use Maps_red\TicketingBundle\Model\TicketCategoryInterface;
 use Maps_red\TicketingBundle\Model\TicketInterface;
 use Maps_red\TicketingBundle\Model\TicketStatusInterface;
+use Maps_red\TicketingBundle\Model\Traits\Timestampable;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 
 /**
  * @ORM\MappedSuperclass()
  */
 class Ticket implements TicketInterface
 {
-    use ORMBehaviors\Timestampable\Timestampable;
+    use Timestampable;
 
     /**
      * @var integer

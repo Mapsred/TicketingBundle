@@ -1,16 +1,17 @@
 let Table = {
     init: function () {
         $('.data-table').each(function () {
-            let table = Table.initTable(this, $(this).data('status'));
-
-            $('#dataTable_wrapper').on('keyup', ".column_search", function () {
+            let table = Table.initTable(this, $(this).data('status'), $(this).data('type'));
+            let parent = $(this).closest('.box-body');
+            $(parent).find('.dataTables_wrapper').on('keyup', ".column_search", function () {
+                console.log('test');
                 table.column($(this).parent().index()).search(this.value).draw();
             });
 
         });
     },
 
-    initTable: function (dataTable, status) {
+    initTable: function (dataTable, status, type) {
         $(dataTable).find('tfoot th').each(function () {
             let title = $(this).text();
             $(this).html('<input type="text" class="form-control column_search" style="width: 100%" placeholder="' + title + '" />');
@@ -23,7 +24,7 @@ let Table = {
             "serverSide": true,
             "searchDelay": 350,
             "bDeferRender": true,
-            "ajax": Routing.generate('data_table', {status: status}, false),
+            "ajax": Routing.generate('data_table', {status: status, type: type}, false),
             'language': {
                 "sProcessing": "Traitement en cours...",
                 "sSearch": "Rechercher selon n'importe quel critère&nbsp;:",
@@ -54,7 +55,7 @@ let Table = {
                     name: 'id',
                     className: "",
                     render: function (data, type, row) {
-                        return data;
+                        return "<a href='" + Routing.generate('ticketing_detail', {id: data}) + "'>#" + data + "</a>";
                     }
                 },
                 {
@@ -86,7 +87,10 @@ let Table = {
                     name: 'status',
                     className: "",
                     render: function (data, type, row) {
-                        return data;
+                        data = data.split(' - ');
+                        var color = data[1];
+
+                        return "<div class='label bg-" + color + "'>" + data[0] + "</div>";
                     }
                 },
                 {

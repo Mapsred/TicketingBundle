@@ -37,11 +37,11 @@ class TicketingController extends Controller
      * @Route("/nouveau", name="new_ticketing", methods="GET|POST")
      * @param Request $request
      * @param TicketManager $ticketManager
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function addTicket(Request $request, TicketManager $ticketManager): \Symfony\Component\HttpFoundation\Response
+    public function addTicket(Request $request, TicketManager $ticketManager): Response
     {
         $ticket = $ticketManager->newClass();
         $user = $this->getUser();
@@ -61,7 +61,7 @@ class TicketingController extends Controller
     }
 
     /**
-     * @Route("/detail/{id}", name="ticketing_detail")
+     * @Route("/detail/{id}", name="ticketing_detail", options={"expose": "true"})
      * @param Ticket $ticket
      */
     public function detail(Ticket $ticket)

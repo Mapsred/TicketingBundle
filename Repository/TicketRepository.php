@@ -15,7 +15,7 @@ use Doctrine\Common\Util\Inflector;
 class TicketRepository extends ServiceEntityRepository
 {
     public function searchDataTable(string $globalSearch = null, array $columns, array $fields, array $sort, int $offset,
-                                    int $limit, bool $isCount)
+                                    int $limit, bool $isCount, $status, $type)
     {
         $parameters = [];
         $qb = $this->createQueryBuilder('q')
@@ -34,8 +34,20 @@ class TicketRepository extends ServiceEntityRepository
         } elseif (!empty($columns)) {
             $qbWhere = [];
             foreach ($columns as $field => $value) {
-                $field = Inflector::camelize($field);
-                $qbWhere[] = $qb->expr()->like('q.' . $field, ':' . $field);
+                if ($field === 'author') {
+                    $qb->leftJoin('q.author', 'author');
+                    $qbWhere[] = $qb->expr()->like('author.username', ':' . $field);
+                } elseif ($field === 'category') {
+                    $qb->leftJoin('q.category', 'category');
+                    $qbWhere[] = $qb->expr()->like('category.name', ':' . $field);
+                } elseif ($field === 'status') {
+                    $qb->leftJoin('q.status', 'status');
+                    $qbWhere[] = $qb->expr()->like('status.value', ':' . $field);
+                } else {
+                    $field = Inflector::camelize($field);
+                    $qbWhere[] = $qb->expr()->like('q.' . $field, ':' . $field);
+                }
+
                 $parameters[$field] = '%' . $value . '%';
             }
 

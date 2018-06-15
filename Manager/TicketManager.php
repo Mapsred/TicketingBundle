@@ -51,7 +51,7 @@ class TicketManager extends AbstractManager
     public function createTicket(UserInterface $user, TicketInterface $ticket)
     {
         $status = $this->ticketStatusManager->getDefaultStatus();
-        $ticket->setStatus($status)->setAuthor($user);
+        $ticket->setStatus($status)->setAuthor($user)->setPublic(false);
 
         if (!$this->isTicketRestrictionEnabled()) {
             $ticket->setPublicAt(new \DateTime())->setPublic(true);
@@ -60,7 +60,7 @@ class TicketManager extends AbstractManager
         $this->persistAndFlush($ticket);
     }
 
-    public function handleDataTable(array $datas, string $status)
+    public function handleDataTable(array $datas, string $status, string $type)
     {
         $columns = array_combine(
             array_column($datas['columns'], 'name'),
@@ -85,8 +85,10 @@ class TicketManager extends AbstractManager
         unset($datas['search']);
 
         return [
-            'data' => $this->getRepository()->searchDataTable($globalSearch, $columns, $fields, $order, $datas['start'], $datas['length'], false),
-            'count' => $this->getRepository()->searchDataTable($globalSearch, $columns, $fields, $order, $datas['start'], $datas['length'], true)
+            'data' => $this->getRepository()
+                ->searchDataTable($globalSearch, $columns, $fields, $order, $datas['start'], $datas['length'], false, $status, $type),
+            'count' => $this->getRepository()
+                ->searchDataTable($globalSearch, $columns, $fields, $order, $datas['start'], $datas['length'], true, $status, $type)
         ];
     }
 
@@ -95,9 +97,9 @@ class TicketManager extends AbstractManager
         return [
             'id' => $ticket->getId(),
             'author' => $ticket->getAuthor()->getUsername(),
-            'date' => $ticket->getCreatedAt()->format('dd/mm/YY'),
+            'date' => $ticket->getCreatedAt()->format('d/m/Y'),
             'category' => $ticket->getCategory()->getName(),
-            'status' => $ticket->getStatus()->getName(),
+            'status' => $ticket->getStatus()->getValue().' - '.$ticket->getStatus()->getStyle(),
             'type' => $ticket->getPublic() ? "Public" : "Privé",
             'assignated' => 'TODO',
         ];

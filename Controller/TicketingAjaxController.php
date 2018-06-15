@@ -21,15 +21,16 @@ use Symfony\Component\HttpFoundation\Response;
 class TicketingAjaxController extends Controller
 {
     /**
-     * @Route("/{status}", name="data_table", options={"expose": "true"}, requirements={})
+     * @Route("/{status}/{type}", name="data_table", options={"expose": "true"})
      * @param Request $request
      * @param TicketManager $ticketManager
      * @param string $status
+     * @param string $type
      * @return Response
      */
-    public function dataTableProcessing(Request $request, TicketManager $ticketManager, string $status)
+    public function dataTableProcessing(Request $request, TicketManager $ticketManager, string $status, string $type)
     {
-        $results = $ticketManager->handleDataTable($request->query->all(), $status);
+        $results = $ticketManager->handleDataTable($request->query->all(), $status, $type);
 
         return $this->json([
             'draw' =>$request->query->getInt('draw'),
