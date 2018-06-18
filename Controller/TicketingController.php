@@ -24,8 +24,9 @@ class TicketingController extends Controller
             'status_list' => $ticketStatusManager->getRepository()->findAll()
         ]);
     }
+
     /**
-     * @Route("/allTicketing", name="all_ticketing")
+     * @Route("/all", name="ticketing_all")
      */
     public function index()
     {
