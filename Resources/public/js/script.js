@@ -26,7 +26,7 @@ let Table = {
             "serverSide": true,
             "searchDelay": 350,
             "bDeferRender": true,
-            "ajax": Routing.generate('data_table', {status: status, type: type}, false),
+            "ajax": Routing.generate('ticketing_ajax_datatable', {status: status, type: type}, false),
             'language': {
                 "sProcessing": "Traitement en cours...",
                 "sSearch": "Rechercher selon n'importe quel critère&nbsp;:",
