@@ -61,6 +61,7 @@ class MakeTicketing extends AbstractMaker
      * @param InputInterface $input
      * @param ConsoleStyle $io
      * @param Generator $generator
+     * @throws \Exception
      */
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator)
     {
@@ -92,6 +93,12 @@ class MakeTicketing extends AbstractMaker
         }
     }
 
+    /**
+     * @param ClassNameDetails $classDetails
+     * @param ConsoleStyle $io
+     * @param bool $regenerate
+     * @throws \Exception
+     */
     private function remove(ClassNameDetails $classDetails, ConsoleStyle $io, bool $regenerate)
     {
         if (class_exists($classDetails->getFullName()) && $regenerate) {
@@ -128,17 +135,21 @@ class MakeTicketing extends AbstractMaker
      * @param Generator $generator
      * @param ClassNameDetails $entityClassDetails
      * @param ClassNameDetails $repositoryClassDetails
+     * @param $className
+     * @param $classFQN
      */
-    private function generateRepository(Generator $generator, ClassNameDetails $entityClassDetails, ClassNameDetails $repositoryClassDetails)
+    private function generateRepository(Generator $generator, ClassNameDetails $entityClassDetails, ClassNameDetails $repositoryClassDetails, $className, $classFQN)
     {
         $entityAlias = strtolower($entityClassDetails->getShortName()[0]);
         $generator->generateClass(
             $repositoryClassDetails->getFullName(),
-            'doctrine/Repository.tpl.php',
+            __DIR__ . '/../Resources/skeleton/doctrine/Repository.tpl.php',
             [
                 'entity_full_class_name' => $entityClassDetails->getFullName(),
                 'entity_class_name' => $entityClassDetails->getShortName(),
                 'entity_alias' => $entityAlias,
+                'parent_name' => $className."Repository",
+                'parent_namespace' => str_replace("Entity", "Repository", $classFQN)."Repository",
             ]
         );
     }
