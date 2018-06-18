@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class TicketingController extends Controller
 {
     /**
-     * @Route("/", name="ticket_perso")
+     * @Route("/perso", name="ticketing_perso")
      * @param TicketStatusManager $ticketStatusManager
      * @return Response
      */
@@ -24,8 +24,9 @@ class TicketingController extends Controller
             'status_list' => $ticketStatusManager->getRepository()->findAll()
         ]);
     }
+
     /**
-     * @Route("/allTicketing", name="all_ticketing")
+     * @Route("/all", name="ticketing_all")
      */
     public function index()
     {
@@ -34,7 +35,7 @@ class TicketingController extends Controller
     }
 
     /**
-     * @Route("/nouveau", name="new_ticketing", methods="GET|POST")
+     * @Route("/new", name="ticketing_new", methods="GET|POST")
      * @param Request $request
      * @param TicketManager $ticketManager
      * @return Response
@@ -52,7 +53,7 @@ class TicketingController extends Controller
             $ticketManager->createTicket($user, $ticket);
             $this->addFlash('success', 'The ticket is online !');
 
-            return $this->redirectToRoute('all_ticketing');
+            return $this->redirectToRoute('ticketing_all');
         }
 
         return $this->render('@Ticketing/ticketing/new.html.twig', [

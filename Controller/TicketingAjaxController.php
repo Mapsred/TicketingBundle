@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 class TicketingAjaxController extends Controller
 {
     /**
-     * @Route("/{status}/{type}", name="data_table", options={"expose": "true"})
+     * @Route("/{status}/{type}", name="ticketing_ajax_datatable", options={"expose": "true"})
      * @param Request $request
      * @param TicketManager $ticketManager
      * @param string $status
