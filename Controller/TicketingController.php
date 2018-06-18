@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class TicketingController extends Controller
 {
     /**
-     * @Route("/ticket_perso", name="ticket_perso")
+     * @Route("/perso", name="ticketing_perso")
      * @param TicketStatusManager $ticketStatusManager
      * @return Response
      */
@@ -34,7 +34,7 @@ class TicketingController extends Controller
     }
 
     /**
-     * @Route("/nouveau", name="new_ticketing", methods="GET|POST")
+     * @Route("/new", name="ticketing_new", methods="GET|POST")
      * @param Request $request
      * @param TicketManager $ticketManager
      * @return Response
