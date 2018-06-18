@@ -11,12 +11,10 @@
     "symfony/security-bundle": "^4.0",
     "symfony/templating": "^4.0",
     "symfony/twig-bundle": "^4.0",
-    "symfony/yaml": "^4.0",
-    "knplabs/doctrine-behaviors": "^1.5"
+    "symfony/yaml": "^4.0"
   },
   "require-dev": {
     "symfony/console": "^4.0",
-    "symfony/dotenv": "^4.0",
     "symfony/maker-bundle": "^1.5"
   },
   "config": {
