@@ -10,15 +10,4 @@ use <?= $parent_namespace ." as Base" .$parent_name.";\n"?>
  */
 class <?= $class_name ?> extends <?= "Base".$parent_name ."\n"?>
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
-    public function getId()
-    {
-        return $this->id;
-    }
 }
