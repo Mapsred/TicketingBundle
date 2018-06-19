@@ -15,7 +15,7 @@ class TicketingController extends Controller
 {
 
     /**
-     * @Route("/all", name="ticketing_all")
+     * @Route("/list", name="ticketing_list")
      * @param TicketStatusManager $ticketStatusManager
      * @return Response
      */
@@ -57,7 +57,7 @@ class TicketingController extends Controller
             $ticketManager->createTicket($user, $ticket);
             $this->addFlash('success', 'The ticket is online !');
 
-            return $this->redirectToRoute('ticketing_all');
+            return $this->redirectToRoute('ticketing_list');
         }
 
         return $this->render('@Ticketing/ticketing/new.html.twig', [

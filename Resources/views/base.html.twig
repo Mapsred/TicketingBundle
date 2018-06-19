@@ -52,6 +52,15 @@
                     <ul class="nav navbar-nav">
                         {% if app.user %}
                             <li>
+                                <a href="{{ path('ticketing_list') }}">Tout les tickets</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('ticketing_perso') }}">Mes tickets</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('ticketing_new') }}">Nouveau ticket</a>
+                            </li>
+                            <li>
                                 <a href="{{ path('security_logout') }}">Se déconnecter</a>
                             </li>
                         {% else %}
