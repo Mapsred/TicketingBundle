@@ -27,7 +27,7 @@ ticketing:
         ticket_status:        App\Entity\TicketStatus
     templates:
         layout:               '@Ticketing/base.html.twig'
-        index:                '@Ticketing/ticketing/index.html.twig'
+        index:                list.html.twig
         new:                  '@Ticketing/ticketing/new.html.twig'
     assets:
         stylesheets:

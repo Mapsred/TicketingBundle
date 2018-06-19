@@ -13,6 +13,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class TicketingController extends Controller
 {
+
+    /**
+     * @Route("/all", name="ticketing_all")
+     * @param TicketStatusManager $ticketStatusManager
+     * @return Response
+     */
+    public function listTicketsAction(TicketStatusManager $ticketStatusManager)
+    {
+        return $this->render('@Ticketing/ticketing/list.html.twig', [
+            'status_list' => $ticketStatusManager->getRepository()->findAll()
+        ]);
+    }
+
     /**
      * @Route("/perso", name="ticketing_perso")
      * @param TicketStatusManager $ticketStatusManager
@@ -22,15 +35,6 @@ class TicketingController extends Controller
     {
         return $this->render("@Ticketing/ticketing/personal_page.html.twig", [
             'status_list' => $ticketStatusManager->getRepository()->findAll()
-        ]);
-    }
-
-    /**
-     * @Route("/all", name="ticketing_all")
-     */
-    public function index()
-    {
-        return $this->render('@Ticketing/ticketing/index.html.twig', [
         ]);
     }
 
