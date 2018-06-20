@@ -1,7 +1,7 @@
 {
   "name": "maps_red/ticketing-bundle",
   "type": "symfony-bundle",
-  "license": "proprietary",
+  "license": "MIT",
   "require": {
     "php": ">=7.1.0",
     "friendsofsymfony/jsrouting-bundle": "^2.2",
