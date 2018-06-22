@@ -18,15 +18,20 @@ class TicketForm extends AbstractType
     /**  @var string $ticketClass */
     private $ticketClass;
 
+    /** @var string $priorityClass */
+    private $priorityClass;
+
     /**
-     * CreateTicketForm constructor.
+     * TicketForm constructor.
      * @param string $categoryClass
      * @param string $ticketClass
+     * @param string $priorityClass
      */
-    public function __construct(string $categoryClass, string $ticketClass)
+    public function __construct(string $categoryClass, string $ticketClass, string $priorityClass)
     {
         $this->categoryClass = $categoryClass;
         $this->ticketClass = $ticketClass;
+        $this->priorityClass = $priorityClass;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -42,7 +47,12 @@ class TicketForm extends AbstractType
                 },
                 'choice_label' => 'name',
                 'label' => "label.category",
-                'attr' => ['class' => 'select2'],
+                'attr' => ['data-provider' => 'select2'],
+            ])->add('priority', EntityType::class, [
+                'class' => $this->priorityClass,
+                'choice_label' => 'value',
+                'label' => "label.priority",
+                'attr' => ['data-provider' => 'select2'],
             ]);
 
     }

@@ -25,6 +25,7 @@ ticketing:
         ticket_history:       App\Entity\TicketHistory
         ticket_keyword:       App\Entity\TicketKeyword
         ticket_status:        App\Entity\TicketStatus
+        ticket_priority:      App\Entity\TicketPriority
     templates:
         layout:               '@Ticketing/base.html.twig'
         index:                '@Ticketing/ticketing/index.html.twig'
