@@ -58,7 +58,7 @@ class TicketHistoryManager extends AbstractManager
      */
     private function findOrCreateUserHistory(UserInterface $user, TicketInterface $ticket)
     {
-        if (null === $history = $this->getRepository()->findOneBy(['ticket' => $ticket, 'user' => $user])) {
+        if (null === $history = $this->getRepository()->findOneBy(['ticket' => $ticket, 'author' => $user])) {
             $history = $this->newClass()
                 ->setStatus(1)
                 ->setTicket($ticket)

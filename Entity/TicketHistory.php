@@ -4,6 +4,7 @@ namespace Maps_red\TicketingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Maps_red\TicketingBundle\Model\TicketHistoryInterface;
+use Maps_red\TicketingBundle\Model\TicketInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -20,6 +21,12 @@ class TicketHistory implements TicketHistoryInterface
      * @ORM\ManyToOne(targetEntity="Symfony\Component\Security\Core\User\UserInterface")
      */
     private $author;
+
+    /**
+     * @var TicketInterface $ticket
+     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Model\TicketInterface")
+     */
+    private $ticket;
 
     /**
      * @var integer
@@ -58,4 +65,24 @@ class TicketHistory implements TicketHistoryInterface
 
         return $this;
     }
+
+    /**
+     * @return TicketInterface
+     */
+    public function getTicket(): ?TicketInterface
+    {
+        return $this->ticket;
+    }
+
+    /**
+     * @param TicketInterface $ticket
+     * @return TicketHistory
+     */
+    public function setTicket(TicketInterface $ticket): TicketHistoryInterface
+    {
+        $this->ticket = $ticket;
+
+        return $this;
+    }
+
 }
