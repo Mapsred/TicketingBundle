@@ -5,6 +5,7 @@ namespace Maps_red\TicketingBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Maps_red\TicketingBundle\Model\TicketCategoryInterface;
 use Maps_red\TicketingBundle\Model\TicketInterface;
+use Maps_red\TicketingBundle\Model\TicketPriorityInterface;
 use Maps_red\TicketingBundle\Model\TicketStatusInterface;
 use Maps_red\TicketingBundle\Model\Traits\Timestampable;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -74,7 +75,13 @@ class Ticket implements TicketInterface
      */
     private $public_at;
 
-    public function getId() : ?int
+    /**
+     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Model\TicketPriorityInterface")
+     * @ORM\JoinColumn(name="priority", referencedColumnName="id", nullable=true)
+     */
+    private $priority;
+
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -183,6 +190,17 @@ class Ticket implements TicketInterface
     public function setPublicAt(\DateTimeInterface $public_at): TicketInterface
     {
         $this->public_at = $public_at;
+
+        return $this;
+    }
+
+    public function getPriority(): ?TicketPriorityInterface
+    {
+        return $this->priority;
+    }
+
+    public function setPriority(?TicketPriorityInterface $priority): TicketInterface {
+        $this->priority = $priority;
 
         return $this;
     }

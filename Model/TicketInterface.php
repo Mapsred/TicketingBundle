@@ -50,4 +50,8 @@ interface TicketInterface
 
     public function setPublicAt(\DateTimeInterface $public_at): TicketInterface;
 
+    public function getPriority(): ?TicketPriorityInterface;
+
+    public function setPriority(?TicketPriorityInterface $priority): TicketInterface;
+
 }

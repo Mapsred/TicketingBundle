@@ -61,7 +61,6 @@ class TicketingExtension extends Extension
                 }
             }
         }
-
     }
 
     /**
@@ -70,11 +69,8 @@ class TicketingExtension extends Extension
      */
     protected function addFormArguments(ContainerBuilder $container, array $entities)
     {
-        $container->getDefinition('Maps_red\TicketingBundle\Form\CreateTicketForm')
-            ->setArguments([$entities['ticket_category'], $entities['ticket']]);
-
         $container->getDefinition('Maps_red\TicketingBundle\Form\TicketForm')
-            ->setArguments([$entities['ticket_category'], $entities['ticket']]);
+            ->setArguments([$entities['ticket_category'], $entities['ticket'], $entities['ticket_priority']]);
     }
 
     /**
