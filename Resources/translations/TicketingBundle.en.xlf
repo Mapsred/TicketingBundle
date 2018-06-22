@@ -53,6 +53,18 @@
         <source>List of my tickets</source>
         <target>List of my tickets</target>
       </trans-unit>
+      <trans-unit id="QkGoYrK" resname="Ticketing">
+        <source>Ticketing</source>
+        <target>Ticketing</target>
+      </trans-unit>
+      <trans-unit id="P9xyOEv" resname="See my tickets">
+        <source>See my tickets</source>
+        <target>See my tickets</target>
+      </trans-unit>
+      <trans-unit id="I.90Oxf" resname="See all tickets">
+        <source>See all tickets</source>
+        <target>See all tickets</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
