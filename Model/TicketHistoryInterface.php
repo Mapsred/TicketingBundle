@@ -24,4 +24,8 @@ interface TicketHistoryInterface
 
     public function setAuthor(?UserInterface $author): TicketHistoryInterface;
 
+    public function getTicket(): ?TicketInterface;
+
+    public function setTicket(TicketInterface $ticket): TicketHistoryInterface;
+
 }
