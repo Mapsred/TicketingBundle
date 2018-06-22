@@ -65,6 +65,19 @@
         <source>See all tickets</source>
         <target>See all tickets</target>
       </trans-unit>
+      <trans-unit id="8DLrZJd" resname="pastebin_helper">
+        <source>pastebin_helper</source>
+        <target><![CDATA[
+          If you want to add a size content, head to
+          <a target="_blank" href="http://pastebin.com">pastebin.com</a> and put your content there,
+          then enter the link in the ticket. <br>
+          This will allow a better visibility of your ticket and therefore a better take in charge.
+        ]]></target>
+      </trans-unit>
+      <trans-unit id="._lORbD" resname="Submit the ticket">
+        <source>Submit the ticket</source>
+        <target>Submit the ticket</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

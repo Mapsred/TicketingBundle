@@ -32,10 +32,10 @@ class TicketForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('Description', TextareaType::class, [
+            ->add('description', TextareaType::class, [
                 'label' => "label.description",
             ])
-            ->add('Category', EntityType::class, [
+            ->add('category', EntityType::class, [
                 'class' => $this->categoryClass,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')->orderBy('u.position', 'ASC');
