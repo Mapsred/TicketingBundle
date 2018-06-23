@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Maps_red\TicketingBundle\Entity\Ticket;
 use Maps_red\TicketingBundle\Model\TicketInterface;
 use Maps_red\TicketingBundle\Repository\TicketRepository;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -60,6 +59,14 @@ class TicketManager extends AbstractManager
         $this->persistAndFlush($ticket);
     }
 
+    /**
+     * @param array $datas
+     * @param string $status
+     * @param string $type
+     * @param UserInterface $user
+     * @return array
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function handleDataTable(array $datas, string $status, string $type, UserInterface $user)
     {
         $columns = array_combine(
@@ -84,6 +91,9 @@ class TicketManager extends AbstractManager
         $globalSearch = $datas['search']['value'] ?: null;
         unset($datas['search']);
 
+        $fields = array_combine(array_values($fields), array_values($fields));
+        unset($fields['status'], $fields['type'], $fields['assignated']);
+
         return [
             'data' => $this->getRepository()
                 ->searchDataTable($globalSearch, $columns, $fields, $order, $datas['start'], $datas['length'], false, $status, $type, $user),
@@ -92,13 +102,17 @@ class TicketManager extends AbstractManager
         ];
     }
 
+    /**
+     * @param Ticket $ticket
+     * @return array
+     */
     public function toArray(Ticket $ticket)
     {
         return [
             'id' => $ticket->getId(),
             'author' => $ticket->getAuthor()->getUsername(),
             'createdAt' => $ticket->getCreatedAt()->format('d/m/Y'),
-            'category' => $ticket->getCategory()->getName(),
+            'category' => $ticket->getCategory()? $ticket->getCategory()->getName(): 'Aucune Catégorie',
             'status' => $ticket->getStatus()->getValue().' - '.$ticket->getStatus()->getStyle(),
             'type' => $ticket->getPublic() ? "Public" : "Privé",
             'assignated' => 'TODO',

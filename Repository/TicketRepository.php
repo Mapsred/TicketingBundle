@@ -2,30 +2,44 @@
 
 namespace Maps_red\TicketingBundle\Repository;
 
-
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Util\Inflector;
-use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class TicketRepository extends ServiceEntityRepository
 {
+    /** @var array $joins */
+    private $joins;
+
+    /**
+     * @param string|null $globalSearch
+     * @param array $columns
+     * @param array $fields
+     * @param array $sortOrder
+     * @param int $offset
+     * @param int $limit
+     * @param bool $isCount
+     * @param string $status
+     * @param string $type
+     * @param UserInterface|null $user
+     * @return array|int
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function searchDataTable(string $globalSearch = null, array $columns, array $fields, array $sortOrder, int $offset,
                                     int $limit, bool $isCount, $status, $type, UserInterface $user = null)
     {
-        $parameters = ['status' => $status];
-        $joins = ['q.status' => 'status'];
+        $this->joins = ['q.status' => 'status'];
+        $parameters = ['_status' => $status];
         $qb = $this->createQueryBuilder('q')
-            ->where('status.name = :status');
+            ->where('status.name = :_status');
 
         $sort = key($sortOrder);
         $order = $sortOrder[$sort];
-        $joins = $this->searchOrder($qb, $sort, $order, $joins);
-
+        $qb->orderBy($this->getX($sort), $order);
 
         if ($type === 'perso') {
-            $qb->andWhere('q.author = :author');
-            $parameters['author'] = $user;
+            $qb->andWhere('q.author = :_author');
+            $parameters['_author'] = $user;
         }
 
         if (null !== $globalSearch) {
@@ -33,34 +47,21 @@ class TicketRepository extends ServiceEntityRepository
             $parameters['globalSearch'] = '%' . $globalSearch . '%';
 
             foreach ($fields as $field) {
-                $field = Inflector::camelize($field);
-                $qbWhere[] = $qb->expr()->like('q.' . $field, ':globalSearch');
+                $qbWhere[] = $qb->expr()->like($this->getX($field), ':globalSearch');
             }
 
             $qb->andWhere(call_user_func_array([$qb->expr(), 'orX'], $qbWhere));
         } elseif (!empty($columns)) {
             $qbWhere = [];
             foreach ($columns as $field => $value) {
-                if ($field === 'author') {
-                    $joins['q.author'] = 'author';
-                    $qbWhere[] = $qb->expr()->like('author.username', ':' . $field);
-                } elseif ($field === 'category') {
-                    $joins['q.category'] = 'category';
-                    $qbWhere[] = $qb->expr()->like('category.name', ':' . $field);
-                } elseif ($field === 'status') {
-                    $qbWhere[] = $qb->expr()->like('status.value', ':' . $field);
-                } else {
-                    $field = Inflector::camelize($field);
-                    $qbWhere[] = $qb->expr()->like('q.' . $field, ':' . $field);
-                }
-
+                $qbWhere[] = $qb->expr()->like($this->getX($field), ':' . $field);
                 $parameters[$field] = '%' . $value . '%';
             }
 
             $qb->andWhere(call_user_func_array([$qb->expr(), 'andX'], $qbWhere));
         }
 
-        foreach ($joins as $join => $alias) {
+        foreach ($this->joins as $join => $alias) {
             $qb->leftJoin($join, $alias);
         }
 
@@ -71,31 +72,28 @@ class TicketRepository extends ServiceEntityRepository
         }
 
         return $qb->setFirstResult($offset)->setMaxResults($limit)->getQuery()->getResult();
-
     }
 
     /**
-     * @param QueryBuilder $qb
-     * @param string $sort
-     * @param string $order
-     * @param array $joins
-     * @return array
+     * @param string $field
+     * @return string
      */
-    private function searchOrder(QueryBuilder $qb, string $sort, string $order, array $joins)
+    private function getX(string $field)
     {
-        if ($sort === 'author') {
-            $joins['q.author'] = 'author';
-            $qb->orderBy('author.username.', $order);
-        } elseif ($sort === 'category') {
-            $joins['q.category'] = 'category';
-            $qb->orderBy('category.name.', $order);
-        } elseif ($sort === 'status') {
-            $joins['q.status'] = 'status';
-            $qb->orderBy('status.value.', $order);
-        } else {
-            $qb->orderBy('q.' . Inflector::camelize($sort), $order);
+        if ($field === 'author') {
+            $this->joins['q.author'] = 'author';
+
+            return 'author.username';
+        } elseif ($field === 'category') {
+            $this->joins['q.category'] = 'category';
+
+            return 'category.name';
+        } elseif ($field === 'status') {
+            $this->joins['q.status'] = 'status';
+
+            return 'status.value';
         }
 
-        return $joins;
+        return 'q.' . Inflector::camelize($field);
     }
 }
