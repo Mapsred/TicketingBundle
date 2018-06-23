@@ -35,6 +35,10 @@ interface TicketInterface
 
     public function setAuthor(?UserInterface $author): TicketInterface;
 
+    public function getAssignated(): ?UserInterface;
+
+    public function setAssignated(?UserInterface $assignated = null): TicketInterface;
+
     public function getRating(): ?int;
 
     public function setRating(?int $rating): TicketInterface;

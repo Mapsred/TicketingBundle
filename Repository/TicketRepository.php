@@ -96,6 +96,10 @@ class TicketRepository extends ServiceEntityRepository
             $this->joins['q.priority'] = 'priority';
 
             return 'priority.value';
+        } elseif ($field === 'assignated') {
+            $this->joins['q.assignated'] = 'assignated';
+
+            return 'assignated.username';
         }
 
         return 'q.' . Inflector::camelize($field);

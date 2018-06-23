@@ -56,6 +56,12 @@ class Ticket implements TicketInterface
     private $author;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Symfony\Component\Security\Core\User\UserInterface")
+     * @ORM\JoinColumn(name="assignated", referencedColumnName="id", nullable=true)
+     */
+    private $assignated;
+
+    /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $rating;
@@ -160,6 +166,18 @@ class Ticket implements TicketInterface
     public function setAuthor(?UserInterface $author): TicketInterface
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getAssignated(): ?UserInterface
+    {
+        return $this->assignated;
+    }
+
+    public function setAssignated(?UserInterface $assignated = null): TicketInterface
+    {
+        $this->assignated = $assignated;
 
         return $this;
     }
