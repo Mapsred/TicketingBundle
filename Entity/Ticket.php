@@ -2,6 +2,7 @@
 
 namespace Maps_red\TicketingBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Maps_red\TicketingBundle\Model\TicketCategoryInterface;
 use Maps_red\TicketingBundle\Model\TicketInterface;
@@ -80,6 +81,23 @@ class Ticket implements TicketInterface
      * @ORM\JoinColumn(name="priority", referencedColumnName="id", nullable=true)
      */
     private $priority;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Maps_red\TicketingBundle\Model\TicketInterface", cascade={"persist"})
+     * @ORM\JoinTable(name="ticket_join_reference",
+     *      joinColumns={@ORM\JoinColumn(name="ticket_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="reference_id", referencedColumnName="id")}
+     * )
+     */
+    protected $references;
+
+    /**
+     * Ticket constructor.
+     */
+    public function __construct()
+    {
+        $this->references = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -199,9 +217,40 @@ class Ticket implements TicketInterface
         return $this->priority;
     }
 
-    public function setPriority(?TicketPriorityInterface $priority): TicketInterface {
+    public function setPriority(?TicketPriorityInterface $priority): TicketInterface
+    {
         $this->priority = $priority;
 
         return $this;
+    }
+
+    public function addReference(TicketInterface $ticket): TicketInterface
+    {
+        if (!$this->references->contains($ticket)) {
+            $this->references->add($ticket);
+        }
+
+        return $this;
+    }
+
+    public function removeReference(TicketInterface $ticket): TicketInterface
+    {
+        if ($this->references->contains($ticket)) {
+            $this->references->removeElement($ticket);
+        }
+
+        return $this;
+    }
+
+    public function setReferences($references): TicketInterface
+    {
+        $this->references = $references;
+
+        return $this;
+    }
+
+    public function getReferences(): ?ArrayCollection
+    {
+        return $this->references;
     }
 }

@@ -8,6 +8,7 @@
 
 namespace Maps_red\TicketingBundle\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 interface TicketInterface
@@ -53,5 +54,13 @@ interface TicketInterface
     public function getPriority(): ?TicketPriorityInterface;
 
     public function setPriority(?TicketPriorityInterface $priority): TicketInterface;
+
+    public function addReference(TicketInterface $ticket): TicketInterface;
+
+    public function removeReference(TicketInterface $ticket): TicketInterface;
+
+    public function setReferences($references): TicketInterface;
+
+    public function getReferences(): ?ArrayCollection;
 
 }
