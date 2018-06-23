@@ -17,6 +17,10 @@
         <source>label.category</source>
         <target>Catégorie</target>
       </trans-unit>
+      <trans-unit id="hk2F0e." resname="label.priority">
+        <source>label.priority</source>
+        <target>Priority</target>
+      </trans-unit>
       <trans-unit id="UQI8T0S" resname="label.text">
         <source>label.text</source>
         <target>Texte</target>
@@ -52,6 +56,32 @@
       <trans-unit id="3UNMlF2" resname="List of my tickets">
         <source>List of my tickets</source>
         <target>Liste de mes tickets</target>
+      </trans-unit>
+      <trans-unit id="QkGoYrK" resname="Ticketing">
+        <source>Ticketing</source>
+        <target>Ticketing</target>
+      </trans-unit>
+      <trans-unit id="P9xyOEv" resname="See my tickets">
+        <source>See my tickets</source>
+        <target>Voir mes tickets</target>
+      </trans-unit>
+      <trans-unit id="I.90Oxf" resname="See all tickets">
+        <source>See all tickets</source>
+        <target>Voir tous les tickets</target>
+      </trans-unit>
+      <trans-unit id="8DLrZJd" resname="pastebin_helper">
+        <source>pastebin_helper</source>
+        <target><![CDATA[
+          Si vous souhaitez inclure un contenu de taille, dirigez vous vers
+          <a target="_blank" href="http://pastebin.com">pastebin.com</a> et mettez y votre contenu,
+          puis indiquez le lien dans le ticket. <br>
+          Cela permettra une meilleure visibilité de votre ticket et donc une meilleure prise en
+          charge.
+        ]]></target>
+      </trans-unit>
+      <trans-unit id="._lORbD" resname="Submit the ticket">
+        <source>Submit the ticket</source>
+        <target>Envoyer le ticket</target>
       </trans-unit>
     </body>
   </file>

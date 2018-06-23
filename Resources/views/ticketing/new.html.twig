@@ -3,9 +3,61 @@
 {% block title %}{{ 'New Ticket'|trans({}, 'TicketingBundle') }}{% endblock %}
 {% block header %}<h1>{{ 'New Ticket'|trans({}, 'TicketingBundle') }}</h1>{% endblock %}
 
+{% block form_group_class -%}
+    col-sm-8
+{%- endblock form_group_class %}
+
+
 {% block body %}
-    <h1>{{ 'Create a new ticket'|trans({}, 'TicketingBundle') }}</h1>
+    <div class="box box-danger">
+        <div class="box-header with-border">
+            <h3 class="box-title">{{ 'Create a new ticket'|trans({}, 'TicketingBundle') }}</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' _self %}
 
-    {{ include('@Ticketing/ticketing/_form.html.twig') }}
-
+        {{ form_start(form, {'attr': {'class': 'form-horizontal'} }) }}
+        <div class="box-body">
+            {#{{ form_row(form.server) }}#}
+            {{ form_row(form.category) }}
+            {{ form_row(form.priority) }}
+            <div class="form-group">
+                <label for="new_ticket_text" class="col-md-2 control-label"></label>
+                <div class="col-sm-8">
+                    {{ form_errors(form.description) }}
+                    {{ form_widget(form.description, {'attr': {'class': 'form-control', 'cols': '40', 'rows': '5' } }) }}
+                </div>
+            </div>
+            {#TODO TICKET REREFENCE#}
+            {#<div class="form-group">
+                {{ form_label(form.references) }}
+                <div class="col-sm-8">
+                    {{ form_widget(form.references) }}
+                </div>
+                <div class="col-md-offset-2 col-sm-8">
+                    <span class="small">
+                        Si ce ticket concerne un ou plusieurs tickets existants, sélectionnez les ci-dessus.
+                    </span>
+                </div>
+            </div>#}
+            <div class="form-group">
+                <div class="col-md-offset-2 col-sm-8">
+                    <span class="small">
+                        {{ 'pastebin_helper'|trans({}, 'TicketingBundle')|raw }}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <div class="col-md-offset-2 col-sm-8">
+                <button class="btn bg-ticketing btn-flat form-control" type="submit">
+                    {{ 'Submit the ticket'|trans({}, 'TicketingBundle') }}
+                </button>
+            </div>
+        </div>
+        <!-- /.box-footer -->
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

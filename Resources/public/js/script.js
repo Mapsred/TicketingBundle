@@ -120,10 +120,6 @@ let Table = {
 $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
 
-    $(".select2").select2({
-        language: 'fr'
-    });
-
     $(".select2-tags").select2({
         tags: true,
         language: 'fr'
@@ -136,6 +132,11 @@ $(document).ready(function () {
         clearBtn: true,
         autoclose: true,
         todayHighlight: true
+    });
+
+
+    $('[data-provider="select2"]').select2({
+        language: 'fr'
     });
 
     Table.init();

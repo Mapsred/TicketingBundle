@@ -30,15 +30,24 @@ class TicketDoctrineSubscriber implements EventSubscriber
      */
     public function getSubscribedEvents()
     {
-        return [Events::postPersist, Events::postUpdate];
+        return [Events::prePersist, Events::preUpdate, Events::postPersist, Events::postUpdate];
+    }
+
+
+    /**
+     * @param LifecycleEventArgs $args
+     */
+    public function prePersist(LifecycleEventArgs $args)
+    {
+        $this->preHandle($args);
     }
 
     /**
      * @param LifecycleEventArgs $args
      */
-    public function postUpdate(LifecycleEventArgs $args)
+    public function preUpdate(LifecycleEventArgs $args)
     {
-        $this->handle($args);
+        $this->preHandle($args);
     }
 
     /**
@@ -46,13 +55,33 @@ class TicketDoctrineSubscriber implements EventSubscriber
      */
     public function postPersist(LifecycleEventArgs $args)
     {
-        $this->handle($args);
+        $this->postHandle($args);
     }
 
     /**
      * @param LifecycleEventArgs $args
      */
-    public function handle(LifecycleEventArgs $args)
+    public function postUpdate(LifecycleEventArgs $args)
+    {
+        $this->postHandle($args);
+    }
+
+    /**
+     * @param LifecycleEventArgs $args
+     */
+    public function preHandle(LifecycleEventArgs $args)
+    {
+        $entity = $args->getEntity();
+
+        if (method_exists($entity, 'updateTimestamps')) {
+            call_user_func([$entity, 'updateTimestamps']);
+        }
+    }
+
+    /**
+     * @param LifecycleEventArgs $args
+     */
+    public function postHandle(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
 

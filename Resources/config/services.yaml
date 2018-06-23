@@ -1,8 +1,4 @@
 services:
-    Maps_red\TicketingBundle\Form\CreateTicketForm:
-        tags:
-            - { name: form.type }
-
     Maps_red\TicketingBundle\Controller\:
         resource: '../../Controller'
         tags: ['controller.service_arguments']
@@ -40,6 +36,10 @@ services:
         tags:
             - { name: ticketing.manager, class: 'ticket_status', default_status_name: true}
 
+    Maps_red\TicketingBundle\Manager\TicketPriorityManager:
+        tags:
+            - { name: ticketing.manager, class: 'ticket_priority'}
+
     Maps_red\TicketingBundle\EventSubscriber\RequestSubscriber:
         autowire: true
         tags:
@@ -51,6 +51,12 @@ services:
             $enableHistory: "%ticketing.enable_history%"
         tags:
             - { name: kernel.event_subscriber }
+
+    Maps_red\TicketingBundle\EventSubscriber\TicketDoctrineSubscriber:
+        arguments: ['@event_dispatcher']
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
 
     Maps_red\TicketingBundle\Utils\TicketingHelper:
         autowire: true
