@@ -53,7 +53,16 @@ class TicketForm extends AbstractType
                 'choice_label' => 'value',
                 'label' => "label.priority",
                 'attr' => ['data-provider' => 'select2'],
-            ]);
+            ])
+            ->add('references', EntityType::class, [
+                'class' => $this->ticketClass,
+                'choice_label' => 'id',
+                'label' => "label.references",
+                'multiple' => true,
+                'required' => false,
+                'attr' => ['data-provider' => 'select2'],
+            ])
+        ;
 
     }
 
