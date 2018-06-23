@@ -47,6 +47,7 @@
                 <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
                     {% block left_navbar %}
                     <ul class="nav navbar-nav">
+                        {% if app.user %}
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 {{ "Ticketing"|trans({}, 'TicketingBundle') }}
@@ -64,11 +65,12 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ path('ticketing_all') }}">
+                                    <a href="{{ path('ticketing_list') }}">
                                         {{ "See all tickets"|trans({}, 'TicketingBundle') }}
                                     </a>
                                 </li>
                             </ul>
+                            {% endif %}
                         </li>
                     </ul>
                     {% endblock %}
@@ -79,15 +81,6 @@
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
                         {% if app.user %}
-                            <li>
-                                <a href="{{ path('ticketing_list') }}">Tout les tickets</a>
-                            </li>
-                            <li>
-                                <a href="{{ path('ticketing_perso') }}">Mes tickets</a>
-                            </li>
-                            <li>
-                                <a href="{{ path('ticketing_new') }}">Nouveau ticket</a>
-                            </li>
                             <li>
                                 <a href="{{ path('security_logout') }}">Se déconnecter</a>
                             </li>

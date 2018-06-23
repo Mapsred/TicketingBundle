@@ -75,7 +75,7 @@ let Table = {
                     render: function (data, type, row) {
                         return data;
                     }
-                },
+                },$
                 {
                     targets: 3,
                     name: 'category',
