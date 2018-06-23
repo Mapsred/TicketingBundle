@@ -112,13 +112,12 @@ class TicketManager extends AbstractManager
             'id' => $ticket->getId(),
             'author' => $ticket->getAuthor()->getUsername(),
             'createdAt' => $ticket->getCreatedAt()->format('d/m/Y'),
-            'category' => $ticket->getCategory()? $ticket->getCategory()->getName(): 'Aucune Catégorie',
-            'status' => $ticket->getStatus()->getValue().' - '.$ticket->getStatus()->getStyle(),
+            'category' => $ticket->getCategory() ? $ticket->getCategory()->getName() : 'Aucune Catégorie',
+            'status' => $ticket->getStatus()->getValue() . ' - ' . $ticket->getStatus()->getStyle(),
             'type' => $ticket->getPublic() ? "Public" : "Privé",
-            'assignated' => 'TODO',
+            'assignated' => $ticket->getAssignated() ? $ticket->getAssignated()->getUsername() : "",
         ];
     }
-
 
     /**
      * @return bool
