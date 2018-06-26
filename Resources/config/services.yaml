@@ -57,11 +57,6 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-
-    Maps_red\TicketingBundle\Utils\TicketingHelper:
-        autowire: true
-        autoconfigure: true
-
     Maps_red\TicketingBundle\Twig\TicketingExtension:
         arguments: ["%ticketing.templates%", "%ticketing.stylesheets%", "%ticketing.javascripts%"]
         tags:

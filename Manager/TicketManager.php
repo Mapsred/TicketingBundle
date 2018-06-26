@@ -5,7 +5,7 @@ namespace Maps_red\TicketingBundle\Manager;
 use Doctrine\ORM\EntityManagerInterface;
 use Maps_red\TicketingBundle\Model\TicketInterface;
 use Maps_red\TicketingBundle\Repository\TicketRepository;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -27,8 +27,8 @@ class TicketManager extends AbstractManager
     /** @var TicketStatusManager $ticketStatusManager */
     private $ticketStatusManager;
 
-    /** @var AuthorizationCheckerInterface $authorizationChecker */
-    private $authorizationChecker;
+    /** @var Security $security */
+    private $security;
 
     /**
      * TicketManager constructor.
@@ -38,18 +38,17 @@ class TicketManager extends AbstractManager
      * @param bool $enableTicketRestriction
      * @param string $restrictedTicketsRole
      * @param TicketStatusManager $ticketStatusManager
-     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param Security $security
      */
     public function __construct(EntityManagerInterface $manager, string $class, bool $enableHistory, bool $enableTicketRestriction,
-                                string $restrictedTicketsRole, TicketStatusManager $ticketStatusManager,
-                                AuthorizationCheckerInterface $authorizationChecker)
+                                string $restrictedTicketsRole, TicketStatusManager $ticketStatusManager, Security $security)
     {
         parent::__construct($manager, $class);
         $this->enableHistory = $enableHistory;
         $this->enableTicketRestriction = $enableTicketRestriction;
         $this->restrictedTicketsRole = $restrictedTicketsRole;
         $this->ticketStatusManager = $ticketStatusManager;
-        $this->authorizationChecker = $authorizationChecker;
+        $this->security = $security;
     }
 
     /* Form Handler */
@@ -156,7 +155,7 @@ class TicketManager extends AbstractManager
      */
     public function isTicketPrivate(TicketInterface $ticket, UserInterface $user)
     {
-        return !$ticket->getPublic() && !$this->isGranted("ROLE_MODERATEUR_JUNIOR") && !$this->isUserTicketAuthor($ticket, $user);
+        return !$ticket->getPublic() && !$this->security->isGranted("ROLE_MODERATEUR_JUNIOR") && !$this->isUserTicketAuthor($ticket, $user);
     }
 
 
@@ -176,20 +175,10 @@ class TicketManager extends AbstractManager
         }
 
         if ($this->isTicketPrivate($ticket, $user)) {
-            return $this->isGranted($ticket->getCategory()->getRole());
+            return $this->security->isGranted($ticket->getCategory()->getRole());
         }
 
         return true;
-    }
-
-
-    /**
-     * @param $role
-     * @return bool
-     */
-    private function isGranted($role)
-    {
-        return $this->authorizationChecker->isGranted($role);
     }
 
 
