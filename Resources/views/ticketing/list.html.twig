@@ -1,10 +1,10 @@
 {% extends getTicketingLayoutTemplate() %}
 
-{% block title %}{{ 'My tickets'|trans({}, 'TicketingBundle') }}{% endblock %}
-{% block header %}<h1>{{ 'My tickets'|trans({}, 'TicketingBundle') }}</h1>{% endblock %}
+{% block title %}{{ 'All Tickets'|trans({}, 'TicketingBundle') }} {% endblock %}
+{% block header %}<h1>{{ 'All Tickets'|trans({}, 'TicketingBundle') }} </h1>{% endblock %}
 
 {% block body %}
-    <h1>{{ 'List of my tickets'|trans({}, 'TicketingBundle') }}</h1>
+    <h1>{{ 'View all Tickets'|trans({}, 'TicketingBundle') }}</h1>
 
     {% for status in status_list %}
         <div class="box box-{{ status.style }}">
@@ -12,7 +12,7 @@
                 <h3 class="box-title">{{ status.value }}</h3>
             </div>
             <div class="box-body">
-                <table class="table table-bordered table-striped data-table" data-status="{{ status.name }}" data-type="perso">
+                <table class="table table-bordered table-striped data-table" data-status="{{ status.name }}" data-type="list">
                     <thead>
                     <tr>
                         <th>Numéro</th>
@@ -22,7 +22,6 @@
                         <th>Statut</th>
                         <th>Type</th>
                         <th>Assigné à</th>
-                        <th>Priorité</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -37,7 +36,6 @@
                         <th class="disabled">Statut</th>
                         <th class="disabled">Type</th>
                         <th>Assigné à</th>
-                        <th>Priorité</th>
                     </tr>
                     </tfoot>
                 </table>
@@ -45,6 +43,4 @@
             </div>
         </div>
     {% endfor %}
-
-    <a href="{{ path('ticketing_new') }}">{{ 'Create a new ticket'|trans({}, 'TicketingBundle') }}</a>
 {% endblock %}

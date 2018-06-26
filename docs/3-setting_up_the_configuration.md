@@ -28,7 +28,7 @@ ticketing:
         ticket_priority:      App\Entity\TicketPriority
     templates:
         layout:               '@Ticketing/base.html.twig'
-        index:                '@Ticketing/ticketing/index.html.twig'
+        index:                list.html.twig
         new:                  '@Ticketing/ticketing/new.html.twig'
     assets:
         stylesheets:

@@ -9,7 +9,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Maps_red\TicketingBundle\Utils\TicketingHelper;
+use Symfony\Component\Security\Core\Security;
 
 class RequestSubscriber implements EventSubscriberInterface
 {
@@ -19,27 +19,30 @@ class RequestSubscriber implements EventSubscriberInterface
     /** @var EventDispatcherInterface $eventDispatcher */
     private $eventDispatcher;
 
-    /** @var TicketingHelper $ticketingHelper */
-    private $ticketingHelper;
-
     /** @var string $restrictedTicketsRole */
     private $restrictedTicketsRole;
+
+    /** @var Security $security */
+    private $security;
 
     /**
      * RequestSubscriber constructor.
      * @param TicketManager $ticketManager
      * @param EventDispatcherInterface $eventDispatcher
-     * @param TicketingHelper $ticketingHelper
+     * @param Security $security
      * @param string $restrictedTicketsRole
      */
-    public function __construct(TicketManager $ticketManager, EventDispatcherInterface $eventDispatcher, TicketingHelper $ticketingHelper, string $restrictedTicketsRole)
+    public function __construct(TicketManager $ticketManager, EventDispatcherInterface $eventDispatcher, Security $security, string $restrictedTicketsRole)
     {
         $this->ticketManager = $ticketManager;
         $this->eventDispatcher = $eventDispatcher;
         $this->restrictedTicketsRole = $restrictedTicketsRole;
-        $this->ticketingHelper = $ticketingHelper;
+        $this->security = $security;
     }
 
+    /**
+     * @return array
+     */
     public static function getSubscribedEvents()
     {
         return [
@@ -59,8 +62,8 @@ class RequestSubscriber implements EventSubscriberInterface
 
         $controller = explode("::", $event->getRequest()->attributes->get('_controller'))[0];
         if ($controller === 'Maps_red\TicketingBundle\Controller\TicketingController') {
-            $user = $this->ticketingHelper->getUser();
-            if (null !== $user && $this->ticketingHelper->isGranted($this->restrictedTicketsRole)) {
+            $user = $this->security->getUser();
+            if (null !== $user && $this->security->isGranted($this->restrictedTicketsRole)) {
                 return;
             }
 
@@ -75,6 +78,5 @@ class RequestSubscriber implements EventSubscriberInterface
             $this->eventDispatcher->dispatch(TicketSeenEvent::NAME, $event);
         }
     }
-
 
 }

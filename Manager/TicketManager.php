@@ -3,9 +3,9 @@
 namespace Maps_red\TicketingBundle\Manager;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Maps_red\TicketingBundle\Entity\Ticket;
 use Maps_red\TicketingBundle\Model\TicketInterface;
 use Maps_red\TicketingBundle\Repository\TicketRepository;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -21,8 +21,14 @@ class TicketManager extends AbstractManager
     /** @var bool $enableTicketRestriction */
     private $enableTicketRestriction;
 
+    /** @var string $restrictedTicketsRole */
+    private $restrictedTicketsRole;
+
     /** @var TicketStatusManager $ticketStatusManager */
     private $ticketStatusManager;
+
+    /** @var Security $security */
+    private $security;
 
     /**
      * TicketManager constructor.
@@ -30,16 +36,22 @@ class TicketManager extends AbstractManager
      * @param string $class
      * @param bool $enableHistory
      * @param bool $enableTicketRestriction
+     * @param string $restrictedTicketsRole
      * @param TicketStatusManager $ticketStatusManager
+     * @param Security $security
      */
     public function __construct(EntityManagerInterface $manager, string $class, bool $enableHistory, bool $enableTicketRestriction,
-                                TicketStatusManager $ticketStatusManager)
+                                string $restrictedTicketsRole, TicketStatusManager $ticketStatusManager, Security $security)
     {
         parent::__construct($manager, $class);
         $this->enableHistory = $enableHistory;
         $this->enableTicketRestriction = $enableTicketRestriction;
+        $this->restrictedTicketsRole = $restrictedTicketsRole;
         $this->ticketStatusManager = $ticketStatusManager;
+        $this->security = $security;
     }
+
+    /* Form Handler */
 
     /**
      * @param UserInterface $user
@@ -59,6 +71,9 @@ class TicketManager extends AbstractManager
         $this->persistAndFlush($ticket);
     }
 
+
+    /* DataTables */
+
     /**
      * @param array $datas
      * @param string $status
@@ -69,6 +84,10 @@ class TicketManager extends AbstractManager
      */
     public function handleDataTable(array $datas, string $status, string $type, UserInterface $user)
     {
+        if ($type === 'list' && $this->isTicketRestrictionEnabled()) {
+            $type = $this->isTicketRestrictionEnabledAndGranted() ? "list" : "list_public";
+        }
+
         $columns = array_combine(
             array_column($datas['columns'], 'name'),
             array_column(array_column($datas['columns'], 'search'), 'value')
@@ -103,10 +122,10 @@ class TicketManager extends AbstractManager
     }
 
     /**
-     * @param Ticket $ticket
+     * @param TicketInterface $ticket
      * @return array
      */
-    public function toArray(Ticket $ticket)
+    public function toArray(TicketInterface $ticket)
     {
         return [
             'id' => $ticket->getId(),
@@ -120,6 +139,37 @@ class TicketManager extends AbstractManager
         ];
     }
 
+
+    /* Helpers */
+
+    /**
+     * @param TicketInterface $ticket
+     * @param UserInterface $user
+     * @return bool
+     */
+    public function isUserTicketAuthor(TicketInterface $ticket, UserInterface $user)
+    {
+        return $ticket->getAuthor() === $user;
+    }
+
+    /**
+     * @param TicketInterface $ticket
+     * @param UserInterface $user
+     * @return bool
+     */
+    public function isTicketPrivate(TicketInterface $ticket, UserInterface $user)
+    {
+        return !$ticket->getPublic() && !$this->isTicketRestrictionEnabledAndGranted() && !$this->isUserTicketAuthor($ticket, $user);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTicketRestrictionEnabledAndGranted()
+    {
+        return $this->isTicketRestrictionEnabled() && $this->security->isGranted($this->restrictedTicketsRole);
+    }
+
     /**
      * @return bool
      */
@@ -127,4 +177,24 @@ class TicketManager extends AbstractManager
     {
         return $this->enableTicketRestriction;
     }
+
+    /**
+     * @param TicketInterface $ticket
+     * @param UserInterface $user
+     * @return bool
+     */
+    public function isTicketGranted(TicketInterface $ticket, UserInterface $user)
+    {
+        if ($this->isUserTicketAuthor($ticket, $user)) {
+            return true;
+        }
+
+        if ($this->isTicketPrivate($ticket, $user)) {
+            return $this->security->isGranted($ticket->getCategory()->getRole());
+        }
+
+        return true;
+    }
+
+
 }

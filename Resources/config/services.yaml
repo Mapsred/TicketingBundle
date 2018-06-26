@@ -3,9 +3,9 @@ services:
         resource: '../../Controller'
         tags: ['controller.service_arguments']
 
-    Maps_red\TicketingBundle\Form\TicketForm:
-        tags:
-            - { name: form.type }
+    Maps_red\TicketingBundle\Form\:
+        resource: '../../Form'
+        tags: ['form.type']
 
     Maps_red\TicketingBundle\Maker\MakeTicketing:
         arguments: ["@maker.file_manager"]
@@ -14,7 +14,7 @@ services:
 
     Maps_red\TicketingBundle\Manager\TicketManager:
         tags:
-            - { name: ticketing.manager, class: 'ticket', enable_history: true, enable_ticket_restriction: true}
+            - { name: ticketing.manager, class: 'ticket', enable_history: true, enable_ticket_restriction: true, restricted_tickets_role: true}
 
     Maps_red\TicketingBundle\Manager\TicketCategoryManager:
         tags:
@@ -56,11 +56,6 @@ services:
         arguments: ['@event_dispatcher']
         tags:
             - { name: doctrine.event_subscriber, connection: default }
-
-
-    Maps_red\TicketingBundle\Utils\TicketingHelper:
-        autowire: true
-        autoconfigure: true
 
     Maps_red\TicketingBundle\Twig\TicketingExtension:
         arguments: ["%ticketing.templates%", "%ticketing.stylesheets%", "%ticketing.javascripts%"]

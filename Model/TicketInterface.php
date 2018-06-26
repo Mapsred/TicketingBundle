@@ -43,6 +43,10 @@ interface TicketInterface
 
     public function setRating(?int $rating): TicketInterface;
 
+    public function getClosureResponse(): ?string;
+
+    public function setClosureResponse(?string $closure_response): TicketInterface;
+
     public function getClosedAt(): ?\DateTimeInterface;
 
     public function setClosedAt(\DateTimeInterface $closed_at): TicketInterface;
@@ -66,5 +70,7 @@ interface TicketInterface
     public function setReferences($references): TicketInterface;
 
     public function getReferences(): ?ArrayCollection;
+
+    public function getCreatedAt(): ?\DateTime;
 
 }
