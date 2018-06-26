@@ -3,10 +3,9 @@
 namespace Maps_red\TicketingBundle\Manager;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Maps_red\TicketingBundle\Entity\Ticket;
 use Maps_red\TicketingBundle\Model\TicketInterface;
 use Maps_red\TicketingBundle\Repository\TicketRepository;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -22,8 +21,14 @@ class TicketManager extends AbstractManager
     /** @var bool $enableTicketRestriction */
     private $enableTicketRestriction;
 
+    /** @var string $restrictedTicketsRole */
+    private $restrictedTicketsRole;
+
     /** @var TicketStatusManager $ticketStatusManager */
     private $ticketStatusManager;
+
+    /** @var Security $security */
+    private $security;
 
     /**
      * TicketManager constructor.
@@ -31,16 +36,22 @@ class TicketManager extends AbstractManager
      * @param string $class
      * @param bool $enableHistory
      * @param bool $enableTicketRestriction
+     * @param string $restrictedTicketsRole
      * @param TicketStatusManager $ticketStatusManager
+     * @param Security $security
      */
     public function __construct(EntityManagerInterface $manager, string $class, bool $enableHistory, bool $enableTicketRestriction,
-                                TicketStatusManager $ticketStatusManager)
+                                string $restrictedTicketsRole, TicketStatusManager $ticketStatusManager, Security $security)
     {
         parent::__construct($manager, $class);
         $this->enableHistory = $enableHistory;
         $this->enableTicketRestriction = $enableTicketRestriction;
+        $this->restrictedTicketsRole = $restrictedTicketsRole;
         $this->ticketStatusManager = $ticketStatusManager;
+        $this->security = $security;
     }
+
+    /* Form Handler */
 
     /**
      * @param UserInterface $user
@@ -60,6 +71,17 @@ class TicketManager extends AbstractManager
         $this->persistAndFlush($ticket);
     }
 
+
+    /* DataTables */
+
+    /**
+     * @param array $datas
+     * @param string $status
+     * @param string $type
+     * @param UserInterface $user
+     * @return array
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function handleDataTable(array $datas, string $status, string $type, UserInterface $user)
     {
         if ($type === 'list') {
@@ -94,6 +116,9 @@ class TicketManager extends AbstractManager
         $globalSearch = $datas['search']['value'] ?: null;
         unset($datas['search']);
 
+        $fields = array_combine(array_values($fields), array_values($fields));
+        unset($fields['status'], $fields['type'], $fields['assignated']);
+
         return [
             'data' => $this->getRepository()
                 ->searchDataTable($globalSearch, $columns, $fields, $order, $datas['start'], $datas['length'], false, $status, $type, $user),
@@ -102,18 +127,47 @@ class TicketManager extends AbstractManager
         ];
     }
 
-    public function toArray(Ticket $ticket)
+    /**
+     * @param TicketInterface $ticket
+     * @return array
+     */
+    public function toArray(TicketInterface $ticket)
     {
         return [
             'id' => $ticket->getId(),
             'author' => $ticket->getAuthor()->getUsername(),
             'createdAt' => $ticket->getCreatedAt()->format('d/m/Y'),
-            'category' => $ticket->getCategory()->getName(),
-            'status' => $ticket->getStatus()->getValue().' - '.$ticket->getStatus()->getStyle(),
+            'category' => $ticket->getCategory() ? $ticket->getCategory()->getName() : 'Aucune Catégorie',
+            'status' => $ticket->getStatus()->getValue() . ' - ' . $ticket->getStatus()->getStyle(),
             'type' => $ticket->getPublic() ? "Public" : "Privé",
-            'assignated' => 'TODO',
+            'priority' => $ticket->getPriority() ? $ticket->getPriority()->getValue() : 'Aucune Priorité',
+            'assignated' => $ticket->getAssignated() ? $ticket->getAssignated()->getUsername() : "",
         ];
     }
+
+
+    /* Helpers */
+
+    /**
+     * @param TicketInterface $ticket
+     * @param UserInterface $user
+     * @return bool
+     */
+    public function isUserTicketAuthor(TicketInterface $ticket, UserInterface $user)
+    {
+        return $ticket->getAuthor() === $user;
+    }
+
+    /**
+     * @param TicketInterface $ticket
+     * @param UserInterface $user
+     * @return bool
+     */
+    public function isTicketPrivate(TicketInterface $ticket, UserInterface $user)
+    {
+        return !$ticket->getPublic() && !$this->security->isGranted("ROLE_MODERATEUR_JUNIOR") && !$this->isUserTicketAuthor($ticket, $user);
+    }
+
 
 
     /**
@@ -123,4 +177,19 @@ class TicketManager extends AbstractManager
     {
         return $this->enableTicketRestriction;
     }
+
+    public function isTicketGranted(TicketInterface $ticket, UserInterface $user)
+    {
+        if ($this->isUserTicketAuthor($ticket, $user)) {
+            return true;
+        }
+
+        if ($this->isTicketPrivate($ticket, $user)) {
+            return $this->security->isGranted($ticket->getCategory()->getRole());
+        }
+
+        return true;
+    }
+
+
 }

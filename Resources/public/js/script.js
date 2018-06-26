@@ -50,7 +50,7 @@ let Table = {
                 }
             },
             "sPaginationType": "full_numbers",
-            "aoColumns": [null, null, null, null, null, null, null],
+            "aoColumns": [null, null, null, null, null, null, null, null],
             "columnDefs": [
                 {
                     targets: 0,
@@ -106,6 +106,14 @@ let Table = {
                 {
                     targets: 6,
                     name: 'assignated',
+                    className: "",
+                    render: function (data, type, row) {
+                        return data;
+                    }
+                },
+                {
+                    targets: 7,
+                    name: 'priority',
                     className: "",
                     render: function (data, type, row) {
                         return data;

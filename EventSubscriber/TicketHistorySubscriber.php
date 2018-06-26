@@ -13,6 +13,7 @@ use Maps_red\TicketingBundle\Event\TicketUnseenEvent;
 use Maps_red\TicketingBundle\Manager\TicketHistoryManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -21,8 +22,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class TicketHistorySubscriber implements EventSubscriberInterface
 {
-    /** @var TokenStorageInterface $tokenStorage */
-    private $tokenStorage;
+    /** @var Security $security */
+    private $security;
 
     /** @var TicketHistoryManager $ticketHistoryManager */
     private $ticketHistoryManager;
@@ -32,13 +33,13 @@ class TicketHistorySubscriber implements EventSubscriberInterface
 
     /**
      * RequestSubscriber constructor.
-     * @param TokenStorageInterface $tokenStorage
+     * @param Security $security
      * @param TicketHistoryManager $ticketHistoryManager
      * @param bool $enableHistory
      */
-    public function __construct(TokenStorageInterface $tokenStorage, TicketHistoryManager $ticketHistoryManager, bool $enableHistory)
+    public function __construct(Security $security, TicketHistoryManager $ticketHistoryManager, bool $enableHistory)
     {
-        $this->tokenStorage = $tokenStorage;
+        $this->security = $security;
         $this->ticketHistoryManager = $ticketHistoryManager;
         $this->enableHistory = $enableHistory;
     }
@@ -60,7 +61,7 @@ class TicketHistorySubscriber implements EventSubscriberInterface
      */
     public function onTicketingSeen(TicketSeenEvent $event)
     {
-        if ($this->enableHistory && null !== $user = $this->getUser()) {
+        if ($this->enableHistory && null !== $user = $this->security->getUser()) {
             $this->ticketHistoryManager->setSeen($user, $event->getTicket());
         }
     }
@@ -70,25 +71,9 @@ class TicketHistorySubscriber implements EventSubscriberInterface
      */
     public function onTicketingUnseen(TicketUnseenEvent $event)
     {
-        if ($this->enableHistory && null !== $user = $this->getUser()) {
+        if ($this->enableHistory && null !== $user = $this->security->getUser()) {
             $this->ticketHistoryManager->setUnseen($user, $event->getTicket());
         }
-    }
-
-    /**
-     * @return UserInterface|null
-     */
-    private function getUser()
-    {
-        if (null === $token = $this->tokenStorage->getToken()) {
-            return null;
-        }
-
-        if (!is_object($user = $token->getUser())) {
-            return null;
-        }
-
-        return $user;
     }
 
 }

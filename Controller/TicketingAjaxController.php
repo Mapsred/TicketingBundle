@@ -28,6 +28,7 @@ class TicketingAjaxController extends Controller
      * @param string $status
      * @param string $type
      * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function dataTableProcessing(Request $request, TicketManager $ticketManager, string $status, string $type)
     {
