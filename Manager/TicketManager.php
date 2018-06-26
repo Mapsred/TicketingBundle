@@ -102,6 +102,22 @@ class TicketManager extends AbstractManager
         $this->persistAndFlush($ticket);
     }
 
+    /**
+     * @param TicketInterface $ticket
+     * @param UserInterface $user
+     * @param bool $bool
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function handlePublicStatusAction(TicketInterface $ticket, UserInterface $user, bool $bool)
+    {
+        $ticket
+            ->setPublic($bool)
+            ->setPublicBy($bool ? $user : null)
+            ->setPublicAt(new \DateTime());
+
+        $this->persistAndFlush($ticket);
+    }
 
 
     /* DataTables */

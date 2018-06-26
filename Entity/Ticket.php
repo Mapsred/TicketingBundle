@@ -52,6 +52,12 @@ class Ticket implements TicketInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="Symfony\Component\Security\Core\User\UserInterface")
+     * @ORM\JoinColumn(name="public_by", referencedColumnName="id", nullable=true)
+     */
+    private $public_by;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Symfony\Component\Security\Core\User\UserInterface")
      * @ORM\JoinColumn(name="author", referencedColumnName="id", nullable=true)
      */
     private $author;
@@ -166,6 +172,18 @@ class Ticket implements TicketInterface
     public function setPublic(bool $public): TicketInterface
     {
         $this->public = $public;
+
+        return $this;
+    }
+
+    public function getPublicBy(): ?UserInterface
+    {
+        return $this->public_by;
+    }
+
+    public function setPublicBy(?UserInterface $publicBy): TicketInterface
+    {
+        $this->public_by = $publicBy;
 
         return $this;
     }

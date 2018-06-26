@@ -2,7 +2,78 @@
 
 {% block title %}Ticket #{{ ticket.id }}{% endblock %}
 
+
 {% block body %}
+    <div id="flashbag"></div>
+    {% set isAuthor = ticket.author == app.user %}
+
+    <div class="box box-red">
+        <div class="box-header with-border">
+            <h3 class="box-title">Ticket #{{ ticket.id }}</h3>
+            {% if isAuthorOrGranted %}
+                <form method="post" class="pull-right">
+                    <button class="btn btn bg-ticketing btn-flat" name="public" value="{{ ticket.public == 0 }}" type="submit">
+                        Rendre {{ ticket.public ? "privé" : "public" }}
+                    </button>
+                </form>
+            {% endif %}
+        </div>
+        <!-- form start -->
+        <div class="box-body table-responsive no-padding">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Auteur</th>
+                    <th>Date</th>
+                    <th>Catégorie</th>
+                    <th>Statut</th>
+                    <th>Assigné à</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <span>{{ ticket.author.username }}</span>
+                    </td>
+                    <td>{{ ticket.createdAt|date("d/m/Y H:i:s") }}</td>
+                    <td><span id="cat">{{ ticket.getCategory is not null ? ticket.category.name : "" }}</span>
+                        {% if isAuthorOrGranted %}
+                            <button class="btn bg-ticketing btn-flat btn-sm pull-right" id="cat_btn" type="button"
+                                    data-toggle="modal" data-target="#change_category"
+                                    data-id="{{ ticket.id }}">
+                                Changer la catégorie
+                            </button>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ ticket.status.value }}
+                        {% if (ticket.status.name == "waiting" or ticket.status.name == "pending") and isGranted %}
+                            <button class="btn bg-ticketing btn-flat btn-sm pull-right" id="status_btn" type="button"
+                                    data-id="{{ ticket.id }}">
+                                Mettre {{ ticket.status.name == "waiting" ? "en cours" : "en attente" }}
+                            </button>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if ticket.assignated is not null %}
+                            {% set message =
+                                " <br> Moyenne : <br>" ~
+                                render(controller('App\\Controller\\Ticket\\RatingController:getUserRating', {
+                                'user_id': ticket.assignated.id
+                            })) ~
+                                render(controller('App\\Controller\\Ticket\\RatingController:getUserClosedTickets', {
+                                'user_id': ticket.assignated.id
+                            } )) %}
+
+                        {% endif %}
+                        <span>{{ ticket.assignated.username|default("Non assigné") }}</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- /.box-body -->
+    </div>
 
 {% endblock %}
 

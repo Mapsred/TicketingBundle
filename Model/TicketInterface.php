@@ -31,6 +31,10 @@ interface TicketInterface
 
     public function setPublic(bool $public): TicketInterface;
 
+    public function getPublicBy(): ?UserInterface;
+
+    public function setPublicBy(?UserInterface $publicBy): TicketInterface;
+
     public function getAuthor(): ?UserInterface;
 
     public function setAuthor(?UserInterface $author): TicketInterface;
