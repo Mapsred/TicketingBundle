@@ -132,6 +132,10 @@ class TicketManager extends AbstractManager
      */
     public function handleDataTable(array $datas, string $status, string $type, UserInterface $user)
     {
+        if ($type === 'list' && $this->isTicketRestrictionEnabled()) {
+            $type = $this->isTicketRestrictionEnabledAndGranted() ? "list" : "list_public";
+        }
+
         $columns = array_combine(
             array_column($datas['columns'], 'name'),
             array_column(array_column($datas['columns'], 'search'), 'value')

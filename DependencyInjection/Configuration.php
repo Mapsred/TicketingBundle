@@ -88,7 +88,7 @@ class Configuration implements ConfigurationInterface
                         ->cannotBeEmpty()
                     ->end()
                     ->scalarNode('index')
-                        ->defaultValue('@Ticketing/ticketing/index.html.twig')
+                        ->defaultValue('@Ticketing/ticketing/list.html.twig')
                         ->cannotBeEmpty()
                     ->end()
                     ->scalarNode('new')

@@ -18,24 +18,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class TicketingController extends Controller
 {
+
     /**
-     * @Route("/perso", name="ticketing_perso")
+     * @Route("/list", name="ticketing_list")
      * @param TicketStatusManager $ticketStatusManager
      * @return Response
      */
-    public function persoTicketsAction(TicketStatusManager $ticketStatusManager)
+    public function listTickets(TicketStatusManager $ticketStatusManager)
     {
-        return $this->render("@Ticketing/ticketing/personal_page.html.twig", [
+        return $this->render('@Ticketing/ticketing/list.html.twig', [
             'status_list' => $ticketStatusManager->getRepository()->findAll()
         ]);
     }
 
     /**
-     * @Route("/all", name="ticketing_all")
+     * @Route("/perso", name="ticketing_perso")
+     * @param TicketStatusManager $ticketStatusManager
+     * @return Response
      */
-    public function index()
+    public function persoTickets(TicketStatusManager $ticketStatusManager)
     {
-        return $this->render('@Ticketing/ticketing/index.html.twig', [
+        return $this->render("@Ticketing/ticketing/personal_page.html.twig", [
+            'status_list' => $ticketStatusManager->getRepository()->findAll()
         ]);
     }
 
@@ -58,7 +62,7 @@ class TicketingController extends Controller
             $ticketManager->createTicket($user, $ticket);
             $this->addFlash('success', 'The ticket is online !');
 
-            return $this->redirectToRoute('ticketing_all');
+            return $this->redirectToRoute('ticketing_list');
         }
 
         return $this->render('@Ticketing/ticketing/new.html.twig', [
