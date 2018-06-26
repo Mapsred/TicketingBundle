@@ -8,42 +8,54 @@ use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 
 class TicketStatusManager extends AbstractManager
 {
-    /** @var string $defaultStatusName */
-    private $defaultStatusName;
+    /** @var array $ticketStatus */
+    private $ticketStatus;
 
     /**
      * TicketStatusManager constructor.
      * @param EntityManagerInterface $manager
      * @param string $class
-     * @param string $defaultStatusName
+     * @param array $ticketStatus
      */
-    public function __construct(EntityManagerInterface $manager, string $class, string $defaultStatusName)
+    public function __construct(EntityManagerInterface $manager, string $class, array $ticketStatus)
     {
         parent::__construct($manager, $class);
-        $this->defaultStatusName = $defaultStatusName;
+        $this->ticketStatus = $ticketStatus;
     }
 
     /**
      * @return TicketStatusInterface|null|object
      */
-    public function getDefaultStatus(): TicketStatusInterface
+    public function getOpenStatus(): TicketStatusInterface
     {
-        if (null === $status = $this->getRepository()->findOneBy(['name' => $this->getDefaultStatusName()])) {
+        return $this->getStatus('open');
+    }
+
+    /**
+     * @return mixed|null|object
+     */
+    public function getClosedStatus()
+    {
+        return $this->getStatus('closed');
+    }
+
+    /**
+     * @param $type
+     * @return mixed|null|object
+     */
+    private function getStatus($type)
+    {
+        $status = $this->ticketStatus[$type];
+        if (null === $status = $this->getRepository()->findOneBy(['name' => $status])) {
             throw new InvalidArgumentException(sprintf(
-                    "No %s found with the name %s. please check the ticketing.default_status_name parameter.",
+                    "No %s found with the name %s. please check the ticketing.ticket_status.%s parameter.",
                     $this->getClass(),
-                    $this->getDefaultStatusName())
+                    $status,
+                    $type)
             );
         }
 
         return $status;
     }
 
-    /**
-     * @return string
-     */
-    public function getDefaultStatusName(): string
-    {
-        return $this->defaultStatusName;
-    }
 }

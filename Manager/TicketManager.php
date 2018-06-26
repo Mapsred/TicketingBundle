@@ -3,6 +3,7 @@
 namespace Maps_red\TicketingBundle\Manager;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Maps_red\TicketingBundle\Model\TicketCommentInterface;
 use Maps_red\TicketingBundle\Model\TicketInterface;
 use Maps_red\TicketingBundle\Repository\TicketRepository;
 use Symfony\Component\Security\Core\Security;
@@ -37,6 +38,7 @@ class TicketManager extends AbstractManager
      * @param bool $enableHistory
      * @param bool $enableTicketRestriction
      * @param string $restrictedTicketsRole
+     * @param array $ticketStatus
      * @param TicketStatusManager $ticketStatusManager
      * @param Security $security
      */
@@ -61,7 +63,7 @@ class TicketManager extends AbstractManager
      */
     public function createTicket(UserInterface $user, TicketInterface $ticket)
     {
-        $status = $this->ticketStatusManager->getDefaultStatus();
+        $status = $this->ticketStatusManager->getOpenStatus();
         $ticket->setStatus($status)->setAuthor($user)->setPublic(false);
 
         if (!$this->isTicketRestrictionEnabled()) {
@@ -70,6 +72,36 @@ class TicketManager extends AbstractManager
 
         $this->persistAndFlush($ticket);
     }
+
+    /**
+     * @param TicketInterface $ticket
+     * @param UserInterface $user
+     * @param TicketCommentInterface $comment
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function handleCommentAction(TicketInterface $ticket, UserInterface $user, TicketCommentInterface $comment)
+    {
+        $comment->setAuthor($user)->setTicket($ticket);
+        $ticket->addComment($comment);
+
+        $this->persistAndFlush($ticket);
+    }
+
+    /**
+     * @param TicketInterface $ticket
+     * @param UserInterface $user
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function handleCloseAction(TicketInterface $ticket, UserInterface $user)
+    {
+        $status = $this->ticketStatusManager->getClosedStatus();
+        $ticket->setStatus($status)->setClosedBy($user)->setClosedAt(new \DateTime());
+
+        $this->persistAndFlush($ticket);
+    }
+
 
 
     /* DataTables */
@@ -155,15 +187,29 @@ class TicketManager extends AbstractManager
      */
     public function isTicketPrivate(TicketInterface $ticket, UserInterface $user)
     {
-        return !$ticket->getPublic() && !$this->isTicketRestrictionEnabledAndGranted() && !$this->isUserTicketAuthor($ticket, $user);
+        return !$ticket->getPublic() && !$this->isPrivateTicketAuthorized() && !$this->isUserTicketAuthor($ticket, $user);
+    }
+
+    /**
+     * @param TicketInterface $ticket
+     * @param UserInterface $user
+     * @return bool
+     */
+    public function isAuthorOrGranted(TicketInterface $ticket, UserInterface $user): bool
+    {
+        return $this->isUserTicketAuthor($ticket, $user) || $this->isPrivateTicketAuthorized();
     }
 
     /**
      * @return bool
      */
-    public function isTicketRestrictionEnabledAndGranted()
+    public function isPrivateTicketAuthorized(): bool
     {
-        return $this->isTicketRestrictionEnabled() && $this->security->isGranted($this->restrictedTicketsRole);
+        if ($this->isTicketRestrictionEnabled()) {
+            return $this->security->isGranted($this->restrictedTicketsRole);
+        }
+
+        return true;
     }
 
     /**

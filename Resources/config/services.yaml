@@ -14,7 +14,12 @@ services:
 
     Maps_red\TicketingBundle\Manager\TicketManager:
         tags:
-            - { name: ticketing.manager, class: 'ticket', enable_history: true, enable_ticket_restriction: true, restricted_tickets_role: true}
+            -
+              name: ticketing.manager
+              class: 'ticket'
+              enable_history: true
+              enable_ticket_restriction: true
+              restricted_tickets_role: true
 
     Maps_red\TicketingBundle\Manager\TicketCategoryManager:
         tags:
@@ -34,7 +39,7 @@ services:
 
     Maps_red\TicketingBundle\Manager\TicketStatusManager:
         tags:
-            - { name: ticketing.manager, class: 'ticket_status', default_status_name: true}
+            - { name: ticketing.manager, class: 'ticket_status', ticket_status: true }
 
     Maps_red\TicketingBundle\Manager\TicketPriorityManager:
         tags:
