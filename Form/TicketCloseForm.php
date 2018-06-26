@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: Maps_red
- * Date: 28/05/2016
- * Time: 21:49
+ * Date: 29/05/2016
+ * Time: 18:33
  */
 
 namespace Maps_red\TicketingBundle\Form;
@@ -13,18 +13,22 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TicketCommentForm extends AbstractType
+/**
+ * Class CloseTicket
+ * @package App\Form\Ticket
+ */
+class TicketCloseForm extends AbstractType
 {
-    /** @var string $commentClass */
-    private $commentClass;
+    /** @var string $ticketClass */
+    private $ticketClass;
 
     /**
      * TicketForm constructor.
-     * @param string $commentClass
+     * @param string $ticketClass
      */
-    public function __construct(string $commentClass)
+    public function __construct(string $ticketClass)
     {
-        $this->commentClass = $commentClass;
+        $this->ticketClass = $ticketClass;
     }
 
     /**
@@ -33,7 +37,10 @@ class TicketCommentForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add("text", TextareaType::class, ['label' => "label.comment", 'required' => false]);
+        $builder->add("closureResponse", TextareaType::class, [
+            'label' => "label.closure_response",
+            "required" => false
+        ]);
     }
 
     /**
@@ -42,7 +49,7 @@ class TicketCommentForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data-class' => $this->commentClass,
+            'data-class' => $this->ticketClass,
             'translation_domain' => 'TicketingBundle'
         ]);
     }

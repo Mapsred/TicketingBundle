@@ -67,6 +67,11 @@ class Ticket implements TicketInterface
     private $rating;
 
     /**
+     * @ORM\Column(type="text", length=65535, nullable=true)
+     */
+    private $closure_response;
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $closed_at;
@@ -190,6 +195,18 @@ class Ticket implements TicketInterface
     public function setRating(?int $rating): TicketInterface
     {
         $this->rating = $rating;
+
+        return $this;
+    }
+
+    public function getClosureResponse(): ?string
+    {
+        return $this->closure_response;
+    }
+
+    public function setClosureResponse(?string $closure_response): TicketInterface
+    {
+        $this->closure_response = $closure_response;
 
         return $this;
     }
