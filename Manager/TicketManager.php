@@ -62,6 +62,16 @@ class TicketManager extends AbstractManager
 
     public function handleDataTable(array $datas, string $status, string $type, UserInterface $user)
     {
+        if ($type === 'list') {
+            if($user->isGranted("ROLE_SUPER_ADMIN")){
+                $type = 'list_public';
+            }
+            else{
+                $type = 'list_private';
+            }
+        }
+
+
         $columns = array_combine(
             array_column($datas['columns'], 'name'),
             array_column(array_column($datas['columns'], 'search'), 'value')
