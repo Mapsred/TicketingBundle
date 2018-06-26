@@ -21,6 +21,9 @@ class TicketManager extends AbstractManager
     /** @var bool $enableTicketRestriction */
     private $enableTicketRestriction;
 
+    /** @var string $restrictedTicketsRole */
+    private $restrictedTicketsRole;
+
     /** @var TicketStatusManager $ticketStatusManager */
     private $ticketStatusManager;
 
@@ -33,15 +36,18 @@ class TicketManager extends AbstractManager
      * @param string $class
      * @param bool $enableHistory
      * @param bool $enableTicketRestriction
+     * @param string $restrictedTicketsRole
      * @param TicketStatusManager $ticketStatusManager
      * @param AuthorizationCheckerInterface $authorizationChecker
      */
     public function __construct(EntityManagerInterface $manager, string $class, bool $enableHistory, bool $enableTicketRestriction,
-                                TicketStatusManager $ticketStatusManager, AuthorizationCheckerInterface $authorizationChecker)
+                                string $restrictedTicketsRole, TicketStatusManager $ticketStatusManager,
+                                AuthorizationCheckerInterface $authorizationChecker)
     {
         parent::__construct($manager, $class);
         $this->enableHistory = $enableHistory;
         $this->enableTicketRestriction = $enableTicketRestriction;
+        $this->restrictedTicketsRole = $restrictedTicketsRole;
         $this->ticketStatusManager = $ticketStatusManager;
         $this->authorizationChecker = $authorizationChecker;
     }

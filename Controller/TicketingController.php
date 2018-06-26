@@ -65,11 +65,12 @@ class TicketingController extends Controller
     /**
      * @Route("/detail/{id}", name="ticketing_detail", options={"expose": "true"})
      * @param Ticket $ticket
+     * @param TicketManager $ticketManager
      * @return RedirectResponse|Response
      */
-    public function detail(Ticket $ticket)
+    public function detail(Ticket $ticket, TicketManager $ticketManager)
     {
-        if (!$this->get(TicketManager::class)->isTicketGranted($ticket, $this->getUser())) {
+        if (!$ticketManager->isTicketGranted($ticket, $this->getUser())) {
             $this->addFlash("warning", "Ce ticket appartient à une catégorie restreinte, vous ne disposez pas des 
             permissions suffisantes pour l'afficher");
 
