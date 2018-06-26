@@ -156,7 +156,7 @@ class TicketManager extends AbstractManager
     public function isTicketPrivate(TicketInterface $ticket, UserInterface $user)
     {
         if ($this->enableTicketRestriction) {
-            return !$ticket->getPublic() && !$this->isTicketRestricted() && !$this->isUserTicketAuthor($ticket, $user);
+            return !$ticket->getPublic() && !$this->isTicketRestrictionEnabledAndGranted() && !$this->isUserTicketAuthor($ticket, $user);
         }
 
         return false;
@@ -166,9 +166,9 @@ class TicketManager extends AbstractManager
     /**
      * @return bool
      */
-    public function isTicketRestricted()
+    public function isTicketRestrictionEnabledAndGranted()
     {
-        return $this->security->isGranted($this->restrictedTicketsRole);
+        return $this->enableTicketRestriction && $this->security->isGranted($this->restrictedTicketsRole);
     }
 
 
