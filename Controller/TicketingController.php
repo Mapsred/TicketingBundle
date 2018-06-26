@@ -22,7 +22,7 @@ class TicketingController extends Controller
      * @param TicketStatusManager $ticketStatusManager
      * @return Response
      */
-    public function listTicketsAction(TicketStatusManager $ticketStatusManager)
+    public function listTickets(TicketStatusManager $ticketStatusManager)
     {
         return $this->render('@Ticketing/ticketing/list.html.twig', [
             'status_list' => $ticketStatusManager->getRepository()->findAll()
@@ -34,7 +34,7 @@ class TicketingController extends Controller
      * @param TicketStatusManager $ticketStatusManager
      * @return Response
      */
-    public function persoTicketsAction(TicketStatusManager $ticketStatusManager)
+    public function persoTickets(TicketStatusManager $ticketStatusManager)
     {
         return $this->render("@Ticketing/ticketing/personal_page.html.twig", [
             'status_list' => $ticketStatusManager->getRepository()->findAll()
