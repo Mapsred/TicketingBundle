@@ -3,9 +3,9 @@
 namespace Maps_red\TicketingBundle\Manager;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Maps_red\TicketingBundle\Entity\Ticket;
 use Maps_red\TicketingBundle\Model\TicketInterface;
 use Maps_red\TicketingBundle\Repository\TicketRepository;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -24,6 +24,9 @@ class TicketManager extends AbstractManager
     /** @var TicketStatusManager $ticketStatusManager */
     private $ticketStatusManager;
 
+    /** @var AuthorizationCheckerInterface $authorizationChecker */
+    private $authorizationChecker;
+
     /**
      * TicketManager constructor.
      * @param EntityManagerInterface $manager
@@ -31,15 +34,19 @@ class TicketManager extends AbstractManager
      * @param bool $enableHistory
      * @param bool $enableTicketRestriction
      * @param TicketStatusManager $ticketStatusManager
+     * @param AuthorizationCheckerInterface $authorizationChecker
      */
     public function __construct(EntityManagerInterface $manager, string $class, bool $enableHistory, bool $enableTicketRestriction,
-                                TicketStatusManager $ticketStatusManager)
+                                TicketStatusManager $ticketStatusManager, AuthorizationCheckerInterface $authorizationChecker)
     {
         parent::__construct($manager, $class);
         $this->enableHistory = $enableHistory;
         $this->enableTicketRestriction = $enableTicketRestriction;
         $this->ticketStatusManager = $ticketStatusManager;
+        $this->authorizationChecker = $authorizationChecker;
     }
+
+    /* Form Handler */
 
     /**
      * @param UserInterface $user
@@ -58,6 +65,9 @@ class TicketManager extends AbstractManager
 
         $this->persistAndFlush($ticket);
     }
+
+
+    /* DataTables */
 
     /**
      * @param array $datas
@@ -103,10 +113,10 @@ class TicketManager extends AbstractManager
     }
 
     /**
-     * @param Ticket $ticket
+     * @param TicketInterface $ticket
      * @return array
      */
-    public function toArray(Ticket $ticket)
+    public function toArray(TicketInterface $ticket)
     {
         return [
             'id' => $ticket->getId(),
@@ -120,6 +130,31 @@ class TicketManager extends AbstractManager
         ];
     }
 
+
+    /* Helpers */
+
+    /**
+     * @param TicketInterface $ticket
+     * @param UserInterface $user
+     * @return bool
+     */
+    public function isUserTicketAuthor(TicketInterface $ticket, UserInterface $user)
+    {
+        return $ticket->getAuthor() === $user;
+    }
+
+    /**
+     * @param TicketInterface $ticket
+     * @param UserInterface $user
+     * @return bool
+     */
+    public function isTicketPrivate(TicketInterface $ticket, UserInterface $user)
+    {
+        return !$ticket->getPublic() && !$this->isGranted("ROLE_MODERATEUR_JUNIOR") && !$this->isUserTicketAuthor($ticket, $user);
+    }
+
+
+
     /**
      * @return bool
      */
@@ -127,4 +162,29 @@ class TicketManager extends AbstractManager
     {
         return $this->enableTicketRestriction;
     }
+
+    public function isTicketGranted(TicketInterface $ticket, UserInterface $user)
+    {
+        if ($this->isUserTicketAuthor($ticket, $user)) {
+            return true;
+        }
+
+        if ($this->isTicketPrivate($ticket, $user)) {
+            return $this->isGranted($ticket->getCategory()->getRole());
+        }
+
+        return true;
+    }
+
+
+    /**
+     * @param $role
+     * @return bool
+     */
+    private function isGranted($role)
+    {
+        return $this->authorizationChecker->isGranted($role);
+    }
+
+
 }

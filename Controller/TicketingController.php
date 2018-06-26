@@ -3,6 +3,7 @@
 namespace Maps_red\TicketingBundle\Controller;
 
 use Maps_red\TicketingBundle\Manager\TicketStatusManager;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Maps_red\TicketingBundle\Entity\Ticket;
@@ -64,9 +65,35 @@ class TicketingController extends Controller
     /**
      * @Route("/detail/{id}", name="ticketing_detail", options={"expose": "true"})
      * @param Ticket $ticket
+     * @return RedirectResponse|Response
      */
     public function detail(Ticket $ticket)
     {
-        var_dump($ticket);
+        if (!$this->get(TicketManager::class)->isTicketGranted($ticket, $this->getUser())) {
+            $this->addFlash("warning", "Ce ticket appartient à une catégorie restreinte, vous ne disposez pas des 
+            permissions suffisantes pour l'afficher");
+
+            return $this->redirectToRoute("ticketing_perso");
+        }
+
+//        $comment = new Comment();
+//        $commentForm = $this->createForm(CreateCommentForm::class, $comment);
+//        $closeForm = $this->createForm(CloseTicket::class, $ticket);
+
+//        $commentForm->handleRequest($request);
+//        $closeForm->handleRequest($request);
+
+//        $this->get(HistoryManager::class)->setSeen($this->getUser(), $ticket);
+
+//        $route = $this->redirectToRoute("ticket_detail", ['id' => $ticket->getId()]);
+//        $isModeratorOrAuthor = $this->isGranted("ROLE_MODERATEUR_JUNIOR") || $this->getUser() === $ticket->getAuthor();
+
+
+
+        return $this->render("@Ticketing/ticketing/detail_page.html.twig", [
+            'ticket' => $ticket,
+//            'form' => $commentForm->createView(),
+//            'close_form' => $closeForm->createView(),
+        ]);
     }
 }

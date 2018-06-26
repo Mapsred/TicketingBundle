@@ -67,4 +67,6 @@ interface TicketInterface
 
     public function getReferences(): ?ArrayCollection;
 
+    public function getCreatedAt(): ?\DateTime;
+
 }
