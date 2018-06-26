@@ -5,6 +5,7 @@ namespace Maps_red\TicketingBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Maps_red\TicketingBundle\Model\TicketCategoryInterface;
+use Maps_red\TicketingBundle\Model\TicketCommentInterface;
 use Maps_red\TicketingBundle\Model\TicketInterface;
 use Maps_red\TicketingBundle\Model\TicketPriorityInterface;
 use Maps_red\TicketingBundle\Model\TicketStatusInterface;
@@ -103,11 +104,17 @@ class Ticket implements TicketInterface
     protected $references;
 
     /**
+     * @ORM\OneToMany(targetEntity="Maps_red\TicketingBundle\Model\TicketCommentInterface", mappedBy="ticket", cascade={"persist"})
+     */
+    protected $comments;
+
+    /**
      * Ticket constructor.
      */
     public function __construct()
     {
         $this->references = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -287,5 +294,35 @@ class Ticket implements TicketInterface
     public function getReferences(): ?ArrayCollection
     {
         return $this->references;
+    }
+
+    public function addComment(TicketCommentInterface $comment): TicketInterface
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(TicketCommentInterface $comment): TicketInterface
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+        }
+
+        return $this;
+    }
+
+    public function setComments($comments): TicketInterface
+    {
+        $this->comments = $comments;
+
+        return $this;
+    }
+
+    public function getComments(): ?ArrayCollection
+    {
+        return $this->comments;
     }
 }

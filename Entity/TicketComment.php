@@ -4,6 +4,7 @@ namespace Maps_red\TicketingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Maps_red\TicketingBundle\Model\TicketCommentInterface;
+use Maps_red\TicketingBundle\Model\TicketInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -25,6 +26,14 @@ class TicketComment implements TicketCommentInterface
      * @ORM\ManyToOne(targetEntity="Symfony\Component\Security\Core\User\UserInterface")
      */
     private $author;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Model\TicketInterface", inversedBy="comments")
+     *
+     * @ORM\JoinColumn(name="ticket", referencedColumnName="id", nullable=false)
+     */
+    protected $ticket;
+
 
     /**
      * @var integer
@@ -72,6 +81,18 @@ class TicketComment implements TicketCommentInterface
     public function setAuthor(?UserInterface $author): TicketCommentInterface
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getTicket(): ?TicketInterface
+    {
+        return $this->ticket;
+    }
+
+    public function setTicket($ticket):? TicketCommentInterface
+    {
+        $this->ticket = $ticket;
 
         return $this;
     }

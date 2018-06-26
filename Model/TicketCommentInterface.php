@@ -28,4 +28,7 @@ interface TicketCommentInterface
 
     public function setAuthor(?UserInterface $author): TicketCommentInterface;
 
+    public function getTicket(): ?TicketInterface;
+
+    public function setTicket($ticket):? TicketCommentInterface;
 }

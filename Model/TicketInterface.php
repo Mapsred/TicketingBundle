@@ -73,4 +73,11 @@ interface TicketInterface
 
     public function getCreatedAt(): ?\DateTime;
 
+    public function addComment(TicketCommentInterface $comment): TicketInterface;
+
+    public function removeComment(TicketCommentInterface $comment): TicketInterface;
+
+    public function setComments($comments): TicketInterface;
+
+    public function getComments(): ?ArrayCollection;
 }
