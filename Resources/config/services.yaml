@@ -7,6 +7,10 @@ services:
         tags:
             - { name: form.type }
 
+    Maps_red\TicketingBundle\Form\TicketCommentForm:
+        tags:
+            - { name: form.type }
+
     Maps_red\TicketingBundle\Maker\MakeTicketing:
         arguments: ["@maker.file_manager"]
         tags:

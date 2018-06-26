@@ -2,6 +2,8 @@
 
 namespace Maps_red\TicketingBundle\Controller;
 
+use Maps_red\TicketingBundle\Entity\TicketComment;
+use Maps_red\TicketingBundle\Form\TicketCommentForm;
 use Maps_red\TicketingBundle\Manager\TicketStatusManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -77,8 +79,8 @@ class TicketingController extends Controller
             return $this->redirectToRoute("ticketing_perso");
         }
 
-//        $comment = new Comment();
-//        $commentForm = $this->createForm(CreateCommentForm::class, $comment);
+        $comment = new TicketComment();
+        $commentForm = $this->createForm(TicketCommentForm::class, $comment);
 //        $closeForm = $this->createForm(CloseTicket::class, $ticket);
 
 //        $commentForm->handleRequest($request);
