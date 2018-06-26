@@ -3,13 +3,9 @@ services:
         resource: '../../Controller'
         tags: ['controller.service_arguments']
 
-    Maps_red\TicketingBundle\Form\TicketForm:
-        tags:
-            - { name: form.type }
-
-    Maps_red\TicketingBundle\Form\TicketCommentForm:
-        tags:
-            - { name: form.type }
+    Maps_red\TicketingBundle\Form\:
+        resource: '../../Form'
+        tags: ['form.type']
 
     Maps_red\TicketingBundle\Maker\MakeTicketing:
         arguments: ["@maker.file_manager"]
