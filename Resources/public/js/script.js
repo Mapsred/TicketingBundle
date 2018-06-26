@@ -90,7 +90,7 @@ let Table = {
                     className: "",
                     render: function (data, type, row) {
                         data = data.split(' - ');
-                        var color = data[1];
+                        const color = data[1];
 
                         return "<div class='label bg-" + color + "'>" + data[0] + "</div>";
                     }
@@ -124,6 +124,118 @@ let Table = {
     },
 };
 
+const Detail = {
+    init: function () {
+        $('#change_category').on('shown.bs.modal', function () {
+            Detail.categories();
+        });
+
+        $("#status_btn").unbind('click').bind('click', function () {
+            Detail.status($(this).data("id"));
+        });
+    },
+
+    categories: function () {
+        const route = Routing.generate("ticketing_ajax_categories");
+        $.ajax({
+            url: route,
+            type: "GET",
+            data: {'cat': true},
+            success: function (res) {
+                Detail.treatment(res.categories);
+            }
+        });
+    },
+
+    treatment: function (data) {
+        let select = "<select class=\"form-control\" id='cat_select'>";
+
+        $.each(data, function (key, value) {
+            select += "<option>" + value + "</option>";
+        });
+
+        select += "</select>";
+
+        $("#cat_modal_body").html(select);
+
+        $("#cat_validate").click(function () {
+            const id = $("#cat_btn").data("id");
+            const selectMenu = document.getElementById('cat_select');
+            const cat = selectMenu.options[selectMenu.selectedIndex].text;
+
+            $('#change_category').modal('hide');
+            const catTd = $("#cat");
+            const old = catTd.html();
+            $("#flashbag").html("<div class=\"alert alert-success\">" +
+                "Catégorie changée de " + old + " à " + cat + "</div>");
+
+            catTd.html(cat);
+            Detail.changeCategory(cat, id);
+        });
+    },
+
+    changeCategory: function (cat, id) {
+        const route = Routing.generate("ticketing_ajax_cat_change");
+        $.ajax({
+            url: route,
+            type: "POST",
+            data: {'cat': cat, id: id},
+            success: function (res) {
+            }
+        });
+    },
+
+    //TODO
+    status: function (id) {
+        const route = Routing.generate("ajax_ticket_status_update");
+        $.ajax({
+            url: route,
+            type: "POST",
+            data: {'id': id},
+            success: function () {
+                window.location.reload();
+            }
+        });
+    }
+};
+
+//TODO
+const Rating = {
+    init: function () {
+        Rating.create($("#rating-input"));
+
+        $("#rating-input").on("rating.change", function (event, value) {
+            $(this).rating('destroy').prop('readonly', true);
+            Rating.create(this);
+            Rating.send($("#rating-box"), value, $("#rating-box").data('ticket'));
+        });
+    },
+
+    create: function (object) {
+        $(object).rating({
+            min: $(object).data('min'),
+            max: $(object).data('max'),
+            step: $(object).data('step'),
+            size: $(object).data('size'),
+            showClear: $(object).data('show-clear'),
+            showCaption: $(object).data('show-caption'),
+            readonly: $(object).prop('readonly')
+        });
+    },
+
+    send: function (rating_box, rating, ticket) {
+        const outputDiv = $($(rating_box).next());
+        $.ajax({
+            type: "POST",
+            url: Routing.generate("ajax_rating_add"),
+            data: {rating: rating, ticket: ticket},
+            success: function (res) {
+                outputDiv.html(res['success']);
+                outputDiv.addClass('text-success');
+            }
+        });
+    }
+};
 
 $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
@@ -148,4 +260,12 @@ $(document).ready(function () {
     });
 
     Table.init();
+
+    if (document.getElementById("cat")) {
+        Detail.init();
+    }
+
+    if (document.getElementById("rating-input")) {
+        Rating.init();
+    }
 });

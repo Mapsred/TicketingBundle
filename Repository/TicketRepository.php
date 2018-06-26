@@ -4,8 +4,15 @@ namespace Maps_red\TicketingBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Util\Inflector;
+use Maps_red\TicketingBundle\Model\TicketInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Class TicketRepository
+ * @package Maps_red\TicketingBundle\Repository
+ * @method TicketInterface|object|null find($id, $lockMode = null, $lockVersion = null)
+ * @method TicketInterface|object|null findOneBy(array $criteria, array $orderBy = null)
+ */
 class TicketRepository extends ServiceEntityRepository
 {
     /** @var array $joins */
