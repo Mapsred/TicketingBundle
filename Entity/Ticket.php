@@ -347,4 +347,25 @@ class Ticket implements TicketInterface
 
         return $this->comments;
     }
+
+    public function isClosed(): bool
+    {
+        return $this->getStatus()->getName() == "closed";
+    }
+
+    public function isOpen(): bool
+    {
+        return $this->getStatus()->getName() == "open";
+    }
+
+    public function isPending(): bool
+    {
+        return $this->getStatus()->getName() == "pending";
+    }
+
+    public function isWaiting(): bool
+    {
+        return $this->getStatus()->getName() == "waiting";
+    }
+
 }

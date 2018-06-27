@@ -131,6 +131,50 @@
         </div>
     {% endif %}
 
+    {% if ticket.closed == false %}
+        <div class="box box-red">
+            <div class="box-header with-border">
+                <div class="box-title">Répondre</div>
+            </div>
+            <div class="box-body">
+                {{ form_start(form, {'attr': {'class': 'form-inline'} }) }}
+                <div class="col-md-8 col-lg-7">
+                    <div class="form-group">
+                        {{ form_errors(form.text) }}
+                        {{ form_widget(form.text, {'attr': {'class': 'form-control', 'cols': '80', 'rows': '5' } }) }}
+                        <br>
+                        <input id="submit" class="form-control btn bg-ticketing btn-flat margin-top15"
+                               value="Envoyer votre réponse" type="submit">
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    {% else %}
+        <div class="box box-red">
+            <div class="box-header with-border">
+                <div class="box-title">Commentaire de clôture</div>
+            </div>
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Auteur</th>
+                        <th>Commentaire</th>
+                        <th>Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ ticket.closedBy.username }}</td>
+                        <td>{{ ticket.closureResponse }}</td>
+                        <td>{{ ticket.closedBy|date("d-m-Y h:i:s") }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endif %}
 
 
     {% include "@Ticketing/ticketing/modals/change_category.html.twig" %}
