@@ -43,8 +43,10 @@ class TicketRepository extends ServiceEntityRepository
         }
 
         if ($type === 'list_public') {
-            $qb->andWhere('q.author = :author');
-            $parameters['author'] = $user;
+            $qb->andWhere($qb->expr()->orX('q.author = :_author', 'q.public = :_public'));
+
+            $parameters['_author'] = $user;
+            $parameters['_public'] = true;
         }
 
         if (null !== $globalSearch) {
