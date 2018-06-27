@@ -38,7 +38,6 @@ class TicketManager extends AbstractManager
      * @param bool $enableHistory
      * @param bool $enableTicketRestriction
      * @param string $restrictedTicketsRole
-     * @param array $ticketStatus
      * @param TicketStatusManager $ticketStatusManager
      * @param Security $security
      */
@@ -133,7 +132,7 @@ class TicketManager extends AbstractManager
     public function handleDataTable(array $datas, string $status, string $type, UserInterface $user)
     {
         if ($type === 'list' && $this->isTicketRestrictionEnabled()) {
-            $type = $this->isTicketRestrictionEnabledAndGranted() ? "list" : "list_public";
+            $type = $this->isTicketRestrictionEnabled() ? "list" : "list_public";
         }
 
         $columns = array_combine(

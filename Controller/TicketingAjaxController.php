@@ -8,10 +8,10 @@
 
 namespace Maps_red\TicketingBundle\Controller;
 
-
 use Maps_red\TicketingBundle\Entity\Ticket;
 use Maps_red\TicketingBundle\Manager\TicketCategoryManager;
 use Maps_red\TicketingBundle\Manager\TicketManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,6 +24,7 @@ class TicketingAjaxController extends Controller
 {
     /**
      * @Route("/{status}/{type}", name="ticketing_ajax_datatable", options={"expose": "true"})
+     * @Method({"GET"})
      * @param Request $request
      * @param TicketManager $ticketManager
      * @param string $status
@@ -51,7 +52,7 @@ class TicketingAjaxController extends Controller
      * @param TicketCategoryManager $ticketCategoryManager
      * @return Response
      */
-    public function getCategoriesAction(Request $request, TicketCategoryManager $ticketCategoryManager)
+    public function getCategories(Request $request, TicketCategoryManager $ticketCategoryManager)
     {
         if ($request->query->has("cat")) {
             return $this->json(['categories' => $ticketCategoryManager->getRepository()->findAllCategories()]);
@@ -62,6 +63,7 @@ class TicketingAjaxController extends Controller
 
     /**
      * @Route("/categories/change", name="ticketing_ajax_cat_change", options={"expose"=true})
+     * @Method({"POST"})
      * @param Request $request
      * @param TicketManager $ticketManager
      * @param TicketCategoryManager $ticketCategoryManager
@@ -69,7 +71,7 @@ class TicketingAjaxController extends Controller
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function setCategoriesAction(Request $request, TicketManager $ticketManager, TicketCategoryManager $ticketCategoryManager)
+    public function setCategories(Request $request, TicketManager $ticketManager, TicketCategoryManager $ticketCategoryManager)
     {
         if ($request->request->has("cat") && $request->request->has("id")) {
             $ticket = $ticketManager->getRepository()->find($request->request->get('id'));
