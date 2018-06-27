@@ -341,6 +341,10 @@ class Ticket implements TicketInterface
 
     public function getComments(): ?ArrayCollection
     {
+        if (!$this->comments instanceof ArrayCollection) {
+            $this->comments = new ArrayCollection();
+        }
+
         return $this->comments;
     }
 }

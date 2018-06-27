@@ -5,6 +5,7 @@ namespace Maps_red\TicketingBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Maps_red\TicketingBundle\Model\TicketCommentInterface;
 use Maps_red\TicketingBundle\Model\TicketInterface;
+use Maps_red\TicketingBundle\Model\Traits\Timestampable;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -12,6 +13,15 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class TicketComment implements TicketCommentInterface
 {
+    use Timestampable;
+
+    /**
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
     /**
      * @ORM\Column(type="text")
      */
@@ -33,16 +43,6 @@ class TicketComment implements TicketCommentInterface
      * @ORM\JoinColumn(name="ticket", referencedColumnName="id", nullable=false)
      */
     protected $ticket;
-
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
 
     public function getId() : ?int
     {

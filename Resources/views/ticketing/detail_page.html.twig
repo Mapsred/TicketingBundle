@@ -12,7 +12,8 @@
             <h3 class="box-title">Ticket #{{ ticket.id }}</h3>
             {% if isAuthorOrGranted %}
                 <form method="post" class="pull-right">
-                    <button class="btn btn bg-ticketing btn-flat" name="public" value="{{ ticket.public == 0 }}" type="submit">
+                    <button class="btn btn bg-ticketing btn-flat" name="public" value="{{ ticket.public == 0 }}"
+                            type="submit">
                         Rendre {{ ticket.public ? "privé" : "public" }}
                     </button>
                 </form>
@@ -98,6 +99,38 @@
             {{ ticket.description|urlreplacer|raw|nl2br }}
         </div>
     </div>
+
+    {% if not ticket.comments.empty %}
+        <div class="box box-red">
+            <div class="box-header with-border">
+                <div class="box-title">Commentaires</div>
+            </div>
+
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Auteur</th>
+                        <th>Commentaire</th>
+                        <th>Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for comment in ticket.comments %}
+                        <tr>
+                            <td>
+                                <span>{{ comment.author.username }}</span>
+                            </td>
+                            <td>{{ comment.text|urlreplacer|raw|nl2br }}</td>
+                            <td>{{ comment.createdAt|date("d/m/Y H:i:s") }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endif %}
+
 
 
     {% include "@Ticketing/ticketing/modals/change_category.html.twig" %}
