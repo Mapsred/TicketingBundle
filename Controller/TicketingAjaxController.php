@@ -13,6 +13,7 @@ use Maps_red\TicketingBundle\Manager\TicketCategoryManager;
 use Maps_red\TicketingBundle\Manager\TicketManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,6 +25,7 @@ class TicketingAjaxController extends Controller
 {
     /**
      * @Route("/{status}/{type}", name="ticketing_ajax_datatable", options={"expose": "true"})
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @Method({"GET"})
      * @param Request $request
      * @param TicketManager $ticketManager
@@ -48,6 +50,7 @@ class TicketingAjaxController extends Controller
 
     /**
      * @Route("/categories", name="ticketing_ajax_categories", options={"expose"=true})
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @param Request $request
      * @param TicketCategoryManager $ticketCategoryManager
      * @return Response
@@ -63,6 +66,7 @@ class TicketingAjaxController extends Controller
 
     /**
      * @Route("/categories/change", name="ticketing_ajax_cat_change", options={"expose"=true})
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @Method({"POST"})
      * @param Request $request
      * @param TicketManager $ticketManager
@@ -91,6 +95,7 @@ class TicketingAjaxController extends Controller
 
     /**
      * @Route("/update_ticket_status", name="ticketing_ajax_status_update", options={"expose"=true})
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @Method({"POST"})
      * @param Request $request
      * @param TicketManager $ticketManager

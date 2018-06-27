@@ -7,6 +7,7 @@ use Maps_red\TicketingBundle\Form\TicketCloseForm;
 use Maps_red\TicketingBundle\Form\TicketCommentForm;
 use Maps_red\TicketingBundle\Manager\TicketCommentManager;
 use Maps_red\TicketingBundle\Manager\TicketStatusManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,6 +22,7 @@ class TicketingController extends Controller
 
     /**
      * @Route("/list", name="ticketing_list")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @param TicketStatusManager $ticketStatusManager
      * @return Response
      */
@@ -33,6 +35,7 @@ class TicketingController extends Controller
 
     /**
      * @Route("/perso", name="ticketing_perso")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @param TicketStatusManager $ticketStatusManager
      * @return Response
      */
@@ -45,6 +48,7 @@ class TicketingController extends Controller
 
     /**
      * @Route("/new", name="ticketing_new", methods="GET|POST")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @param Request $request
      * @param TicketManager $ticketManager
      * @return Response
@@ -72,15 +76,15 @@ class TicketingController extends Controller
 
     /**
      * @Route("/detail/{id}", name="ticketing_detail", options={"expose": "true"})
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @param Request $request
      * @param Ticket $ticket
      * @param TicketManager $ticketManager
-     * @param TicketCommentManager $ticketCommentManager
      * @return RedirectResponse|Response
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function detail(Request $request, Ticket $ticket, TicketManager $ticketManager, TicketCommentManager $ticketCommentManager)
+    public function detail(Request $request, Ticket $ticket, TicketManager $ticketManager)
     {
         if (!$ticketManager->isTicketGranted($ticket, $this->getUser())) {
             $this->addFlash("warning", "Ce ticket appartient à une catégorie restreinte, vous ne disposez pas des 
