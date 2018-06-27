@@ -7,6 +7,10 @@ services:
         resource: '../../Form'
         tags: ['form.type']
 
+    Maps_red\TicketingBundle\Utils\:
+        resource: '../../Utils'
+        autowire: true
+
     Maps_red\TicketingBundle\Maker\MakeTicketing:
         arguments: ["@maker.file_manager"]
         tags:
@@ -64,5 +68,6 @@ services:
 
     Maps_red\TicketingBundle\Twig\TicketingExtension:
         arguments: ["%ticketing.templates%", "%ticketing.stylesheets%", "%ticketing.javascripts%"]
+        autowire: true
         tags:
             - { name: twig.extension }

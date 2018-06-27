@@ -75,6 +75,31 @@
         <!-- /.box-body -->
     </div>
 
+    <div class="box box-red">
+        <div class="box-header with-border">
+            <div class="box-title">Description</div>
+        </div>
+        <div class="box-body">
+            {% if ticket.references is not null and ticket.references|length > 0 %}
+                <div class="help-block">
+                    <ul class="list-unstyled">
+                        <li>
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            L'auteur de ce ticket a ajouté les tickets suivants en référence :
+                            {% for reference in ticket.references %}
+                                {% set route = path("ticketing_detail", {id: reference.id}) %}
+                                {% set url = url|merge(["<a target='_blank' href='#{route}'>##{reference.id}</a>"]) %}
+                            {% endfor %}
+                            {{ url|join(", ")|raw }}
+                        </li>
+                    </ul>
+                </div>
+            {% endif %}
+            {{ ticket.description|urlreplacer|raw|nl2br }}
+        </div>
+    </div>
+
+
     {% include "@Ticketing/ticketing/modals/change_category.html.twig" %}
 
 {% endblock %}
