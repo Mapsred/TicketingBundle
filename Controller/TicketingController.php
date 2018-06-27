@@ -100,6 +100,22 @@ class TicketingController extends Controller
         $isAuthorOrGranted = $ticketManager->isAuthorOrGranted($ticket, $this->getUser());
         $isGranted = $ticketManager->isPrivateTicketAuthorized();
 
+        //Current user manage this ticket
+        if ($request->request->has("manage") && $isGranted) {
+            $ticketManager->handleManageAction($ticket, $this->getUser());
+            $this->addFlash('info', 'Vous êtes maintenant en charge de ce ticket');
+
+            return $route;
+        }
+
+        //Current user open again this ticket
+        if ($request->request->has("open") && $isGranted) {
+            $ticketManager->handleOpenAction($ticket);
+            $this->addFlash('success', 'Le ticket a bien été réouvert');
+
+            return $route;
+        }
+
         if ($request->request->has("public") && $isAuthorOrGranted) {
             $isPublic = (int)$request->request->get("public");
             $ticketManager->handlePublicStatusAction($ticket, $this->getUser(), $isPublic);
@@ -107,7 +123,6 @@ class TicketingController extends Controller
 
             return $route;
         }
-
 
 
         //Current user add a comment to this ticket

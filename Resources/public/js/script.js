@@ -185,9 +185,8 @@ const Detail = {
         });
     },
 
-    //TODO
     status: function (id) {
-        const route = Routing.generate("ajax_ticket_status_update");
+        const route = Routing.generate("ticketing_ajax_status_update");
         $.ajax({
             url: route,
             type: "POST",

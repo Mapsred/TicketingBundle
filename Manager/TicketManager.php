@@ -3,6 +3,7 @@
 namespace Maps_red\TicketingBundle\Manager;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Maps_red\TicketingBundle\Entity\TicketComment;
 use Maps_red\TicketingBundle\Model\TicketCommentInterface;
 use Maps_red\TicketingBundle\Model\TicketInterface;
 use Maps_red\TicketingBundle\Repository\TicketRepository;
@@ -118,6 +119,59 @@ class TicketManager extends AbstractManager
         $this->persistAndFlush($ticket);
     }
 
+    /**
+     * @param TicketInterface $ticket
+     * @param UserInterface $user
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function handleManageAction(TicketInterface $ticket, UserInterface $user)
+    {
+        $status = $this->ticketStatusManager->getPendingStatus();
+        $ticket->setAssignated($user)->setStatus($status);
+
+        $this->persistAndFlush($ticket);
+    }
+
+    /**
+     * @param TicketInterface $ticket
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function handleOpenAction(TicketInterface $ticket)
+    {
+        $comment = new TicketComment();
+        $comment
+            ->setAuthor($ticket->getClosedBy())
+            ->setTicket($ticket)
+            ->setText($ticket->getClosureResponse());
+
+        $ticket->addComment($comment);
+        $status = $this->ticketStatusManager->getOpenStatus();
+
+        $ticket->setClosedBy(null)
+            ->setClosedAt(null)
+            ->setClosureResponse(null)
+            ->setAssignated(null)
+            ->setStatus($status);
+
+        $this->persistAndFlush($ticket);
+    }
+
+    /**
+     * @param TicketInterface $ticket
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function handleStatusChange(TicketInterface $ticket)
+    {
+        $status = $ticket->getStatus()->getName() == "waiting" ? "pending" :"waiting";
+
+        $status = $this->ticketStatusManager->getStatus($status);
+        $ticket->setStatus($status);
+
+        $this->persistAndFlush($ticket);
+    }
 
     /* DataTables */
 

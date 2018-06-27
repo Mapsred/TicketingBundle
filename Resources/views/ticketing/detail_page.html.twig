@@ -57,14 +57,14 @@
                     </td>
                     <td>
                         {% if ticket.assignated is not null %}
-                            {% set message =
-                                " <br> Moyenne : <br>" ~
-                                render(controller('App\\Controller\\Ticket\\RatingController:getUserRating', {
-                                'user_id': ticket.assignated.id
-                            })) ~
-                                render(controller('App\\Controller\\Ticket\\RatingController:getUserClosedTickets', {
-                                'user_id': ticket.assignated.id
-                            } )) %}
+                            {#{% set message =#}
+                                {#" <br> Moyenne : <br>" ~#}
+                                {#render(controller('App\\Controller\\Ticket\\RatingController:getUserRating', {#}
+                                {#'user_id': ticket.assignated.id#}
+                            {#})) ~#}
+                                {#render(controller('App\\Controller\\Ticket\\RatingController:getUserClosedTickets', {#}
+                                {#'user_id': ticket.assignated.id#}
+                            {#} )) %}#}
 
                         {% endif %}
                         <span>{{ ticket.assignated.username|default("Non assigné") }}</span>
@@ -131,7 +131,7 @@
         </div>
     {% endif %}
 
-    {% if ticket.closed == false %}
+    {% if not ticket.closed %}
         <div class="box box-red">
             <div class="box-header with-border">
                 <div class="box-title">Répondre</div>
@@ -172,6 +172,60 @@
                     </tr>
                     </tbody>
                 </table>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if isGranted or (isAuthor and not ticket.closed) %}
+        <div class="box box-red">
+            <div class="box-header with-border">
+                {% if isGranted or isAuthor and not ticket.closed %}
+                    <div class="box-title">Clôturer le ticket</div>
+                {% elseif isGranted and ticket.closed %}
+                    <div class="box-title">Réouvrir le ticket</div>
+                {% endif %}
+            </div>
+            <div class="box-body">
+                {# Prise en charge du ticket - non assigné et granted #}
+                {% if isGranted and (ticket.assignated or ticket.waiting) is empty and not ticket.closed %}
+                    <p>Vous devez prendre en charge le ticket pour le clôturer</p>
+                    <form method="post">
+                        <button class="btn bg-ticketing btn-flat margin-top15" name="manage" value="true"
+                                type="submit">
+                            Prendre le ticket en charge
+                        </button>
+                    </form>
+                    {# Fermeture du ticket - utilisateur courant est auteur ou modérateur #}
+                {% elseif isGranted or isAuthor %}
+                    {# Ticket actif #}
+                    {% if not ticket.closed %}
+                        {# Soit utilisateur courant est auteur soit utilisateur courant est staff et ticket attribué #}
+                        {% if isAuthor or (isGranted and (ticket.assignated or ticket.waiting) is not empty) %}
+                            {{ form_start(close_form, {'attr': {'class': 'form-inline col-md-6'} }) }}
+                            {# Si l'utilisateur courant est l'auteur on cache la zone de réponse #}
+                            <div class="form-group">
+                                <div>
+                                    {{ form_errors(close_form.closureResponse) }}
+                                    {{ form_widget(close_form.closureResponse, {
+                                        'attr': {'class': 'form-control', 'cols': '80', 'rows': '5'}
+                                    }) }}
+                                </div>
+                                <input id="submit" value="Fermer le ticket"
+                                       class="form-control btn bg-ticketing btn-flat margin-top15" type="submit">
+                            </div>
+                            {{ form_end(close_form) }}
+                        {% endif %}
+
+                        {# Ticket inactif #}
+                    {% elseif ticket.closed and isGranted %}
+                        <form method="post">
+                            <button class="btn btn bg-ticketing btn-flat margin-top15" name="open" value="true"
+                                    type="submit">
+                                Réouvrir le ticket
+                            </button>
+                        </form>
+                    {% endif %}
+                {% endif %}
             </div>
         </div>
     {% endif %}

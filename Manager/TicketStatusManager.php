@@ -40,10 +40,18 @@ class TicketStatusManager extends AbstractManager
     }
 
     /**
+     * @return mixed|null|object
+     */
+    public function getPendingStatus()
+    {
+        return $this->getStatus('pending');
+    }
+
+    /**
      * @param $type
      * @return mixed|null|object
      */
-    private function getStatus($type)
+    public function getStatus($type)
     {
         $status = $this->ticketStatus[$type];
         if (null === $status = $this->getRepository()->findOneBy(['name' => $status])) {

@@ -89,4 +89,23 @@ class TicketingAjaxController extends Controller
         return $this->json([], Response::HTTP_FORBIDDEN);
     }
 
+    /**
+     * @Route("/update_ticket_status", name="ticketing_ajax_status_update", options={"expose"=true})
+     * @Method({"POST"})
+     * @param Request $request
+     * @param TicketManager $ticketManager
+     * @return Response
+     */
+    public function updateTicketStatusAction(Request $request, TicketManager $ticketManager)
+    {
+        if ($request->request->has("id") && $ticketManager->isPrivateTicketAuthorized()) {
+            $ticket = $ticketManager->getRepository()->find($request->request->get("id"));
+            $ticketManager->handleStatusChange($ticket);
+
+            return $this->json(["message" => "success"]);
+        }
+
+        return $this->json([], Response::HTTP_FORBIDDEN);
+    }
+
 }
