@@ -8,7 +8,7 @@
 
 namespace Maps_red\TicketingBundle\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 interface TicketInterface
@@ -73,15 +73,7 @@ interface TicketInterface
 
     public function setReferences($references): TicketInterface;
 
-    public function getReferences(): ?ArrayCollection;
+    public function getReferences(): ?Collection;
 
     public function getCreatedAt(): ?\DateTime;
-
-    public function addComment(TicketCommentInterface $comment): TicketInterface;
-
-    public function removeComment(TicketCommentInterface $comment): TicketInterface;
-
-    public function setComments($comments): TicketInterface;
-
-    public function getComments(): ?ArrayCollection;
 }

@@ -28,21 +28,16 @@ class TicketComment implements TicketCommentInterface
     private $text;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $status;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Symfony\Component\Security\Core\User\UserInterface")
+     * @ORM\JoinColumn(name="author", referencedColumnName="id", nullable=false)
      */
     private $author;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Model\TicketInterface", inversedBy="comments")
-     *
+     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Model\TicketInterface")
      * @ORM\JoinColumn(name="ticket", referencedColumnName="id", nullable=false)
      */
-    protected $ticket;
+    private $ticket;
 
     public function getId() : ?int
     {
@@ -57,18 +52,6 @@ class TicketComment implements TicketCommentInterface
     public function setText(string $text): TicketCommentInterface
     {
         $this->text = $text;
-
-        return $this;
-    }
-
-    public function getStatus(): ?int
-    {
-        return $this->status;
-    }
-
-    public function setStatus(int $status): TicketCommentInterface
-    {
-        $this->status = $status;
 
         return $this;
     }

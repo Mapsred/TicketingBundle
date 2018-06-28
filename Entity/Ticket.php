@@ -3,9 +3,9 @@
 namespace Maps_red\TicketingBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Maps_red\TicketingBundle\Model\TicketCategoryInterface;
-use Maps_red\TicketingBundle\Model\TicketCommentInterface;
 use Maps_red\TicketingBundle\Model\TicketInterface;
 use Maps_red\TicketingBundle\Model\TicketPriorityInterface;
 use Maps_red\TicketingBundle\Model\TicketStatusInterface;
@@ -107,12 +107,7 @@ class Ticket implements TicketInterface
      *      inverseJoinColumns={@ORM\JoinColumn(name="reference_id", referencedColumnName="id")}
      * )
      */
-    protected $references;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Maps_red\TicketingBundle\Model\TicketCommentInterface", mappedBy="ticket", cascade={"persist"})
-     */
-    protected $comments;
+    private $references;
 
     /**
      * Ticket constructor.
@@ -120,7 +115,6 @@ class Ticket implements TicketInterface
     public function __construct()
     {
         $this->references = new ArrayCollection();
-        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -309,43 +303,9 @@ class Ticket implements TicketInterface
         return $this;
     }
 
-    public function getReferences(): ?ArrayCollection
+    public function getReferences(): ?Collection
     {
         return $this->references;
-    }
-
-    public function addComment(TicketCommentInterface $comment): TicketInterface
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments->add($comment);
-        }
-
-        return $this;
-    }
-
-    public function removeComment(TicketCommentInterface $comment): TicketInterface
-    {
-        if ($this->comments->contains($comment)) {
-            $this->comments->removeElement($comment);
-        }
-
-        return $this;
-    }
-
-    public function setComments($comments): TicketInterface
-    {
-        $this->comments = $comments;
-
-        return $this;
-    }
-
-    public function getComments(): ?ArrayCollection
-    {
-        if (!$this->comments instanceof ArrayCollection) {
-            $this->comments = new ArrayCollection();
-        }
-
-        return $this->comments;
     }
 
     public function isClosed(): bool

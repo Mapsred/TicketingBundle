@@ -100,7 +100,7 @@
         </div>
     </div>
 
-    {% if not ticket.comments.empty %}
+    {% if not comments.empty %}
         <div class="box box-red">
             <div class="box-header with-border">
                 <div class="box-title">Commentaires</div>
@@ -116,7 +116,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for comment in ticket.comments %}
+                    {% for comment in comments %}
                         <tr>
                             <td>
                                 <span>{{ comment.author.username }}</span>

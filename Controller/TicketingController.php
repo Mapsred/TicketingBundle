@@ -2,16 +2,15 @@
 
 namespace Maps_red\TicketingBundle\Controller;
 
-use Maps_red\TicketingBundle\Entity\TicketComment;
 use Maps_red\TicketingBundle\Form\TicketCloseForm;
 use Maps_red\TicketingBundle\Form\TicketCommentForm;
 use Maps_red\TicketingBundle\Manager\TicketCommentManager;
 use Maps_red\TicketingBundle\Manager\TicketStatusManager;
+use Maps_red\TicketingBundle\Model\TicketInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Maps_red\TicketingBundle\Entity\Ticket;
 use Maps_red\TicketingBundle\Form\TicketForm;
 use Maps_red\TicketingBundle\Manager\TicketManager;
 use Symfony\Component\HttpFoundation\Request;
@@ -78,13 +77,14 @@ class TicketingController extends Controller
      * @Route("/detail/{id}", name="ticketing_detail", options={"expose": "true"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @param Request $request
-     * @param Ticket $ticket
+     * @param TicketInterface $ticket
      * @param TicketManager $ticketManager
+     * @param TicketCommentManager $ticketCommentManager
      * @return RedirectResponse|Response
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function detail(Request $request, Ticket $ticket, TicketManager $ticketManager)
+    public function detail(Request $request, TicketInterface $ticket, TicketManager $ticketManager, TicketCommentManager $ticketCommentManager)
     {
         if (!$ticketManager->isTicketGranted($ticket, $this->getUser())) {
             $this->addFlash("warning", "Ce ticket appartient à une catégorie restreinte, vous ne disposez pas des 
@@ -93,13 +93,15 @@ class TicketingController extends Controller
             return $this->redirectToRoute("ticketing_perso");
         }
 
-        $comment = new TicketComment();
+
+        $comment = $ticketCommentManager->newClass();
         $commentForm = $this->createForm(TicketCommentForm::class, $comment);
         $closeForm = $this->createForm(TicketCloseForm::class, $ticket);
 
         $commentForm->handleRequest($request);
         $closeForm->handleRequest($request);
 
+        $comments = $ticketCommentManager->getTicketComments($ticket);
         $route = $this->redirectToRoute("ticketing_detail", ['id' => $ticket->getId()]);
         $isAuthorOrGranted = $ticketManager->isAuthorOrGranted($ticket, $this->getUser());
         $isGranted = $ticketManager->isPrivateTicketAuthorized();
@@ -152,6 +154,7 @@ class TicketingController extends Controller
             'close_form' => $closeForm->createView(),
             'isAuthorOrGranted' => $isAuthorOrGranted,
             'isGranted' => $isGranted,
+            'comments' => $comments
         ]);
     }
 }

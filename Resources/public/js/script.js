@@ -1,4 +1,4 @@
-let Table = {
+const Table = {
     init: function () {
         $('.data-table').each(function () {
             let table = Table.initTable(this, $(this).data('status'), $(this).data('type'));

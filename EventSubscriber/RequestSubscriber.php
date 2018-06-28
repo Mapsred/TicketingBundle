@@ -60,6 +60,16 @@ class RequestSubscriber implements EventSubscriberInterface
             return;
         }
 
+        if ($event->getRequest()->get("_route") === "ticketing_detail") {
+            /** @var TicketInterface $ticket */
+            $ticket = $this->ticketManager->getRepository()->find($event->getRequest()->attributes->get('id'));
+            $ticketSeenEvent = new TicketSeenEvent($ticket);
+
+            $this->eventDispatcher->dispatch(TicketSeenEvent::NAME, $ticketSeenEvent);
+
+            $event->getRequest()->attributes->set('ticket', $ticket);
+        }
+
         $controller = explode("::", $event->getRequest()->attributes->get('_controller'))[0];
         if ($controller === 'Maps_red\TicketingBundle\Controller\TicketingController') {
             $user = $this->security->getUser();
@@ -68,14 +78,6 @@ class RequestSubscriber implements EventSubscriberInterface
             }
 
             throw new AccessDeniedHttpException();
-        }
-
-        if ($event->getRequest()->get("_route") === "ticketing_detail") {
-            /** @var TicketInterface $ticket */
-            $ticket = $this->ticketManager->getRepository()->find($event->getRequest()->attributes->get('id'));
-            $event = new TicketSeenEvent($ticket);
-
-            $this->eventDispatcher->dispatch(TicketSeenEvent::NAME, $event);
         }
     }
 

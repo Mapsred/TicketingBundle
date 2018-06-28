@@ -83,9 +83,8 @@ class TicketManager extends AbstractManager
     public function handleCommentAction(TicketInterface $ticket, UserInterface $user, TicketCommentInterface $comment)
     {
         $comment->setAuthor($user)->setTicket($ticket);
-        $ticket->addComment($comment);
 
-        $this->persistAndFlush($ticket);
+        $this->persistAndFlush($comment);
     }
 
     /**
@@ -146,7 +145,7 @@ class TicketManager extends AbstractManager
             ->setTicket($ticket)
             ->setText($ticket->getClosureResponse());
 
-        $ticket->addComment($comment);
+        $this->getManager()->persist($comment);
         $status = $this->ticketStatusManager->getOpenStatus();
 
         $ticket->setClosedBy(null)
