@@ -23,7 +23,7 @@ class TicketComment implements TicketCommentInterface
     private $id;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $text;
 
@@ -49,7 +49,7 @@ class TicketComment implements TicketCommentInterface
         return $this->text;
     }
 
-    public function setText(string $text): TicketCommentInterface
+    public function setText(?string $text): TicketCommentInterface
     {
         $this->text = $text;
 

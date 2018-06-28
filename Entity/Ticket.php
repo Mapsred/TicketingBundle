@@ -235,7 +235,7 @@ class Ticket implements TicketInterface
         return $this->closed_at;
     }
 
-    public function setClosedAt(\DateTimeInterface $closed_at): TicketInterface
+    public function setClosedAt(?\DateTimeInterface $closed_at): TicketInterface
     {
         $this->closed_at = $closed_at;
 
@@ -259,7 +259,7 @@ class Ticket implements TicketInterface
         return $this->public_at;
     }
 
-    public function setPublicAt(\DateTimeInterface $public_at): TicketInterface
+    public function setPublicAt(?\DateTimeInterface $public_at): TicketInterface
     {
         $this->public_at = $public_at;
 

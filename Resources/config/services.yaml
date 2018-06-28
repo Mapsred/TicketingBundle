@@ -1,6 +1,7 @@
 services:
     Maps_red\TicketingBundle\Controller\:
         resource: '../../Controller'
+        autowire: true
         tags: ['controller.service_arguments']
 
     Maps_red\TicketingBundle\Form\:

@@ -57,17 +57,6 @@
                         {% endif %}
                     </td>
                     <td>
-                        {% if ticket.assignated is not null %}
-                            {#{% set message =#}
-                                {#" <br> Moyenne : <br>" ~#}
-                                {#render(controller('App\\Controller\\Ticket\\RatingController:getUserRating', {#}
-                                {#'user_id': ticket.assignated.id#}
-                            {#})) ~#}
-                                {#render(controller('App\\Controller\\Ticket\\RatingController:getUserClosedTickets', {#}
-                                {#'user_id': ticket.assignated.id#}
-                            {#} )) %}#}
-
-                        {% endif %}
                         <span>{{ ticket.assignated.username|default("Non assigné") }}</span>
                     </td>
                 </tr>
@@ -169,7 +158,7 @@
                     <tr>
                         <td>{{ ticket.closedBy.username }}</td>
                         <td>{{ ticket.closureResponse }}</td>
-                        <td>{{ ticket.closedBy|date("d-m-Y h:i:s") }}</td>
+                        <td>{{ ticket.closedAt|date("d-m-Y h:i:s") }}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -228,6 +217,42 @@
                     {% endif %}
                 {% endif %}
             </div>
+        </div>
+    {% endif %}
+
+    {% if ticket.closed %}
+        <div class="box box-red">
+            {% if isAuthor and ticket.rating is null %}
+                <div class="box-header with-border">
+                    <div class="box-title">Noter le ticket</div>
+                </div>
+                <div class="box-body">
+                    <p>Vous pouvez, si vous le souhaitez, noter l'aide et le service apporté sur ce ticket</p>
+                    <div class="rating-box" data-ticket="{{ ticket.id }}" id="rating-box">
+                        {{ render(controller("Maps_red\\TicketingBundle\\Controller\\TicketingRatingController::getRating", {
+                            'ticket': ticket.id,
+                            'readonly': false
+                        } )) }}
+                    </div>
+                    <div class="col-md-5">{# Output message from Ajax #}</div>
+                </div>
+            {% elseif ticket.rating is not null %}
+                <div class="box-header with-border">
+                    <div class="box-title">Note du ticket</div>
+                </div>
+                <div class="box-body">
+                    <div>
+                        {{ render(controller("Maps_red\\TicketingBundle\\Controller\\TicketingRatingController::getRating", {
+                            'ticket': ticket.id,
+                            'readonly': true
+                        } )) }}
+                    </div>
+                </div>
+            {% else %}
+                <div class="box-header with-border">
+                    <div class="box-title">Aucune notation</div>
+                </div>
+            {% endif %}
         </div>
     {% endif %}
 

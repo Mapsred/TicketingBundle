@@ -118,4 +118,53 @@ class TicketRepository extends ServiceEntityRepository
 
         return 'q.' . Inflector::camelize($field);
     }
+
+    /**
+     * @param UserInterface $user
+     * @return float|int
+     */
+    public function findUserAvgRating(UserInterface $user)
+    {
+        $results = [];
+        /** @var TicketInterface[] $tickets */
+        $tickets = $this->createQueryBuilder('q')
+            ->where('q.assignated = :user')
+            ->andWhere("q.rating IS NOT NULL")
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+
+        foreach ($tickets as $ticket) {
+            $results[] = $ticket->getRating();
+        }
+
+        $avg = count($results) > 0 ? array_sum($results) / count($results) : 0;
+
+        return $avg;
+    }
+
+    /**
+     * TODO try getSingleScalarResult instead
+     * @param UserInterface $user
+     * @param $status
+     * @return int
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function countBySpecificUserAndStatus(UserInterface $user, $status)
+    {
+        $result = $this->createQueryBuilder('q')
+            ->leftJoin("q.assignated", "user")
+            ->leftJoin("q.status", "status")
+            ->select('user.username assignated, COUNT(q) nb')
+            ->where("status.name = :status")
+            ->andWhere("q.assignated = :user")
+            ->groupBy("assignated")
+            ->orderBy("q.id", "DESC")
+            ->setParameters(["status" => $status, "user" => $user])
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        return isset($result) ? $result['nb'] : 0;
+    }
+
 }

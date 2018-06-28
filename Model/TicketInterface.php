@@ -53,7 +53,7 @@ interface TicketInterface
 
     public function getClosedAt(): ?\DateTimeInterface;
 
-    public function setClosedAt(\DateTimeInterface $closed_at): TicketInterface;
+    public function setClosedAt(?\DateTimeInterface $closed_at): TicketInterface;
 
     public function getClosedBy(): ?UserInterface;
 
@@ -61,7 +61,7 @@ interface TicketInterface
 
     public function getPublicAt(): ?\DateTimeInterface;
 
-    public function setPublicAt(\DateTimeInterface $public_at): TicketInterface;
+    public function setPublicAt(?\DateTimeInterface $public_at): TicketInterface;
 
     public function getPriority(): ?TicketPriorityInterface;
 
@@ -76,4 +76,13 @@ interface TicketInterface
     public function getReferences(): ?Collection;
 
     public function getCreatedAt(): ?\DateTime;
+
+    public function isClosed(): bool;
+
+    public function isOpen(): bool;
+
+    public function isPending(): bool;
+
+    public function isWaiting(): bool;
+
 }

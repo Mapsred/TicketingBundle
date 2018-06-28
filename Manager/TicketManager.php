@@ -172,6 +172,20 @@ class TicketManager extends AbstractManager
         $this->persistAndFlush($ticket);
     }
 
+    /**
+     * @param TicketInterface $ticket
+     * @param int $rating
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function handleRating(TicketInterface $ticket, int $rating)
+    {
+        $rating = $rating > 5 ? 5 : $rating;
+        $ticket->setRating($rating);
+
+        $this->persistAndFlush($ticket);
+    }
+
     /* DataTables */
 
     /**

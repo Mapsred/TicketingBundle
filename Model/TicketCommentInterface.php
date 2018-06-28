@@ -18,7 +18,7 @@ interface TicketCommentInterface
 
     public function getText(): ?string;
 
-    public function setText(string $text): TicketCommentInterface;
+    public function setText(?string $text): TicketCommentInterface;
 
     public function getAuthor(): ?UserInterface;
 
