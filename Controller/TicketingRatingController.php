@@ -34,11 +34,13 @@ class TicketingRatingController extends Controller
     }
 
     /**
-     * @Route("/vote", name="ajax_rating_add", options={"expose"=true})
+     * @Route("/vote", name="ticketing_ajax_rating_add", options={"expose"=true})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @Method({"POST"})
      * @param Request $request
      * @return JsonResponse
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function addRatingAction(Request $request)
     {

@@ -198,7 +198,6 @@ const Detail = {
     }
 };
 
-//TODO
 const Rating = {
     init: function () {
         Rating.create($("#rating-input"));
@@ -226,7 +225,7 @@ const Rating = {
         const outputDiv = $($(rating_box).next());
         $.ajax({
             type: "POST",
-            url: Routing.generate("ajax_rating_add"),
+            url: Routing.generate("ticketing_ajax_rating_add"),
             data: {rating: rating, ticket: ticket},
             success: function (res) {
                 outputDiv.html(res['success']);

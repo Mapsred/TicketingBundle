@@ -58,7 +58,7 @@ class TicketStatusManager extends AbstractManager
             throw new InvalidArgumentException(sprintf(
                     "No %s found with the name %s. please check the ticketing.ticket_status.%s parameter.",
                     $this->getClass(),
-                    $status,
+                    $type,
                     $type)
             );
         }

@@ -112,6 +112,8 @@ class Configuration implements ConfigurationInterface
                             'bundles/ticketing/vendor/css/select2.min.css',
                             'bundles/ticketing/vendor/css/ionicons.min.css',
                             'bundles/ticketing/vendor/css/dataTables.bootstrap.min.css',
+                            'bundles/ticketing/vendor/css/star-rating.min.css',
+                            'bundles/ticketing/vendor/css/star-rating-theme.min.css',
                             'bundles/ticketing/css/AdminLTE.min.css',
                             'bundles/ticketing/css/skin-ticketing.min.css',
                             'bundles/ticketing/css/helper.css',
@@ -128,6 +130,7 @@ class Configuration implements ConfigurationInterface
                             'bundles/ticketing/vendor/js/select2-fr.min.js',
                             'bundles/ticketing/vendor/js/dataTables.min.js',
                             'bundles/ticketing/vendor/js/dataTables.bootstrap.min.js',
+                            'bundles/ticketing/vendor/js/star-rating.min.js',
                             'bundles/ticketing/js/script.js',
                         ])->scalarPrototype()->end()
                     ->end()
