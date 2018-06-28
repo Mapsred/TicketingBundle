@@ -8,10 +8,6 @@
 
 namespace Maps_red\TicketingBundle\Utils;
 
-/**
- * Class UrlReplacer
- * @package App\Utils\Ticket
- */
 class UrlReplacer
 {
     private $rexProtocol = '(https?://)?';
@@ -51,6 +47,4 @@ class UrlReplacer
 
         return '<a href="'.$completeUrl.'">'.$match[2].$match[3].$match[4].'</a>';
     }
-
-
 }

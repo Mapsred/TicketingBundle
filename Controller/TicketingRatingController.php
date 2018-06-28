@@ -9,7 +9,6 @@
 namespace Maps_red\TicketingBundle\Controller;
 
 use Maps_red\TicketingBundle\Manager\TicketManager;
-use Maps_red\TicketingBundle\Model\TicketInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;

@@ -8,7 +8,6 @@
 
 namespace Maps_red\TicketingBundle\Event;
 
-
 use Maps_red\TicketingBundle\Model\TicketInterface;
 use Symfony\Component\EventDispatcher\Event;
 

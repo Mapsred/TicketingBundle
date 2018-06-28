@@ -109,7 +109,6 @@ class TicketingController extends Controller
             return $this->redirectToRoute("ticketing_perso");
         }
 
-
         $comment = $ticketCommentManager->newClass();
         $commentForm = $this->createForm(TicketCommentForm::class, $comment);
         $closeForm = $this->createForm(TicketCloseForm::class, $ticket);

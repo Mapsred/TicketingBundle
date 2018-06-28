@@ -12,9 +12,7 @@ use Maps_red\TicketingBundle\Event\TicketSeenEvent;
 use Maps_red\TicketingBundle\Event\TicketUnseenEvent;
 use Maps_red\TicketingBundle\Manager\TicketHistoryManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class TicketHistorySubscriber
