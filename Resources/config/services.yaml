@@ -1,4 +1,8 @@
 services:
+    _defaults:
+        bind:
+            $ticketingTemplates: '%ticketing.templates%'
+
     Maps_red\TicketingBundle\Controller\:
         resource: '../../Controller'
         autowire: true

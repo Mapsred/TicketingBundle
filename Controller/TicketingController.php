@@ -18,7 +18,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class TicketingController extends Controller
 {
+    /** @var array $ticketingTemplates */
+    private $ticketingTemplates;
 
+    /**
+     * TicketingController constructor.
+     * @param array $ticketingTemplates
+     */
+    public function __construct(array $ticketingTemplates)
+    {
+        $this->ticketingTemplates = $ticketingTemplates;
+    }
     /**
      * @Route("/list", name="ticketing_list")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
@@ -27,7 +37,7 @@ class TicketingController extends Controller
      */
     public function listTickets(TicketStatusManager $ticketStatusManager)
     {
-        return $this->render('@Ticketing/ticketing/list.html.twig', [
+        return $this->render($this->ticketingTemplates['list'], [
             'status_list' => $ticketStatusManager->getRepository()->findAll()
         ]);
     }
@@ -40,7 +50,7 @@ class TicketingController extends Controller
      */
     public function persoTickets(TicketStatusManager $ticketStatusManager)
     {
-        return $this->render("@Ticketing/ticketing/personal_page.html.twig", [
+        return $this->render($this->ticketingTemplates['perso'], [
             'status_list' => $ticketStatusManager->getRepository()->findAll()
         ]);
     }
@@ -68,7 +78,7 @@ class TicketingController extends Controller
             return $this->redirectToRoute('ticketing_list');
         }
 
-        return $this->render('@Ticketing/ticketing/new.html.twig', [
+        return $this->render($this->ticketingTemplates['new'], [
             'form' => $ticketForm->createView(),
         ]);
     }
@@ -148,7 +158,7 @@ class TicketingController extends Controller
         }
 
 
-        return $this->render("@Ticketing/ticketing/detail_page.html.twig", [
+        return $this->render($this->ticketingTemplates['detail'], [
             'ticket' => $ticket,
             'form' => $commentForm->createView(),
             'close_form' => $closeForm->createView(),

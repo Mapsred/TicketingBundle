@@ -24,13 +24,18 @@ class TicketingRatingController extends Controller
     /** @var TicketManager $ticketManager */
     private $ticketManager;
 
+    /** @var array $ticketingTemplates */
+    private $ticketingTemplates;
+
     /**
      * TicketingRatingController constructor.
      * @param TicketManager $ticketManager
+     * @param array $ticketingTemplates
      */
-    public function __construct(TicketManager $ticketManager)
+    public function __construct(TicketManager $ticketManager, array $ticketingTemplates)
     {
         $this->ticketManager = $ticketManager;
+        $this->ticketingTemplates = $ticketingTemplates;
     }
 
     /**
@@ -68,7 +73,7 @@ class TicketingRatingController extends Controller
     {
         $ticket = $this->ticketManager->getRepository()->find($ticket);
 
-        return $this->render("@Ticketing/ticketing/rating/rating.html.twig", [
+        return $this->render($this->ticketingTemplates['rating_rating'], [
             'integer' => $ticket->getRating(),
             'readonly' => $readonly
         ]);
@@ -84,19 +89,20 @@ class TicketingRatingController extends Controller
         $rating = $this->ticketManager->getRepository()->findUserAvgRating($user);
 
 
-        return $this->render("@Ticketing/ticketing/rating/rating.html.twig", ['integer' => round($rating)]);
+        return $this->render($this->ticketingTemplates['rating_rating'], ['integer' => round($rating)]);
     }
 
     /**
      * @param integer $user_id
      * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getUserClosedTickets($user_id)
     {
         $user = $this->getDoctrine()->getRepository(UserInterface::class)->find($user_id);
         $rating = $this->ticketManager->getRepository()->countBySpecificUserAndStatus($user, "closed");
 
-        return $this->render("@Ticketing/ticketing/rating/closed.html.twig", ['integer' => round($rating)]);
+        return $this->render($this->ticketingTemplates['rating_closed'], ['integer' => round($rating)]);
     }
 
     /**
@@ -105,6 +111,6 @@ class TicketingRatingController extends Controller
      */
     public function renderRating($rating)
     {
-        return $this->render("@Ticketing/ticketing/rating/rating.html.twig", ['integer' => round($rating), 'readonly' => true]);
+        return $this->render($this->ticketingTemplates['rating_rating'], ['integer' => round($rating), 'readonly' => true]);
     }
 }
