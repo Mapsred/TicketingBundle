@@ -6,6 +6,7 @@
 {% block body %}
     <div id="flashbag"></div>
     {% set isAuthor = ticket.author == app.user %}
+    {% set url = [] %}
 
     <div class="box box-red">
         <div class="box-header with-border">
