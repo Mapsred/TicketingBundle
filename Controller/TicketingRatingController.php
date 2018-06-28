@@ -88,7 +88,6 @@ class TicketingRatingController extends Controller
         $user = $this->getDoctrine()->getRepository(UserInterface::class)->find($user_id);
         $rating = $this->ticketManager->getRepository()->findUserAvgRating($user);
 
-
         return $this->render($this->ticketingTemplates['rating_rating'], ['integer' => round($rating)]);
     }
 

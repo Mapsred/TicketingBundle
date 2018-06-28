@@ -15,7 +15,9 @@
                 <form method="post" class="pull-right">
                     <button class="btn btn bg-ticketing btn-flat" name="public" value="{{ ticket.public == 0 }}"
                             type="submit">
-                        Rendre {{ ticket.public ? "privé" : "public" }}
+                        {{ 'status_make'|trans({}, 'TicketingBundle') }}
+                        {{ (ticket.public ? "private" : "public")|trans({}, 'TicketingBundle') }}
+
                     </button>
                 </form>
             {% endif %}
@@ -25,11 +27,11 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th>Auteur</th>
+                    <th>{{ 'author'|trans({}, 'TicketingBundle')|capitalize }}</th>
                     <th>Date</th>
-                    <th>Catégorie</th>
-                    <th>Statut</th>
-                    <th>Assigné à</th>
+                    <th>{{ 'category'|trans({}, 'TicketingBundle')|capitalize }}</th>
+                    <th>{{ 'status'|trans({}, 'TicketingBundle')|capitalize }}</th>
+                    <th>{{ 'assignated_to'|trans({}, 'TicketingBundle')|capitalize }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -43,7 +45,7 @@
                             <button class="btn bg-ticketing btn-flat btn-sm pull-right" id="cat_btn" type="button"
                                     data-toggle="modal" data-target="#change_category"
                                     data-id="{{ ticket.id }}">
-                                Changer la catégorie
+                                {{ 'change_category'|trans({}, 'TicketingBundle')|capitalize }}
                             </button>
                         {% endif %}
                     </td>
@@ -52,12 +54,13 @@
                         {% if (ticket.status.name == "waiting" or ticket.status.name == "pending") and isGranted %}
                             <button class="btn bg-ticketing btn-flat btn-sm pull-right" id="status_btn" type="button"
                                     data-id="{{ ticket.id }}">
-                                Mettre {{ ticket.status.name == "waiting" ? "en cours" : "en attente" }}
+                                {{ 'status_put'|trans({}, 'TicketingBundle') }}
+                                {{ ticket.status.name|trans({}, 'TicketingBundle') }}
                             </button>
                         {% endif %}
                     </td>
                     <td>
-                        <span>{{ ticket.assignated.username|default("Non assigné") }}</span>
+                        <span>{{ ticket.assignated.username|default("unasignated")|trans({}, 'TicketingBundle') }}</span>
                     </td>
                 </tr>
                 </tbody>
@@ -93,15 +96,15 @@
     {% if not comments.empty %}
         <div class="box box-red">
             <div class="box-header with-border">
-                <div class="box-title">Commentaires</div>
+                <div class="box-title">{{ 'comments'|trans({}, 'TicketingBundle')|capitalize }}</div>
             </div>
 
             <div class="box-body table-responsive no-padding">
                 <table class="table table-bordered">
                     <thead>
                     <tr>
-                        <th>Auteur</th>
-                        <th>Commentaire</th>
+                        <th>{{ 'author'|trans({}, 'TicketingBundle')|capitalize }}</th>
+                        <th>{{ 'comment'|trans({}, 'TicketingBundle')|capitalize }}</th>
                         <th>Date</th>
                     </tr>
                     </thead>
@@ -124,7 +127,7 @@
     {% if not ticket.closed %}
         <div class="box box-red">
             <div class="box-header with-border">
-                <div class="box-title">Répondre</div>
+                <div class="box-title">{{ 'answer'|trans({}, 'TicketingBundle')|capitalize }}</div>
             </div>
             <div class="box-body">
                 {{ form_start(form, {'attr': {'class': 'form-inline'} }) }}
@@ -134,7 +137,7 @@
                         {{ form_widget(form.text, {'attr': {'class': 'form-control', 'cols': '80', 'rows': '5' } }) }}
                         <br>
                         <input id="submit" class="form-control btn bg-ticketing btn-flat margin-top15"
-                               value="Envoyer votre réponse" type="submit">
+                               value="{{ 'send_answer'|trans({}, 'TicketingBundle')|capitalize }}" type="submit">
                     </div>
                 </div>
                 {{ form_end(form) }}
@@ -143,14 +146,14 @@
     {% else %}
         <div class="box box-red">
             <div class="box-header with-border">
-                <div class="box-title">Commentaire de clôture</div>
+                <div class="box-title">{{ 'closure_comment'|trans({}, 'TicketingBundle')|capitalize }}</div>
             </div>
             <div class="box-body table-responsive no-padding">
                 <table class="table table-bordered">
                     <thead>
                     <tr>
-                        <th>Auteur</th>
-                        <th>Commentaire</th>
+                        <th>{{ 'author'|trans({}, 'TicketingBundle')|capitalize }}</th>
+                        <th>{{ 'comment'|trans({}, 'TicketingBundle')|capitalize }}</th>
                         <th>Date</th>
                     </tr>
                     </thead>
@@ -170,19 +173,19 @@
         <div class="box box-red">
             <div class="box-header with-border">
                 {% if isGranted or isAuthor and not ticket.closed %}
-                    <div class="box-title">Clôturer le ticket</div>
+                    <div class="box-title">{{ 'close_ticket'|trans({}, 'TicketingBundle')|capitalize }}</div>
                 {% elseif isGranted and ticket.closed %}
-                    <div class="box-title">Réouvrir le ticket</div>
+                    <div class="box-title">{{ 'reopen_ticket'|trans({}, 'TicketingBundle')|capitalize }}</div>
                 {% endif %}
             </div>
             <div class="box-body">
                 {# Prise en charge du ticket - non assigné et granted #}
                 {% if isGranted and (ticket.assignated or ticket.waiting) is empty and not ticket.closed %}
-                    <p>Vous devez prendre en charge le ticket pour le clôturer</p>
+                    <p>{{ 'take_ticket'|trans({}, 'TicketingBundle')|capitalize }}</p>
                     <form method="post">
                         <button class="btn bg-ticketing btn-flat margin-top15" name="manage" value="true"
                                 type="submit">
-                            Prendre le ticket en charge
+                            {{ 'take_ticket_submit'|trans({}, 'TicketingBundle')|capitalize }}
                         </button>
                     </form>
                     {# Fermeture du ticket - utilisateur courant est auteur ou modérateur #}
@@ -211,7 +214,7 @@
                         <form method="post">
                             <button class="btn btn bg-ticketing btn-flat margin-top15" name="open" value="true"
                                     type="submit">
-                                Réouvrir le ticket
+                                {{ 'reopen_ticket'|trans({}, 'TicketingBundle')|capitalize }}
                             </button>
                         </form>
                     {% endif %}
@@ -224,10 +227,10 @@
         <div class="box box-red">
             {% if isAuthor and ticket.rating is null %}
                 <div class="box-header with-border">
-                    <div class="box-title">Noter le ticket</div>
+                    <div class="box-title">{{ 'rate_ticket'|trans({}, 'TicketingBundle')|capitalize }}</div>
                 </div>
                 <div class="box-body">
-                    <p>Vous pouvez, si vous le souhaitez, noter l'aide et le service apporté sur ce ticket</p>
+                    <p>{{ 'rate_ticket_text'|trans({}, 'TicketingBundle')|capitalize }}</p>
                     <div class="rating-box" data-ticket="{{ ticket.id }}" id="rating-box">
                         {{ render(controller("Maps_red\\TicketingBundle\\Controller\\TicketingRatingController::getRating", {
                             'ticket': ticket.id,
@@ -238,7 +241,7 @@
                 </div>
             {% elseif ticket.rating is not null %}
                 <div class="box-header with-border">
-                    <div class="box-title">Note du ticket</div>
+                    <div class="box-title">{{ 'ticket_rate'|trans({}, 'TicketingBundle')|capitalize }}</div>
                 </div>
                 <div class="box-body">
                     <div>
@@ -250,7 +253,7 @@
                 </div>
             {% else %}
                 <div class="box-header with-border">
-                    <div class="box-title">Aucune notation</div>
+                    <div class="box-title">{{ 'no_rate'|trans({}, 'TicketingBundle')|capitalize }}</div>
                 </div>
             {% endif %}
         </div>
