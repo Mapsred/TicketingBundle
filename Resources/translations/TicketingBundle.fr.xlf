@@ -203,6 +203,19 @@
         <source>no_rate</source>
         <target>Aucune notation</target>
       </trans-unit>
+      <trans-unit id="d54gCUL" resname="restricted_ticket">
+        <source>restricted_ticket</source>
+        <target>Ce ticket appartient à une catégorie restreinte, vous ne disposez pas des
+          permissions suffisantes pour l'afficher</target>
+      </trans-unit>
+      <trans-unit id="2ZHvUSV" resname="ticket_assignated">
+        <source>ticket_assignated</source>
+        <target>Vous êtes maintenant en charge de ce ticket</target>
+      </trans-unit>
+      <trans-unit id="tkKrzpe" resname="ticket_reopened">
+        <source>ticket_reopened</source>
+        <target>Le ticket a bien été réouvert</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

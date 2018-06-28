@@ -100,6 +100,8 @@ class TicketingAjaxController extends Controller
      * @param Request $request
      * @param TicketManager $ticketManager
      * @return Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function updateTicketStatusAction(Request $request, TicketManager $ticketManager)
     {

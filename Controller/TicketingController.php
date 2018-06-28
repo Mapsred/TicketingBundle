@@ -15,20 +15,27 @@ use Maps_red\TicketingBundle\Form\TicketForm;
 use Maps_red\TicketingBundle\Manager\TicketManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class TicketingController extends Controller
 {
     /** @var array $ticketingTemplates */
     private $ticketingTemplates;
 
+    /** @var TranslatorInterface $translator */
+    private $translator;
+
     /**
      * TicketingController constructor.
      * @param array $ticketingTemplates
+     * @param TranslatorInterface $translator
      */
-    public function __construct(array $ticketingTemplates)
+    public function __construct(array $ticketingTemplates, TranslatorInterface $translator)
     {
         $this->ticketingTemplates = $ticketingTemplates;
+        $this->translator = $translator;
     }
+
     /**
      * @Route("/list", name="ticketing_list")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
@@ -97,8 +104,7 @@ class TicketingController extends Controller
     public function detail(Request $request, TicketInterface $ticket, TicketManager $ticketManager, TicketCommentManager $ticketCommentManager)
     {
         if (!$ticketManager->isTicketGranted($ticket, $this->getUser())) {
-            $this->addFlash("warning", "Ce ticket appartient à une catégorie restreinte, vous ne disposez pas des 
-            permissions suffisantes pour l'afficher");
+            $this->addFlash("warning", $this->trans('restricted_ticket'));
 
             return $this->redirectToRoute("ticketing_perso");
         }
@@ -119,7 +125,7 @@ class TicketingController extends Controller
         //Current user manage this ticket
         if ($request->request->has("manage") && $isGranted) {
             $ticketManager->handleManageAction($ticket, $this->getUser());
-            $this->addFlash('info', 'Vous êtes maintenant en charge de ce ticket');
+            $this->addFlash('info', $this->trans('ticket_assignated'));
 
             return $route;
         }
@@ -127,7 +133,7 @@ class TicketingController extends Controller
         //Current user open again this ticket
         if ($request->request->has("open") && $isGranted) {
             $ticketManager->handleOpenAction($ticket);
-            $this->addFlash('success', 'Le ticket a bien été réouvert');
+            $this->addFlash('success', $this->trans('ticket_reopened'));
 
             return $route;
         }
@@ -166,5 +172,15 @@ class TicketingController extends Controller
             'isGranted' => $isGranted,
             'comments' => $comments
         ]);
+    }
+
+    /**
+     * @param $id
+     * @param array $parameters
+     * @return string
+     */
+    private function trans($id, array $parameters = [])
+    {
+        return $this->translator->trans($id, $parameters, 'TicketingBundle');
     }
 }
