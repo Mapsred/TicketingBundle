@@ -55,7 +55,10 @@
                             <button class="btn bg-ticketing btn-flat btn-sm pull-right" id="status_btn" type="button"
                                     data-id="{{ ticket.id }}">
                                 {{ 'status_put'|trans({}, 'TicketingBundle') }}
-                                {{ ticket.status.name|trans({}, 'TicketingBundle') }}
+
+                                {{ ticket.status.name == "waiting" ?
+                                "pending"|trans({}, 'TicketingBundle') :
+                                "waiting"|trans({}, 'TicketingBundle') }}
                             </button>
                         {% endif %}
                     </td>
