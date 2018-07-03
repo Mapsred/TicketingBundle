@@ -1,0 +1,269 @@
+{% extends getTicketingLayoutTemplate() %}
+
+{% block title %}Ticket #{{ ticket.id }}{% endblock %}
+
+
+{% block body %}
+    <div id="flashbag"></div>
+    {% set isAuthor = ticket.author == app.user %}
+    {% set url = [] %}
+
+    <div class="box box-red">
+        <div class="box-header with-border">
+            <h3 class="box-title">Ticket #{{ ticket.id }}</h3>
+            {% if isAuthorOrGranted %}
+                <form method="post" class="pull-right">
+                    <button class="btn btn bg-ticketing btn-flat" name="public" value="{{ ticket.public == 0 }}"
+                            type="submit">
+                        {{ 'status_make'|trans({}, 'TicketingBundle') }}
+                        {{ (ticket.public ? "private" : "public")|trans({}, 'TicketingBundle') }}
+
+                    </button>
+                </form>
+            {% endif %}
+        </div>
+        <!-- form start -->
+        <div class="box-body table-responsive no-padding">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>{{ 'author'|trans({}, 'TicketingBundle')|capitalize }}</th>
+                    <th>Date</th>
+                    <th>{{ 'category'|trans({}, 'TicketingBundle')|capitalize }}</th>
+                    <th>{{ 'status'|trans({}, 'TicketingBundle')|capitalize }}</th>
+                    <th>{{ 'assignated_to'|trans({}, 'TicketingBundle')|capitalize }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <span>{{ ticket.author.username }}</span>
+                    </td>
+                    <td>{{ ticket.createdAt|date("d/m/Y H:i:s") }}</td>
+                    <td><span id="cat">{{ ticket.getCategory is not null ? ticket.category.name : "" }}</span>
+                        {% if isAuthorOrGranted %}
+                            <button class="btn bg-ticketing btn-flat btn-sm pull-right" id="cat_btn" type="button"
+                                    data-toggle="modal" data-target="#change_category"
+                                    data-id="{{ ticket.id }}">
+                                {{ 'change_category'|trans({}, 'TicketingBundle')|capitalize }}
+                            </button>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ ticket.status.value }}
+                        {% if (ticket.status.name == "waiting" or ticket.status.name == "pending") and isGranted %}
+                            <button class="btn bg-ticketing btn-flat btn-sm pull-right" id="status_btn" type="button"
+                                    data-id="{{ ticket.id }}">
+                                {{ 'status_put'|trans({}, 'TicketingBundle') }}
+
+                                {{ ticket.status.name == "waiting" ?
+                                "pending"|trans({}, 'TicketingBundle') :
+                                "waiting"|trans({}, 'TicketingBundle') }}
+                            </button>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <span>{{ ticket.assignated.username|default("unasignated")|trans({}, 'TicketingBundle') }}</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- /.box-body -->
+    </div>
+
+    <div class="box box-red">
+        <div class="box-header with-border">
+            <div class="box-title">Description</div>
+        </div>
+        <div class="box-body">
+            {% if ticket.references is not null and ticket.references|length > 0 %}
+                <div class="help-block">
+                    <ul class="list-unstyled">
+                        <li>
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            L'auteur de ce ticket a ajouté les tickets suivants en référence :
+                            {% for reference in ticket.references %}
+                                {% set route = path("ticketing_detail", {id: reference.id}) %}
+                                {% set url = url|merge(["<a target='_blank' href='#{route}'>##{reference.id}</a>"]) %}
+                            {% endfor %}
+                            {{ url|join(", ")|raw }}
+                        </li>
+                    </ul>
+                </div>
+            {% endif %}
+            {{ ticket.description|urlreplacer|raw|nl2br }}
+        </div>
+    </div>
+
+    {% if not comments.empty %}
+        <div class="box box-red">
+            <div class="box-header with-border">
+                <div class="box-title">{{ 'comments'|trans({}, 'TicketingBundle')|capitalize }}</div>
+            </div>
+
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>{{ 'author'|trans({}, 'TicketingBundle')|capitalize }}</th>
+                        <th>{{ 'comment'|trans({}, 'TicketingBundle')|capitalize }}</th>
+                        <th>Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for comment in comments %}
+                        <tr>
+                            <td>
+                                <span>{{ comment.author.username }}</span>
+                            </td>
+                            <td>{{ comment.text|urlreplacer|raw|nl2br }}</td>
+                            <td>{{ comment.createdAt|date("d/m/Y H:i:s") }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if not ticket.closed %}
+        <div class="box box-red">
+            <div class="box-header with-border">
+                <div class="box-title">{{ 'answer'|trans({}, 'TicketingBundle')|capitalize }}</div>
+            </div>
+            <div class="box-body">
+                {{ form_start(form, {'attr': {'class': 'form-inline'} }) }}
+                <div class="col-md-8 col-lg-7">
+                    <div class="form-group">
+                        {{ form_errors(form.text) }}
+                        {{ form_widget(form.text, {'attr': {'class': 'form-control', 'cols': '80', 'rows': '5' } }) }}
+                        <br>
+                        <input id="submit" class="form-control btn bg-ticketing btn-flat margin-top15"
+                               value="{{ 'send_answer'|trans({}, 'TicketingBundle')|capitalize }}" type="submit">
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    {% else %}
+        <div class="box box-red">
+            <div class="box-header with-border">
+                <div class="box-title">{{ 'closure_comment'|trans({}, 'TicketingBundle')|capitalize }}</div>
+            </div>
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>{{ 'author'|trans({}, 'TicketingBundle')|capitalize }}</th>
+                        <th>{{ 'comment'|trans({}, 'TicketingBundle')|capitalize }}</th>
+                        <th>Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ ticket.closedBy.username }}</td>
+                        <td>{{ ticket.closureResponse }}</td>
+                        <td>{{ ticket.closedAt|date("d-m-Y h:i:s") }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if isGranted or (isAuthor and not ticket.closed) %}
+        <div class="box box-red">
+            <div class="box-header with-border">
+                {% if isGranted or isAuthor and not ticket.closed %}
+                    <div class="box-title">{{ 'close_ticket'|trans({}, 'TicketingBundle')|capitalize }}</div>
+                {% elseif isGranted and ticket.closed %}
+                    <div class="box-title">{{ 'reopen_ticket'|trans({}, 'TicketingBundle')|capitalize }}</div>
+                {% endif %}
+            </div>
+            <div class="box-body">
+                {# Prise en charge du ticket - non assigné et granted #}
+                {% if isGranted and (ticket.assignated or ticket.waiting) is empty and not ticket.closed %}
+                    <p>{{ 'take_ticket'|trans({}, 'TicketingBundle')|capitalize }}</p>
+                    <form method="post">
+                        <button class="btn bg-ticketing btn-flat margin-top15" name="manage" value="true"
+                                type="submit">
+                            {{ 'take_ticket_submit'|trans({}, 'TicketingBundle')|capitalize }}
+                        </button>
+                    </form>
+                    {# Fermeture du ticket - utilisateur courant est auteur ou modérateur #}
+                {% elseif isGranted or isAuthor %}
+                    {# Ticket actif #}
+                    {% if not ticket.closed %}
+                        {# Soit utilisateur courant est auteur soit utilisateur courant est staff et ticket attribué #}
+                        {% if isAuthor or (isGranted and (ticket.assignated or ticket.waiting) is not empty) %}
+                            {{ form_start(close_form, {'attr': {'class': 'form-inline col-md-6'} }) }}
+                            {# Si l'utilisateur courant est l'auteur on cache la zone de réponse #}
+                            <div class="form-group">
+                                <div>
+                                    {{ form_errors(close_form.closureResponse) }}
+                                    {{ form_widget(close_form.closureResponse, {
+                                        'attr': {'class': 'form-control', 'cols': '80', 'rows': '5'}
+                                    }) }}
+                                </div>
+                                <input id="submit" value="Fermer le ticket"
+                                       class="form-control btn bg-ticketing btn-flat margin-top15" type="submit">
+                            </div>
+                            {{ form_end(close_form) }}
+                        {% endif %}
+
+                        {# Ticket inactif #}
+                    {% elseif ticket.closed and isGranted %}
+                        <form method="post">
+                            <button class="btn btn bg-ticketing btn-flat margin-top15" name="open" value="true"
+                                    type="submit">
+                                {{ 'reopen_ticket'|trans({}, 'TicketingBundle')|capitalize }}
+                            </button>
+                        </form>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if ticket.closed %}
+        <div class="box box-red">
+            {% if isAuthor and ticket.rating is null %}
+                <div class="box-header with-border">
+                    <div class="box-title">{{ 'rate_ticket'|trans({}, 'TicketingBundle')|capitalize }}</div>
+                </div>
+                <div class="box-body">
+                    <p>{{ 'rate_ticket_text'|trans({}, 'TicketingBundle')|capitalize }}</p>
+                    <div class="rating-box" data-ticket="{{ ticket.id }}" id="rating-box">
+                        {{ render(controller("Maps_red\\TicketingBundle\\Controller\\TicketingRatingController::getRating", {
+                            'ticket': ticket.id,
+                            'readonly': false
+                        } )) }}
+                    </div>
+                    <div class="col-md-5">{# Output message from Ajax #}</div>
+                </div>
+            {% elseif ticket.rating is not null %}
+                <div class="box-header with-border">
+                    <div class="box-title">{{ 'ticket_rate'|trans({}, 'TicketingBundle')|capitalize }}</div>
+                </div>
+                <div class="box-body">
+                    <div>
+                        {{ render(controller("Maps_red\\TicketingBundle\\Controller\\TicketingRatingController::getRating", {
+                            'ticket': ticket.id,
+                            'readonly': true
+                        } )) }}
+                    </div>
+                </div>
+            {% else %}
+                <div class="box-header with-border">
+                    <div class="box-title">{{ 'no_rate'|trans({}, 'TicketingBundle')|capitalize }}</div>
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+
+    {% include "@Ticketing/ticketing/modals/change_category.html.twig" %}
+
+{% endblock %}
+

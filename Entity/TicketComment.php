@@ -4,6 +4,8 @@ namespace Maps_red\TicketingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Maps_red\TicketingBundle\Model\TicketCommentInterface;
+use Maps_red\TicketingBundle\Model\TicketInterface;
+use Maps_red\TicketingBundle\Model\Traits\Timestampable;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -11,29 +13,31 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class TicketComment implements TicketCommentInterface
 {
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $text;
+    use Timestampable;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $status;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Symfony\Component\Security\Core\User\UserInterface")
-     */
-    private $author;
-
-    /**
-     * @var integer
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $text;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Symfony\Component\Security\Core\User\UserInterface")
+     * @ORM\JoinColumn(name="author", referencedColumnName="id", nullable=false)
+     */
+    private $author;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Maps_red\TicketingBundle\Model\TicketInterface")
+     * @ORM\JoinColumn(name="ticket", referencedColumnName="id", nullable=false)
+     */
+    private $ticket;
 
     public function getId() : ?int
     {
@@ -45,21 +49,9 @@ class TicketComment implements TicketCommentInterface
         return $this->text;
     }
 
-    public function setText(string $text): TicketCommentInterface
+    public function setText(?string $text): TicketCommentInterface
     {
         $this->text = $text;
-
-        return $this;
-    }
-
-    public function getStatus(): ?int
-    {
-        return $this->status;
-    }
-
-    public function setStatus(int $status): TicketCommentInterface
-    {
-        $this->status = $status;
 
         return $this;
     }
@@ -72,6 +64,18 @@ class TicketComment implements TicketCommentInterface
     public function setAuthor(?UserInterface $author): TicketCommentInterface
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getTicket(): ?TicketInterface
+    {
+        return $this->ticket;
+    }
+
+    public function setTicket($ticket):? TicketCommentInterface
+    {
+        $this->ticket = $ticket;
 
         return $this;
     }

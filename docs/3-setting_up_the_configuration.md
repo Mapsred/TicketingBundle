@@ -6,10 +6,10 @@ Step 3 - Setting up the configuration
 ```yaml
 # app/config/packages/ticketing.yaml
 ticketing:
-
-    # The name of the default status
-    default_status_name:  open
-
+    ticket_status:
+        open: open
+        closed: closed
+        pending: pending
     # Enable the seen/unseen display for tickets
     enable_history:       true
 
@@ -32,22 +32,29 @@ ticketing:
         new:                  '@Ticketing/ticketing/new.html.twig'
     assets:
         stylesheets:
-            - bundles/ticketing/vendor/css/bootstrap.css
-            - bundles/ticketing/vendor/css/bootstrap-datepicker3.css
-            - bundles/ticketing/vendor/css/font-awesome.css
-            - bundles/ticketing/vendor/css/ionicons.css
-            - bundles/ticketing/vendor/css/select2.css
-            - bundles/ticketing/css/AdminLTE.css
+
+            # Defaults:
+            - bundles/ticketing/vendor/css/bootstrap.min.css
+            - bundles/ticketing/vendor/css/bootstrap-datepicker3.min.css
+            - bundles/ticketing/vendor/css/font-awesome.min.css
+            - bundles/ticketing/vendor/css/select2.min.css
+            - bundles/ticketing/vendor/css/ionicons.min.css
+            - bundles/ticketing/vendor/css/dataTables.bootstrap.min.css
+            - bundles/ticketing/css/AdminLTE.min.css
+            - bundles/ticketing/css/skin-ticketing.min.css
             - bundles/ticketing/css/helper.css
-            - bundles/ticketing/css/skin-ticketing.css
         javascripts:
-            - bundles/ticketing/vendor/js/jquery.js
-            - bundles/ticketing/vendor/js/bootstrap.js
-            - bundles/ticketing/vendor/js/adminlte.js
-            - bundles/ticketing/vendor/js/bootstrap-datepicker.js
-            - bundles/ticketing/vendor/js/bootstrap-datepicker.fr.js
-            - bundles/ticketing/vendor/js/select2.js
-            - bundles/ticketing/vendor/js/select2-fr.js
+
+            # Defaults:
+            - bundles/ticketing/vendor/js/jquery.min.js
+            - bundles/ticketing/vendor/js/bootstrap.min.js
+            - bundles/ticketing/vendor/js/adminlte.min.js
+            - bundles/ticketing/vendor/js/bootstrap-datepicker.min.js
+            - bundles/ticketing/vendor/js/bootstrap-datepicker.fr.min.js
+            - bundles/ticketing/vendor/js/select2.min.js
+            - bundles/ticketing/vendor/js/select2-fr.min.js
+            - bundles/ticketing/vendor/js/dataTables.min.js
+            - bundles/ticketing/vendor/js/dataTables.bootstrap.min.js
             - bundles/ticketing/js/script.js
 ```
 
@@ -57,8 +64,10 @@ All parameters are optional if you use the bundle the basic way.
 
 But if you need, you can override the default configuration using the the full configuration above.
 
-* ``default_status_name`` : All new created tickets (``Maps_red\TicketingBundle\Model\TicketInteface``) will have a
-status (``Maps_red\TicketingBundle\Model\TicketStatusInteface``). This status will be found by its name with this parameter.
+* ``ticket_status.open`` : All new created tickets (``Maps_red\TicketingBundle\Model\TicketInteface``) will have a
+status (``Maps_red\TicketingBundle\Model\TicketStatusInterface``). This status will be found by its name with this parameter.
+* ``ticket_status.closed`` : All closed tickets (``Maps_red\TicketingBundle\Model\TicketInteface``) will have a
+status (``Maps_red\TicketingBundle\Model\TicketStatusInterface``). This status will be found by its name with this parameter.
 The default configuration recommends you to create a status with ``open`` as name.
 * ``enable_history`` : If enabled, all users will have a status of seen/unseen on their tickets. 
 They can also check if there is a change on it.

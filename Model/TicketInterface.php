@@ -8,7 +8,7 @@
 
 namespace Maps_red\TicketingBundle\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 interface TicketInterface
@@ -31,6 +31,10 @@ interface TicketInterface
 
     public function setPublic(bool $public): TicketInterface;
 
+    public function getPublicBy(): ?UserInterface;
+
+    public function setPublicBy(?UserInterface $publicBy): TicketInterface;
+
     public function getAuthor(): ?UserInterface;
 
     public function setAuthor(?UserInterface $author): TicketInterface;
@@ -49,7 +53,7 @@ interface TicketInterface
 
     public function getClosedAt(): ?\DateTimeInterface;
 
-    public function setClosedAt(\DateTimeInterface $closed_at): TicketInterface;
+    public function setClosedAt(?\DateTimeInterface $closed_at): TicketInterface;
 
     public function getClosedBy(): ?UserInterface;
 
@@ -57,7 +61,7 @@ interface TicketInterface
 
     public function getPublicAt(): ?\DateTimeInterface;
 
-    public function setPublicAt(\DateTimeInterface $public_at): TicketInterface;
+    public function setPublicAt(?\DateTimeInterface $public_at): TicketInterface;
 
     public function getPriority(): ?TicketPriorityInterface;
 
@@ -69,8 +73,16 @@ interface TicketInterface
 
     public function setReferences($references): TicketInterface;
 
-    public function getReferences(): ?ArrayCollection;
+    public function getReferences(): ?Collection;
 
     public function getCreatedAt(): ?\DateTime;
+
+    public function isClosed(): bool;
+
+    public function isOpen(): bool;
+
+    public function isPending(): bool;
+
+    public function isWaiting(): bool;
 
 }

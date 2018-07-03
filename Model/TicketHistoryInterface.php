@@ -8,12 +8,10 @@
 
 namespace Maps_red\TicketingBundle\Model;
 
-
 use Symfony\Component\Security\Core\User\UserInterface;
 
 interface TicketHistoryInterface
 {
-
     public function getId() : ?int;
 
     public function getStatus(): ?int;
@@ -27,5 +25,4 @@ interface TicketHistoryInterface
     public function getTicket(): ?TicketInterface;
 
     public function setTicket(TicketInterface $ticket): TicketHistoryInterface;
-
 }

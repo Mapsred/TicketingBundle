@@ -3,6 +3,8 @@
 namespace Maps_red\TicketingBundle\Manager;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Maps_red\TicketingBundle\Entity\TicketComment;
+use Maps_red\TicketingBundle\Model\TicketCommentInterface;
 use Maps_red\TicketingBundle\Model\TicketInterface;
 use Maps_red\TicketingBundle\Repository\TicketRepository;
 use Symfony\Component\Security\Core\Security;
@@ -61,7 +63,7 @@ class TicketManager extends AbstractManager
      */
     public function createTicket(UserInterface $user, TicketInterface $ticket)
     {
-        $status = $this->ticketStatusManager->getDefaultStatus();
+        $status = $this->ticketStatusManager->getOpenStatus();
         $ticket->setStatus($status)->setAuthor($user)->setPublic(false);
 
         if (!$this->isTicketRestrictionEnabled()) {
@@ -71,6 +73,118 @@ class TicketManager extends AbstractManager
         $this->persistAndFlush($ticket);
     }
 
+    /**
+     * @param TicketInterface $ticket
+     * @param UserInterface $user
+     * @param TicketCommentInterface $comment
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function handleCommentAction(TicketInterface $ticket, UserInterface $user, TicketCommentInterface $comment)
+    {
+        $comment->setAuthor($user)->setTicket($ticket);
+
+        $this->persistAndFlush($comment);
+    }
+
+    /**
+     * @param TicketInterface $ticket
+     * @param UserInterface $user
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function handleCloseAction(TicketInterface $ticket, UserInterface $user)
+    {
+        $status = $this->ticketStatusManager->getClosedStatus();
+        $ticket->setStatus($status)->setClosedBy($user)->setClosedAt(new \DateTime());
+
+        $this->persistAndFlush($ticket);
+    }
+
+    /**
+     * @param TicketInterface $ticket
+     * @param UserInterface $user
+     * @param bool $bool
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function handlePublicStatusAction(TicketInterface $ticket, UserInterface $user, bool $bool)
+    {
+        $ticket
+            ->setPublic($bool)
+            ->setPublicBy($bool ? $user : null)
+            ->setPublicAt(new \DateTime());
+
+        $this->persistAndFlush($ticket);
+    }
+
+    /**
+     * @param TicketInterface $ticket
+     * @param UserInterface $user
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function handleManageAction(TicketInterface $ticket, UserInterface $user)
+    {
+        $status = $this->ticketStatusManager->getPendingStatus();
+        $ticket->setAssignated($user)->setStatus($status);
+
+        $this->persistAndFlush($ticket);
+    }
+
+    /**
+     * @param TicketInterface $ticket
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function handleOpenAction(TicketInterface $ticket)
+    {
+        $comment = new TicketComment();
+        $comment
+            ->setAuthor($ticket->getClosedBy())
+            ->setTicket($ticket)
+            ->setText($ticket->getClosureResponse());
+
+        $this->getManager()->persist($comment);
+        $status = $this->ticketStatusManager->getOpenStatus();
+
+        $ticket->setClosedBy(null)
+            ->setClosedAt(null)
+            ->setClosureResponse(null)
+            ->setAssignated(null)
+            ->setStatus($status);
+
+        $this->persistAndFlush($ticket);
+    }
+
+    /**
+     * @param TicketInterface $ticket
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function handleStatusChange(TicketInterface $ticket)
+    {
+        $status = $ticket->getStatus()->getName() == "waiting" ? "pending" :"waiting";
+
+        $status = $this->ticketStatusManager->getStatus($status);
+        $ticket->setStatus($status);
+
+        $this->persistAndFlush($ticket);
+    }
+
+    /**
+     * @param TicketInterface $ticket
+     * @param int $rating
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function handleRating(TicketInterface $ticket, int $rating)
+    {
+        $rating = $rating > 5 ? 5 : $rating;
+        $ticket->setRating($rating);
+
+        $this->persistAndFlush($ticket);
+    }
 
     /* DataTables */
 
@@ -85,7 +199,7 @@ class TicketManager extends AbstractManager
     public function handleDataTable(array $datas, string $status, string $type, UserInterface $user)
     {
         if ($type === 'list' && $this->isTicketRestrictionEnabled()) {
-            $type = $this->isTicketRestrictionEnabledAndGranted() ? "list" : "list_public";
+            $type = $this->isTicketRestrictionEnabled() ? "list" : "list_public";
         }
 
         $columns = array_combine(
@@ -159,15 +273,29 @@ class TicketManager extends AbstractManager
      */
     public function isTicketPrivate(TicketInterface $ticket, UserInterface $user)
     {
-        return !$ticket->getPublic() && !$this->isTicketRestrictionEnabledAndGranted() && !$this->isUserTicketAuthor($ticket, $user);
+        return !$ticket->getPublic() && !$this->isPrivateTicketAuthorized() && !$this->isUserTicketAuthor($ticket, $user);
+    }
+
+    /**
+     * @param TicketInterface $ticket
+     * @param UserInterface $user
+     * @return bool
+     */
+    public function isAuthorOrGranted(TicketInterface $ticket, UserInterface $user): bool
+    {
+        return $this->isUserTicketAuthor($ticket, $user) || $this->isPrivateTicketAuthorized();
     }
 
     /**
      * @return bool
      */
-    public function isTicketRestrictionEnabledAndGranted()
+    public function isPrivateTicketAuthorized(): bool
     {
-        return $this->isTicketRestrictionEnabled() && $this->security->isGranted($this->restrictedTicketsRole);
+        if ($this->isTicketRestrictionEnabled()) {
+            return $this->security->isGranted($this->restrictedTicketsRole);
+        }
+
+        return true;
     }
 
     /**

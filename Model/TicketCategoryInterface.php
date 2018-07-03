@@ -8,7 +8,6 @@
 
 namespace Maps_red\TicketingBundle\Model;
 
-
 interface TicketCategoryInterface
 {
     public function getId() : ?int;

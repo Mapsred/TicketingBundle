@@ -2,6 +2,7 @@
 
 namespace Maps_red\TicketingBundle\Twig;
 
+use Maps_red\TicketingBundle\Utils\UrlReplacer;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -17,23 +18,29 @@ class TicketingExtension extends AbstractExtension
     /** @var array $javascripts */
     private $javascripts;
 
+    /** @var UrlReplacer $urlReplacer */
+    private $urlReplacer;
+
     /**
      * TicketingExtension constructor.
      * @param array $templates
      * @param array $stylesheets
      * @param array $javascripts
+     * @param UrlReplacer $urlReplacer
      */
-    public function __construct(array $templates, array $stylesheets, array $javascripts)
+    public function __construct(array $templates, array $stylesheets, array $javascripts, UrlReplacer $urlReplacer)
     {
         $this->templates = $templates;
         $this->stylesheets = $stylesheets;
         $this->javascripts = $javascripts;
+        $this->urlReplacer = $urlReplacer;
     }
 
     public function getFilters(): array
     {
         return [
             new TwigFilter('filter_name', [$this, 'doSomething'], ['is_safe' => ['html']]),
+            new TwigFilter('urlreplacer', [$this, 'getUrlReplacer'], ['is_safe' => ['html']]),
         ];
     }
 
@@ -77,5 +84,14 @@ class TicketingExtension extends AbstractExtension
     public function getLayoutTemplate()
     {
         return $this->templates['layout'];
+    }
+
+    /**
+     * @param string $text
+     * @return string
+     */
+    public function getUrlReplacer($text)
+    {
+        return $this->urlReplacer->replacer($text);
     }
 }

@@ -25,9 +25,26 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('ticketing');
         $rootNode
             ->children()
-                ->scalarNode('default_status_name')
-                    ->info('The name of the default status')
-                    ->defaultValue('open')
+                ->arrayNode("ticket_status")
+                ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('open')
+                            ->info('The name of the open status')
+                            ->defaultValue('open')
+                        ->end()
+                        ->scalarNode('closed')
+                            ->info('The name of the closed status')
+                            ->defaultValue('closed')
+                        ->end()
+                        ->scalarNode('pending')
+                            ->info('The name of the pending status')
+                            ->defaultValue('pending')
+                        ->end()
+                        ->scalarNode('waiting')
+                            ->info('The name of the waiting status')
+                            ->defaultValue('waiting')
+                        ->end()
+                    ->end()
                 ->end()
                 ->booleanNode('enable_history')
                     ->info('Enable the seen/unseen display for tickets')
@@ -70,18 +87,39 @@ class Configuration implements ConfigurationInterface
             ->arrayNode('templates')
             ->addDefaultsIfNotSet()
                 ->children()
+            ->scalarNode('list')
+            ->defaultValue('@Ticketing/ticketing/list.html.twig')
+            ->cannotBeEmpty()
+            ->end()
                     ->scalarNode('layout')
                         ->defaultValue('@Ticketing/base.html.twig')
                         ->cannotBeEmpty()
                     ->end()
-                    ->scalarNode('index')
+                    ->scalarNode('list')
                         ->defaultValue('@Ticketing/ticketing/list.html.twig')
+                        ->cannotBeEmpty()
+                    ->end()
+                    ->scalarNode('perso')
+                        ->defaultValue('@Ticketing/ticketing/perso.html.twig')
                         ->cannotBeEmpty()
                     ->end()
                     ->scalarNode('new')
                         ->defaultValue('@Ticketing/ticketing/new.html.twig')
                         ->cannotBeEmpty()
                     ->end()
+                    ->scalarNode('detail')
+                        ->defaultValue('@Ticketing/ticketing/detail.html.twig')
+                        ->cannotBeEmpty()
+                    ->end()
+                    ->scalarNode('rating_rating')
+                        ->defaultValue('@Ticketing/ticketing/rating/rating.html.twig')
+                        ->cannotBeEmpty()
+                    ->end()
+                    ->scalarNode('rating_closed')
+                        ->defaultValue('@Ticketing/ticketing/rating/closed.html.twig')
+                        ->cannotBeEmpty()
+                    ->end()
+
                 ->end()
             ->end()
             ->arrayNode('assets')
@@ -95,6 +133,8 @@ class Configuration implements ConfigurationInterface
                             'bundles/ticketing/vendor/css/select2.min.css',
                             'bundles/ticketing/vendor/css/ionicons.min.css',
                             'bundles/ticketing/vendor/css/dataTables.bootstrap.min.css',
+                            'bundles/ticketing/vendor/css/star-rating.min.css',
+                            'bundles/ticketing/vendor/css/star-rating-theme.min.css',
                             'bundles/ticketing/css/AdminLTE.min.css',
                             'bundles/ticketing/css/skin-ticketing.min.css',
                             'bundles/ticketing/css/helper.css',
@@ -111,6 +151,7 @@ class Configuration implements ConfigurationInterface
                             'bundles/ticketing/vendor/js/select2-fr.min.js',
                             'bundles/ticketing/vendor/js/dataTables.min.js',
                             'bundles/ticketing/vendor/js/dataTables.bootstrap.min.js',
+                            'bundles/ticketing/vendor/js/star-rating.min.js',
                             'bundles/ticketing/js/script.js',
                         ])->scalarPrototype()->end()
                     ->end()

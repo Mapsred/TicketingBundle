@@ -3,6 +3,7 @@
 namespace Maps_red\TicketingBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Maps_red\TicketingBundle\Model\TicketCategoryInterface;
 use Maps_red\TicketingBundle\Model\TicketInterface;
@@ -48,6 +49,12 @@ class Ticket implements TicketInterface
      * @ORM\Column(type="boolean")
      */
     private $public;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Symfony\Component\Security\Core\User\UserInterface")
+     * @ORM\JoinColumn(name="public_by", referencedColumnName="id", nullable=true)
+     */
+    private $public_by;
 
     /**
      * @ORM\ManyToOne(targetEntity="Symfony\Component\Security\Core\User\UserInterface")
@@ -100,7 +107,7 @@ class Ticket implements TicketInterface
      *      inverseJoinColumns={@ORM\JoinColumn(name="reference_id", referencedColumnName="id")}
      * )
      */
-    protected $references;
+    private $references;
 
     /**
      * Ticket constructor.
@@ -163,6 +170,18 @@ class Ticket implements TicketInterface
         return $this;
     }
 
+    public function getPublicBy(): ?UserInterface
+    {
+        return $this->public_by;
+    }
+
+    public function setPublicBy(?UserInterface $publicBy): TicketInterface
+    {
+        $this->public_by = $publicBy;
+
+        return $this;
+    }
+
     public function getAuthor(): ?UserInterface
     {
         return $this->author;
@@ -216,7 +235,7 @@ class Ticket implements TicketInterface
         return $this->closed_at;
     }
 
-    public function setClosedAt(\DateTimeInterface $closed_at): TicketInterface
+    public function setClosedAt(?\DateTimeInterface $closed_at): TicketInterface
     {
         $this->closed_at = $closed_at;
 
@@ -240,7 +259,7 @@ class Ticket implements TicketInterface
         return $this->public_at;
     }
 
-    public function setPublicAt(\DateTimeInterface $public_at): TicketInterface
+    public function setPublicAt(?\DateTimeInterface $public_at): TicketInterface
     {
         $this->public_at = $public_at;
 
@@ -284,8 +303,29 @@ class Ticket implements TicketInterface
         return $this;
     }
 
-    public function getReferences(): ?ArrayCollection
+    public function getReferences(): ?Collection
     {
         return $this->references;
     }
+
+    public function isClosed(): bool
+    {
+        return $this->getStatus()->getName() == "closed";
+    }
+
+    public function isOpen(): bool
+    {
+        return $this->getStatus()->getName() == "open";
+    }
+
+    public function isPending(): bool
+    {
+        return $this->getStatus()->getName() == "pending";
+    }
+
+    public function isWaiting(): bool
+    {
+        return $this->getStatus()->getName() == "waiting";
+    }
+
 }

@@ -11,6 +11,13 @@ use Maps_red\TicketingBundle\Model\TicketCategoryInterface;
 class TicketCategory implements TicketCategoryInterface
 {
     /**
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $name;
@@ -18,21 +25,12 @@ class TicketCategory implements TicketCategoryInterface
     /**
      * @ORM\Column(type="integer")
      */
-    private $position;
+    private $position = 0;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $role;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+    private $role = 'ROLE_USER';
 
     public function getId() : ?int
     {

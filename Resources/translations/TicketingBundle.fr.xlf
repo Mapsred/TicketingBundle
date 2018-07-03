@@ -83,6 +83,139 @@
         <source>Submit the ticket</source>
         <target>Envoyer le ticket</target>
       </trans-unit>
+      <trans-unit id="JUcK312" resname="change ticket category">
+        <source>change ticket category</source>
+        <target>Changer la catégorie du ticket</target>
+      </trans-unit>
+      <trans-unit id="MQ.yABS" resname="close">
+        <source>close</source>
+        <target>Fermer</target>
+      </trans-unit>
+      <trans-unit id="dUkL17k" resname="submit">
+        <source>submit</source>
+        <target>Valider</target>
+      </trans-unit>
+      <trans-unit id="8Buqn8V" resname="status_make">
+        <source>status_make</source>
+        <target>Rendre</target>
+      </trans-unit>
+      <trans-unit id="cV3ISTw" resname="private">
+        <source>private</source>
+        <target>privé</target>
+      </trans-unit>
+      <trans-unit id="76Hzddd" resname="public">
+        <source>public</source>
+        <target>public</target>
+      </trans-unit>
+      <trans-unit id="Y2SFhol" resname="author">
+        <source>author</source>
+        <target>auteur</target>
+      </trans-unit>
+      <trans-unit id="7bLNO3T" resname="category">
+        <source>category</source>
+        <target>catégorie</target>
+      </trans-unit>
+      <trans-unit id="BzwWNMS" resname="status">
+        <source>status</source>
+        <target>statut</target>
+      </trans-unit>
+      <trans-unit id="TlmAxcX" resname="assignated_to">
+        <source>assignated_to</source>
+        <target>assigné à</target>
+      </trans-unit>
+      <trans-unit id="Ml9MFIS" resname="change_category">
+        <source>change_category</source>
+        <target>changer la catégorie</target>
+      </trans-unit>
+      <trans-unit id="kgHcImx" resname="status_put">
+        <source>status_put</source>
+        <target>Rendre</target>
+      </trans-unit>
+      <trans-unit id="I0j5mHR" resname="open">
+        <source>open</source>
+        <target>ouvert</target>
+      </trans-unit>
+      <trans-unit id="w_77WNf" resname="closed">
+        <source>closed</source>
+        <target>fermé</target>
+      </trans-unit>
+      <trans-unit id="YqL_09b" resname="pending">
+        <source>pending</source>
+        <target>en cours</target>
+      </trans-unit>
+      <trans-unit id="gM_j5.K" resname="waiting">
+        <source>waiting</source>
+        <target>en attente</target>
+      </trans-unit>
+      <trans-unit id="ov3K5tR" resname="unasignated">
+        <source>unasignated</source>
+        <target>non assigné</target>
+      </trans-unit>
+      <trans-unit id="K0JE_yZ" resname="comments">
+        <source>comments</source>
+        <target>commentaires</target>
+      </trans-unit>
+      <trans-unit id="xEuy.VF" resname="comment">
+        <source>comment</source>
+        <target>commentaire</target>
+      </trans-unit>
+      <trans-unit id="DbUvQHb" resname="answer">
+        <source>answer</source>
+        <target>répondre</target>
+      </trans-unit>
+      <trans-unit id="USzI2Wl" resname="send_answer">
+        <source>send_answer</source>
+        <target>envoyer la réponse</target>
+      </trans-unit>
+      <trans-unit id="_VoLDj8" resname="closure_comment">
+        <source>closure_comment</source>
+        <target>commentaire de clôture</target>
+      </trans-unit>
+      <trans-unit id=".r5yPNg" resname="close_ticket">
+        <source>close_ticket</source>
+        <target>clôturer le ticket</target>
+      </trans-unit>
+      <trans-unit id="TFjz6C3" resname="reopen_ticket">
+        <source>reopen_ticket</source>
+        <target>réouvrir le ticket</target>
+      </trans-unit>
+      <trans-unit id="CSaRnn9" resname="take_ticket">
+        <source>take_ticket</source>
+        <target>vous devez prendre en charge le ticket pour le clôturer</target>
+      </trans-unit>
+      <trans-unit id="MPpM6RV" resname="take_ticket_submit">
+        <source>take_ticket_submit</source>
+        <target>prendre le ticket en charge</target>
+      </trans-unit>
+      <trans-unit id="ufWl90S" resname="rate_ticket">
+        <source>rate_ticket</source>
+        <target>noter le ticket</target>
+      </trans-unit>
+      <trans-unit id="t6v.C8O" resname="rate_ticket_text">
+        <source>rate_ticket_text</source>
+        <target>vous pouvez, si vous le souhaitez, noter l'aide et le service apporté sur ce ticket</target>
+      </trans-unit>
+      <trans-unit id="92kWQ.A" resname="ticket_rate">
+        <source>ticket_rate</source>
+        <target>Note du ticket</target>
+      </trans-unit>
+      <trans-unit id="UCMAYu7" resname="no_rate">
+        <source>no_rate</source>
+        <target>Aucune notation</target>
+      </trans-unit>
+      <trans-unit id="d54gCUL" resname="restricted_ticket">
+        <source>restricted_ticket</source>
+        <target>Ce ticket appartient à une catégorie restreinte, vous ne disposez pas des
+          permissions suffisantes pour l'afficher</target>
+      </trans-unit>
+      <trans-unit id="2ZHvUSV" resname="ticket_assignated">
+        <source>ticket_assignated</source>
+        <target>Vous êtes maintenant en charge de ce ticket</target>
+      </trans-unit>
+      <trans-unit id="tkKrzpe" resname="ticket_reopened">
+        <source>ticket_reopened</source>
+        <target>Le ticket a bien été réouvert</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
