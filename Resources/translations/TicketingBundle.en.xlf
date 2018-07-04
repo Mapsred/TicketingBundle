@@ -214,6 +214,10 @@
         <source>ticket_reopened</source>
         <target>This ticket is now reopened</target>
       </trans-unit>
+      <trans-unit id="._iFWDj" resname="status_history">
+        <source>status_history</source>
+        <target>History</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

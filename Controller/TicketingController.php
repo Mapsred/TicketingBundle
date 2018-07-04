@@ -5,6 +5,7 @@ namespace Maps_red\TicketingBundle\Controller;
 use Maps_red\TicketingBundle\Form\TicketCloseForm;
 use Maps_red\TicketingBundle\Form\TicketCommentForm;
 use Maps_red\TicketingBundle\Manager\TicketCommentManager;
+use Maps_red\TicketingBundle\Manager\TicketStatusHistoryManager;
 use Maps_red\TicketingBundle\Manager\TicketStatusManager;
 use Maps_red\TicketingBundle\Model\TicketInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -97,11 +98,13 @@ class TicketingController extends Controller
      * @param TicketInterface $ticket
      * @param TicketManager $ticketManager
      * @param TicketCommentManager $ticketCommentManager
+     * @param TicketStatusHistoryManager $ticketStatusHistoryManager
      * @return RedirectResponse|Response
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function detail(Request $request, TicketInterface $ticket, TicketManager $ticketManager, TicketCommentManager $ticketCommentManager)
+    public function detail(Request $request, TicketInterface $ticket, TicketManager $ticketManager,
+                           TicketCommentManager $ticketCommentManager, TicketStatusHistoryManager $ticketStatusHistoryManager)
     {
         if (!$ticketManager->isTicketGranted($ticket, $this->getUser())) {
             $this->addFlash("warning", $this->trans('restricted_ticket'));
@@ -117,6 +120,7 @@ class TicketingController extends Controller
         $closeForm->handleRequest($request);
 
         $comments = $ticketCommentManager->getTicketComments($ticket);
+        $statusHistory = $ticketStatusHistoryManager->getTicketStatusHistory($ticket);
         $route = $this->redirectToRoute("ticketing_detail", ['id' => $ticket->getId()]);
         $isAuthorOrGranted = $ticketManager->isAuthorOrGranted($ticket, $this->getUser());
         $isGranted = $ticketManager->isPrivateTicketAuthorized();
@@ -169,7 +173,8 @@ class TicketingController extends Controller
             'close_form' => $closeForm->createView(),
             'isAuthorOrGranted' => $isAuthorOrGranted,
             'isGranted' => $isGranted,
-            'comments' => $comments
+            'comments' => $comments,
+            'status_history' => $statusHistory
         ]);
     }
 
