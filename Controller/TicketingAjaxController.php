@@ -81,7 +81,7 @@ class TicketingAjaxController extends Controller
             $ticket = $ticketManager->getRepository()->find($request->request->get('id'));
             if ($ticketManager->isAuthorOrGranted($ticket, $this->getUser())) {
                 $category = $request->request->get("cat");
-                if ($ticket && null !== $category = $ticketCategoryManager->getRepository()->findOneBy(['name' => $category])) {
+                if ($ticket && null !== $category = $ticketCategoryManager->getRepository()->findOneBy(['value' => $category])) {
                     $ticket->setCategory($category);
                     $ticketManager->persistAndFlush($ticket);
                 }

@@ -245,11 +245,11 @@ class TicketManager extends AbstractManager
             'id' => $ticket->getId(),
             'author' => $ticket->getAuthor()->getUsername(),
             'createdAt' => $ticket->getCreatedAt()->format('d/m/Y'),
-            'category' => $ticket->getCategory() ? $ticket->getCategory()->getName() : 'Aucune Catégorie',
+            'category' => $ticket->getCategory() ? $ticket->getCategory()->getValue() : 'Aucune Catégorie',
             'status' => $ticket->getStatus()->getValue() . ' - ' . $ticket->getStatus()->getStyle(),
             'type' => $ticket->getPublic() ? "Public" : "Privé",
-            'priority' => $ticket->getPriority() ? $ticket->getPriority()->getValue() : 'Aucune Priorité',
             'assignated' => $ticket->getAssignated() ? $ticket->getAssignated()->getUsername() : "",
+            'priority' => $ticket->getPriority() ? $ticket->getPriority()->getValue() : 'Aucune Priorité',
         ];
     }
 
