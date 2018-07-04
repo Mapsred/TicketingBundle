@@ -4,9 +4,12 @@ namespace Maps_red\TicketingBundle\EventSubscriber;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Events;
+use Maps_red\TicketingBundle\Event\TicketStatusHistoryEvent;
 use Maps_red\TicketingBundle\Event\TicketUnseenEvent;
 use Maps_red\TicketingBundle\Model\TicketInterface;
+use Maps_red\TicketingBundle\Model\TicketStatusInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class TicketDoctrineSubscriber implements EventSubscriber
@@ -43,9 +46,9 @@ class TicketDoctrineSubscriber implements EventSubscriber
     }
 
     /**
-     * @param LifecycleEventArgs $args
+     * @param PreUpdateEventArgs $args
      */
-    public function preUpdate(LifecycleEventArgs $args)
+    public function preUpdate(PreUpdateEventArgs $args)
     {
         $this->preHandle($args);
     }
@@ -67,14 +70,22 @@ class TicketDoctrineSubscriber implements EventSubscriber
     }
 
     /**
-     * @param LifecycleEventArgs $args
+     * @param LifecycleEventArgs|PreUpdateEventArgs $args
      */
     public function preHandle(LifecycleEventArgs $args)
     {
+        $isPreUpdate = $args instanceof PreUpdateEventArgs;
         $entity = $args->getEntity();
 
         if (method_exists($entity, 'updateTimestamps')) {
             call_user_func([$entity, 'updateTimestamps']);
+        }
+
+        if ($entity instanceof TicketInterface) {
+            //PreUpdate with status change or PrePersist
+            if ($isPreUpdate && $args->hasChangedField('status')) {
+                $this->dispatchTicketStatusHistory($entity->getStatus(), $entity);
+            }
         }
     }
 
@@ -84,10 +95,25 @@ class TicketDoctrineSubscriber implements EventSubscriber
     public function postHandle(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
+        $isPreUpdate = $entity->getId();
 
         if ($entity instanceof TicketInterface) {
             $event = new TicketUnseenEvent($entity);
             $this->eventDispatcher->dispatch(TicketUnseenEvent::NAME, $event);
+
+            if (!$isPreUpdate) {
+                $this->dispatchTicketStatusHistory($entity->getStatus(), $entity);
+            }
         }
+    }
+
+    /**
+     * @param TicketStatusInterface $ticketStatus
+     * @param TicketInterface $ticket
+     */
+    private function dispatchTicketStatusHistory(TicketStatusInterface $ticketStatus, TicketInterface $ticket)
+    {
+        $event = new TicketStatusHistoryEvent($ticketStatus, $ticket);
+        $this->eventDispatcher->dispatch(TicketStatusHistoryEvent::NAME, $event);
     }
 }

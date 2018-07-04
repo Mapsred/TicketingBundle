@@ -2,23 +2,37 @@
 
 namespace Maps_red\TicketingBundle\Manager;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use Maps_red\TicketingBundle\Model\TicketInterface;
+use Maps_red\TicketingBundle\Model\TicketStatusHistoryInterface;
+use Maps_red\TicketingBundle\Repository\TicketStatusHistoryRepository;
 
+/**
+ * Class TicketStatusHistoryManager
+ * @package Maps_red\TicketingBundle\Manager
+ * @method TicketStatusHistoryInterface newClass()
+ * @method TicketStatusHistoryRepository getRepository()()
+ */
 class TicketStatusHistoryManager extends AbstractManager
 {
-    /** @var array $ticketStatusHistory */
-    private $ticketStatusHistory;
-
     /**
      * TicketStatusManager constructor.
      * @param EntityManagerInterface $manager
      * @param string $class
-     * @param array $ticketStatusHistory
      */
-    public function __construct(EntityManagerInterface $manager, string $class, array $ticketStatusHistory)
+    public function __construct(EntityManagerInterface $manager, string $class)
     {
         parent::__construct($manager, $class);
-        $this->ticketStatusHistory = $ticketStatusHistory;
+    }
+
+    /**
+     * @param TicketInterface $ticket
+     * @return ArrayCollection
+     */
+    public function getTicketStatusHistory(TicketInterface $ticket)
+    {
+        return new ArrayCollection($this->getRepository()->getTicketStatusHistory($ticket));
     }
 
 }

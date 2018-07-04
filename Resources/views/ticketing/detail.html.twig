@@ -127,6 +127,35 @@
         </div>
     {% endif %}
 
+    {% if not status_history.empty %}
+        <div class="box box-red">
+            <div class="box-header with-border">
+                <div class="box-title">{{ 'status_history'|trans({}, 'TicketingBundle')|capitalize }}</div>
+            </div>
+
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>{{ 'author'|trans({}, 'TicketingBundle')|capitalize }}</th>
+                        <th>{{ 'status'|trans({}, 'TicketingBundle')|capitalize }}</th>
+                        <th>Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for history in status_history %}
+                        <tr>
+                            <td>{{ history.author.username }}</td>
+                            <td>{{ history.status.value }}</td>
+                            <td>{{ history.createdAt|date("d/m/Y H:i:s") }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endif %}
+
     {% if not ticket.closed %}
         <div class="box box-red">
             <div class="box-header with-border">
