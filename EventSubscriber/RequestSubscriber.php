@@ -8,7 +8,7 @@ use Maps_red\TicketingBundle\Model\TicketInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
 
 class RequestSubscriber implements EventSubscriberInterface
@@ -77,7 +77,7 @@ class RequestSubscriber implements EventSubscriberInterface
                 return;
             }
 
-            throw new AccessDeniedHttpException();
+            throw new AuthenticationException();
         }
     }
 
