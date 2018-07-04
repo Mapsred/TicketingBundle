@@ -45,7 +45,7 @@ class TicketForm extends AbstractType
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')->orderBy('u.position', 'ASC');
                 },
-                'choice_label' => 'name',
+                'choice_label' => 'value',
                 'label' => "label.category",
                 'attr' => ['data-provider' => 'select2'],
             ])->add('priority', EntityType::class, [

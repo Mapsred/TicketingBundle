@@ -23,6 +23,11 @@ class TicketCategory implements TicketCategoryInterface
     private $name;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $value;
+
+    /**
      * @ORM\Column(type="integer")
      */
     private $position = 0;
@@ -45,6 +50,18 @@ class TicketCategory implements TicketCategoryInterface
     public function setName(string $name): TicketCategoryInterface
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getValue(): ?string
+    {
+        return $this->value;
+    }
+
+    public function setValue(string $value): TicketCategoryInterface
+    {
+        $this->value = $value;
 
         return $this;
     }

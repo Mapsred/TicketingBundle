@@ -16,6 +16,10 @@ interface TicketCategoryInterface
 
     public function setName(string $name): TicketCategoryInterface;
 
+    public function getValue(): ?string;
+
+    public function setValue(string $value): TicketCategoryInterface;
+
     public function getPosition() : ?int;
 
     public function setPosition(int $position): TicketCategoryInterface;
