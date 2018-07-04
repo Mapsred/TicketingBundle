@@ -80,18 +80,8 @@
                 <!-- Navbar Right Menu -->
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
-                        {% if app.user %}
-                            <li>
-                                <a href="{{ path('security_logout') }}">Se déconnecter</a>
-                            </li>
-                        {% else %}
-                            <li>
-                                <a href="{{ path('security_login') }}">Se connecter</a>
-                            </li>
-                            <li>
-                                <a href="{{ path('user_register') }}">S'inscrire</a>
-                            </li>
-                        {% endif %}
+                        {% block right_navbar %}
+                        {% endblock %}
                     </ul>
                 </div>
                 <!-- /.navbar-custom-menu -->
