@@ -15,12 +15,12 @@ class TicketStatusManager extends AbstractManager
      * TicketStatusManager constructor.
      * @param EntityManagerInterface $manager
      * @param string $class
-     * @param array $ticketStatus
+     * @param array $ticketStatusHistory
      */
-    public function __construct(EntityManagerInterface $manager, string $class, array $ticketStatus)
+    public function __construct(EntityManagerInterface $manager, string $class, array $ticketStatusHistory)
     {
         parent::__construct($manager, $class);
-        $this->ticketStatus = $ticketStatus;
+        $this->ticketStatus = $ticketStatusHistory;
     }
 
     /**

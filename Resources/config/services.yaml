@@ -54,6 +54,10 @@ services:
         tags:
             - { name: ticketing.manager, class: 'ticket_priority'}
 
+    Maps_red\TicketingBundle\Manager\TicketStatusHistoryRepository:
+        tags:
+            - { name: ticketing.manager, class: 'ticket_status_history'}
+
     Maps_red\TicketingBundle\EventSubscriber\RequestSubscriber:
         autowire: true
         tags:
