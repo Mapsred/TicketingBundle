@@ -46,6 +46,7 @@ doctrine:
             Maps_red\TicketingBundle\Model\TicketKeywordInterface: App\Entity\TicketKeyword
             Maps_red\TicketingBundle\Model\TicketStatusInterface: App\Entity\TicketStatus
             Maps_red\TicketingBundle\Model\TicketPriorityInterface: App\Entity\TicketPriority
+            Maps_red\TicketingBundle\Model\TicketStatusHistoryInterface: App\Entity\TicketStatusHistory
             Symfony\Component\Security\Core\User\UserInterface: App\Entity\User
 ```
 
