@@ -9,7 +9,7 @@ TicketingBundle is a community-driven project, created and maintained by a group
 
 ## Installation
 
-### Install TicketingBundle with composer
+### Add TicketingBundle to your project
 
 ```console
 $ composer require maps_red/ticketing-bundle
