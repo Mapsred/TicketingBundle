@@ -6,6 +6,12 @@ TicketingBundle
 
 ## Installation
 
+### Add TicketingBundle to your project
+
+```console
+$ composer require maps_red/ticketing-bundle
+```
+
 1. [Setting up the bundle](docs/1-setting_up_the_bundle.md)
 2. [Setting up the entities](docs/2-setting_up_the_entities.md)
 3. [Default configuration](docs/3-setting_up_the_configuration.md)
