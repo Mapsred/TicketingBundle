@@ -35,7 +35,11 @@
         <nav class="navbar navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
-                    <a href="{{ path('ticketing_perso') }}" class="navbar-brand"><b></b>My Tickets</a>
+                    {% if app.user %}
+                        <a href="{{ path('ticketing_perso') }}" class="navbar-brand"><b>My Tickets</b></a>
+                    {% else %}
+                        <span class="navbar-brand"><b>My Tickets</b></span>
+                    {% endif %}
                     {# Mobile button #}
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                             data-target="#navbar-collapse">
@@ -46,33 +50,33 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
                     {% block left_navbar %}
-                    <ul class="nav navbar-nav">
-                        {% if app.user %}
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                {{ "Ticketing"|trans({}, 'TicketingBundle') }}
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="{{ path('ticketing_new') }}">
-                                        {{ "Create a new ticket"|trans({}, 'TicketingBundle') }}
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('ticketing_perso') }}">
-                                        {{ "See my tickets"|trans({}, 'TicketingBundle') }}
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('ticketing_list') }}">
-                                        {{ "See all tickets"|trans({}, 'TicketingBundle') }}
-                                    </a>
-                                </li>
-                            </ul>
-                            {% endif %}
-                        </li>
-                    </ul>
+                        <ul class="nav navbar-nav">
+                            {% if app.user %}
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    {{ "Ticketing"|trans({}, 'TicketingBundle') }}
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{{ path('ticketing_new') }}">
+                                            {{ "Create a new ticket"|trans({}, 'TicketingBundle') }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('ticketing_perso') }}">
+                                            {{ "See my tickets"|trans({}, 'TicketingBundle') }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('ticketing_list') }}">
+                                            {{ "See all tickets"|trans({}, 'TicketingBundle') }}
+                                        </a>
+                                    </li>
+                                </ul>
+                                {% endif %}
+                            </li>
+                        </ul>
                     {% endblock %}
 
                 </div>

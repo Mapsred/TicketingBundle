@@ -30,6 +30,7 @@
                     <th>{{ 'author'|trans({}, 'TicketingBundle')|capitalize }}</th>
                     <th>Date</th>
                     <th>{{ 'category'|trans({}, 'TicketingBundle')|capitalize }}</th>
+                    <th>{{ 'label.priority'|trans({}, 'TicketingBundle')|capitalize }}</th>
                     <th>{{ 'status'|trans({}, 'TicketingBundle')|capitalize }}</th>
                     <th>{{ 'assignated_to'|trans({}, 'TicketingBundle')|capitalize }}</th>
                 </tr>
@@ -40,7 +41,7 @@
                         <span>{{ ticket.author.username }}</span>
                     </td>
                     <td>{{ ticket.createdAt|date("d/m/Y H:i:s") }}</td>
-                    <td><span id="cat">{{ ticket.getCategory is not null ? ticket.category.name : "" }}</span>
+                    <td><span id="cat">{{ ticket.getCategory is not null ? ticket.category.value : "" }}</span>
                         {% if isAuthorOrGranted %}
                             <button class="btn bg-ticketing btn-flat btn-sm pull-right" id="cat_btn" type="button"
                                     data-toggle="modal" data-target="#change_category"
@@ -49,6 +50,7 @@
                             </button>
                         {% endif %}
                     </td>
+                    <td>{{ ticket.priority ? ticket.priority.value : "" }}</td>
                     <td>
                         {{ ticket.status.value }}
                         {% if (ticket.status.name == "waiting" or ticket.status.name == "pending") and isGranted %}
@@ -119,6 +121,35 @@
                             </td>
                             <td>{{ comment.text|urlreplacer|raw|nl2br }}</td>
                             <td>{{ comment.createdAt|date("d/m/Y H:i:s") }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if not status_history.empty %}
+        <div class="box box-red">
+            <div class="box-header with-border">
+                <div class="box-title">{{ 'status_history'|trans({}, 'TicketingBundle')|capitalize }}</div>
+            </div>
+
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>{{ 'author'|trans({}, 'TicketingBundle')|capitalize }}</th>
+                        <th>{{ 'status'|trans({}, 'TicketingBundle')|capitalize }}</th>
+                        <th>Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for history in status_history %}
+                        <tr>
+                            <td>{{ history.author.username }}</td>
+                            <td>{{ history.status.value }}</td>
+                            <td>{{ history.createdAt|date("d/m/Y H:i:s") }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>

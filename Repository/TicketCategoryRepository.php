@@ -12,14 +12,14 @@ class TicketCategoryRepository extends ServiceEntityRepository
     public function findAllCategories()
     {
         $result = $this->createQueryBuilder('q')
-            ->select("q.name")
+            ->select("q.value")
             ->orderBy("q.position", "ASC")
             ->getQuery()
             ->getResult();
 
         $response = [];
         foreach ($result as $item) {
-            $response[] = $item['name'];
+            $response[] = $item['value'];
         }
 
         return $response;

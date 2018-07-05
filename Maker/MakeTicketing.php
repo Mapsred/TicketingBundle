@@ -11,6 +11,7 @@ use Maps_red\TicketingBundle\Entity\TicketHistory;
 use Maps_red\TicketingBundle\Entity\TicketKeyword;
 use Maps_red\TicketingBundle\Entity\TicketPriority;
 use Maps_red\TicketingBundle\Entity\TicketStatus;
+use Maps_red\TicketingBundle\Entity\TicketStatusHistory;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\DependencyBuilder;
 use Symfony\Bundle\MakerBundle\Generator;
@@ -73,7 +74,8 @@ class MakeTicketing extends AbstractMaker
             TicketHistory::class,
             TicketKeyword::class,
             TicketStatus::class,
-            TicketPriority::class
+            TicketPriority::class,
+            TicketStatusHistory::class,
         ];
 
         foreach ($classes as $classFQN) {

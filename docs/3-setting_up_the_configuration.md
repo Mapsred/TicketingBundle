@@ -7,9 +7,19 @@ Step 3 - Setting up the configuration
 # app/config/packages/ticketing.yaml
 ticketing:
     ticket_status:
-        open: open
-        closed: closed
-        pending: pending
+
+        # The name of the open status
+        open:                 open
+
+        # The name of the closed status
+        closed:               closed
+
+        # The name of the pending status
+        pending:              pending
+
+        # The name of the waiting status
+        waiting:              waiting
+
     # Enable the seen/unseen display for tickets
     enable_history:       true
 
@@ -26,10 +36,15 @@ ticketing:
         ticket_keyword:       App\Entity\TicketKeyword
         ticket_status:        App\Entity\TicketStatus
         ticket_priority:      App\Entity\TicketPriority
+        ticket_status_history: App\Entity\TicketStatusHistory
     templates:
+        list:                 '@Ticketing/ticketing/list.html.twig'
         layout:               '@Ticketing/base.html.twig'
-        index:                list.html.twig
+        perso:                '@Ticketing/ticketing/perso.html.twig'
         new:                  '@Ticketing/ticketing/new.html.twig'
+        detail:               '@Ticketing/ticketing/detail.html.twig'
+        rating_rating:        '@Ticketing/ticketing/rating/rating.html.twig'
+        rating_closed:        '@Ticketing/ticketing/rating/closed.html.twig'
     assets:
         stylesheets:
 
@@ -40,6 +55,8 @@ ticketing:
             - bundles/ticketing/vendor/css/select2.min.css
             - bundles/ticketing/vendor/css/ionicons.min.css
             - bundles/ticketing/vendor/css/dataTables.bootstrap.min.css
+            - bundles/ticketing/vendor/css/star-rating.min.css
+            - bundles/ticketing/vendor/css/star-rating-theme.min.css
             - bundles/ticketing/css/AdminLTE.min.css
             - bundles/ticketing/css/skin-ticketing.min.css
             - bundles/ticketing/css/helper.css
@@ -55,6 +72,7 @@ ticketing:
             - bundles/ticketing/vendor/js/select2-fr.min.js
             - bundles/ticketing/vendor/js/dataTables.min.js
             - bundles/ticketing/vendor/js/dataTables.bootstrap.min.js
+            - bundles/ticketing/vendor/js/star-rating.min.js
             - bundles/ticketing/js/script.js
 ```
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+  <file source-language="fr" target-language="fr" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
@@ -19,7 +19,7 @@
       </trans-unit>
       <trans-unit id="hk2F0e." resname="label.priority">
         <source>label.priority</source>
-        <target>Priority</target>
+        <target>Priorité</target>
       </trans-unit>
       <trans-unit id="UQI8T0S" resname="label.text">
         <source>label.text</source>
@@ -215,6 +215,10 @@
       <trans-unit id="tkKrzpe" resname="ticket_reopened">
         <source>ticket_reopened</source>
         <target>Le ticket a bien été réouvert</target>
+      </trans-unit>
+      <trans-unit id="._iFWDj" resname="status_history">
+        <source>status_history</source>
+        <target>Historique</target>
       </trans-unit>
     </body>
   </file>

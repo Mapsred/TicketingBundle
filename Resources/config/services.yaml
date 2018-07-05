@@ -54,6 +54,10 @@ services:
         tags:
             - { name: ticketing.manager, class: 'ticket_priority'}
 
+    Maps_red\TicketingBundle\Manager\TicketStatusHistoryManager:
+        tags:
+            - { name: ticketing.manager, class: 'ticket_status_history'}
+
     Maps_red\TicketingBundle\EventSubscriber\RequestSubscriber:
         autowire: true
         tags:
@@ -63,6 +67,11 @@ services:
         autowire: true
         arguments:
             $enableHistory: "%ticketing.enable_history%"
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Maps_red\TicketingBundle\EventSubscriber\TicketStatusHistorySubscriber:
+        autowire: true
         tags:
             - { name: kernel.event_subscriber }
 
