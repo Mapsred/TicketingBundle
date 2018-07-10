@@ -9,8 +9,6 @@ use Maps_red\TicketingBundle\Model\TicketStatusHistoryInterface;
 use Maps_red\TicketingBundle\Repository\TicketStatusHistoryRepository;
 
 /**
- * Class TicketStatusHistoryManager
- * @package Maps_red\TicketingBundle\Manager
  * @method TicketStatusHistoryInterface newClass()
  * @method TicketStatusHistoryRepository getRepository()()
  */

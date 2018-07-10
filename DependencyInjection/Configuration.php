@@ -1,22 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Maps_red
- * Date: 29/05/2018
- * Time: 23:13
- */
 
 namespace Maps_red\TicketingBundle\DependencyInjection;
-
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-/**
- * Class Configuration
- *
- * @author François MATHIEU <francois.mathieu@livexp.fr>
- */
 class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder()
@@ -160,12 +148,8 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
-        ->end()
-
-        ;
-
+        ->end();
         
         return $treeBuilder;
     }
-    
 }

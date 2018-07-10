@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: fma
- * Date: 15/06/18
- * Time: 15:49
- */
 
 namespace Maps_red\TicketingBundle\Model\Traits;
 
@@ -22,30 +16,16 @@ trait Timestampable
      */
     protected $updatedAt;
 
-    /**
-     * Returns createdAt value.
-     *
-     * @return \DateTime
-     */
     public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * Returns updatedAt value.
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
 
-    /**
-     * @param \DateTime $createdAt
-     * @return $this
-     */
     public function setCreatedAt(\DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
@@ -53,10 +33,6 @@ trait Timestampable
         return $this;
     }
 
-    /**
-     * @param \DateTime $updatedAt
-     * @return $this
-     */
     public function setUpdatedAt(\DateTime $updatedAt)
     {
         $this->updatedAt = $updatedAt;

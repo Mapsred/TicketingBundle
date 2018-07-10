@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Maps_red
- * Date: 13/07/2017
- * Time: 18:20
- */
 
 namespace Maps_red\TicketingBundle\Controller;
 
@@ -43,8 +37,6 @@ class TicketingRatingController extends Controller
      * @Method({"POST"})
      * @param Request $request
      * @return JsonResponse
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function addRatingAction(Request $request)
     {
@@ -93,7 +85,6 @@ class TicketingRatingController extends Controller
     /**
      * @param integer $user_id
      * @return Response
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getUserClosedTickets($user_id)
     {

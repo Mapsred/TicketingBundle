@@ -58,8 +58,6 @@ abstract class AbstractManager
     /**
      * @param object $entity
      * @return AbstractManager
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function persistAndFlush($entity)
     {
@@ -72,8 +70,6 @@ abstract class AbstractManager
     /**
      * @param $entity
      * @return AbstractManager
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function removeEntity($entity)
     {

@@ -8,8 +8,6 @@ use Maps_red\TicketingBundle\Model\TicketInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * Class TicketRepository
- * @package Maps_red\TicketingBundle\Repository
  * @method TicketInterface|object|null find($id, $lockMode = null, $lockVersion = null)
  * @method TicketInterface|object|null findOneBy(array $criteria, array $orderBy = null)
  */
@@ -30,7 +28,6 @@ class TicketRepository extends ServiceEntityRepository
      * @param string $type
      * @param UserInterface|null $user
      * @return array|int
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function searchDataTable(string $globalSearch = null, array $columns, array $fields, array $sortOrder, int $offset,
                                     int $limit, bool $isCount, $status, $type, UserInterface $user = null)
@@ -144,11 +141,9 @@ class TicketRepository extends ServiceEntityRepository
     }
 
     /**
-     * TODO try getSingleScalarResult instead
      * @param UserInterface $user
      * @param $status
      * @return int
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function countBySpecificUserAndStatus(UserInterface $user, $status)
     {
