@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Maps_red
- * Date: 29/05/2018
- * Time: 22:37
- */
-
 namespace Maps_red\TicketingBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -13,16 +6,11 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-/**
- * Class TicketingExtension
- * @package Maps_red\TicketingBundle\DependencyInjection
- */
 class TicketingExtension extends Extension
 {
     /**
      * @param array $configs
      * @param ContainerBuilder $container
-     * @throws \Exception
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -89,5 +77,4 @@ class TicketingExtension extends Extension
         $container->setParameter('ticketing.javascripts', $config['assets']['javascripts']);
         $container->setParameter('ticketing.entities', $config['entities']);
     }
-
 }

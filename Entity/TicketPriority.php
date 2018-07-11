@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: fma
- * Date: 22/06/18
- * Time: 16:02
- */
 
 namespace Maps_red\TicketingBundle\Entity;
-
 
 use Doctrine\ORM\Mapping as ORM;
 use Maps_red\TicketingBundle\Model\TicketPriorityInterface;

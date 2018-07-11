@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Maps_red
- * Date: 01/06/2018
- * Time: 21:20
- */
 
 namespace Maps_red\TicketingBundle\EventSubscriber;
 
@@ -13,10 +7,6 @@ use Maps_red\TicketingBundle\Manager\TicketStatusHistoryManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Security;
 
-/**
- * Class TicketStatusHistorySubscriber
- * @package Maps_red\TicketingBundle\EventSubscriber
- */
 class TicketStatusHistorySubscriber implements EventSubscriberInterface
 {
     /** @var Security $security */
@@ -48,7 +38,6 @@ class TicketStatusHistorySubscriber implements EventSubscriberInterface
 
     /**
      * @param TicketStatusHistoryEvent $event
-     * @throws \Doctrine\ORM\ORMException
      */
     public function onTicketStatusChange(TicketStatusHistoryEvent $event)
     {
@@ -59,5 +48,4 @@ class TicketStatusHistorySubscriber implements EventSubscriberInterface
 
         $this->ticketStatusHistoryManager->getManager()->persist($entity);
     }
-
 }

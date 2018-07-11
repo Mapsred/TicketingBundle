@@ -63,7 +63,6 @@ class MakeTicketing extends AbstractMaker
      * @param InputInterface $input
      * @param ConsoleStyle $io
      * @param Generator $generator
-     * @throws \Exception
      */
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator)
     {
@@ -101,7 +100,6 @@ class MakeTicketing extends AbstractMaker
             }
 
             $generator->writeChanges();
-
         }
     }
 
@@ -109,7 +107,6 @@ class MakeTicketing extends AbstractMaker
      * @param ClassNameDetails $classDetails
      * @param ConsoleStyle $io
      * @param bool $regenerate
-     * @throws \Exception
      */
     private function remove(ClassNameDetails $classDetails, ConsoleStyle $io, bool $regenerate)
     {
@@ -119,7 +116,6 @@ class MakeTicketing extends AbstractMaker
                 $io->comment(sprintf('<fg=red>%s</>: %s', "removed", $targetPath));
             }
         }
-
     }
 
     /**
@@ -140,7 +136,6 @@ class MakeTicketing extends AbstractMaker
                 'parent_namespace' => $classFQN,
             ]
         );
-
     }
 
     /**

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Maps_red
- * Date: 02/07/2016
- * Time: 00:05
- */
 
 namespace Maps_red\TicketingBundle\Utils;
 

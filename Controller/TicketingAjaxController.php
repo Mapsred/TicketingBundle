@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Maps_red
- * Date: 14/06/2018
- * Time: 23:42
- */
-
 namespace Maps_red\TicketingBundle\Controller;
 
 use Maps_red\TicketingBundle\Entity\Ticket;
@@ -32,7 +25,6 @@ class TicketingAjaxController extends Controller
      * @param string $status
      * @param string $type
      * @return Response
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function dataTableProcessing(Request $request, TicketManager $ticketManager, string $status, string $type)
     {
@@ -72,8 +64,6 @@ class TicketingAjaxController extends Controller
      * @param TicketManager $ticketManager
      * @param TicketCategoryManager $ticketCategoryManager
      * @return Response
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function setCategories(Request $request, TicketManager $ticketManager, TicketCategoryManager $ticketCategoryManager)
     {
@@ -100,8 +90,6 @@ class TicketingAjaxController extends Controller
      * @param Request $request
      * @param TicketManager $ticketManager
      * @return Response
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function updateTicketStatusAction(Request $request, TicketManager $ticketManager)
     {
@@ -114,5 +102,4 @@ class TicketingAjaxController extends Controller
 
         return $this->json([], Response::HTTP_FORBIDDEN);
     }
-
 }

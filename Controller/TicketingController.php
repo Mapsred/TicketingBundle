@@ -69,8 +69,6 @@ class TicketingController extends Controller
      * @param Request $request
      * @param TicketManager $ticketManager
      * @return Response
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function addTicket(Request $request, TicketManager $ticketManager): Response
     {
@@ -100,8 +98,6 @@ class TicketingController extends Controller
      * @param TicketCommentManager $ticketCommentManager
      * @param TicketStatusHistoryManager $ticketStatusHistoryManager
      * @return RedirectResponse|Response
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function detail(Request $request, TicketInterface $ticket, TicketManager $ticketManager,
                            TicketCommentManager $ticketCommentManager, TicketStatusHistoryManager $ticketStatusHistoryManager)

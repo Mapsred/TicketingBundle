@@ -11,8 +11,6 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * Class TicketManager
- * @package Maps_red\TicketingBundle\Manager
  * @method TicketRepository getRepository
  */
 class TicketManager extends AbstractManager
@@ -58,8 +56,6 @@ class TicketManager extends AbstractManager
     /**
      * @param UserInterface $user
      * @param TicketInterface $ticket
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function createTicket(UserInterface $user, TicketInterface $ticket)
     {
@@ -77,8 +73,6 @@ class TicketManager extends AbstractManager
      * @param TicketInterface $ticket
      * @param UserInterface $user
      * @param TicketCommentInterface $comment
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function handleCommentAction(TicketInterface $ticket, UserInterface $user, TicketCommentInterface $comment)
     {
@@ -90,8 +84,6 @@ class TicketManager extends AbstractManager
     /**
      * @param TicketInterface $ticket
      * @param UserInterface $user
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function handleCloseAction(TicketInterface $ticket, UserInterface $user)
     {
@@ -105,8 +97,6 @@ class TicketManager extends AbstractManager
      * @param TicketInterface $ticket
      * @param UserInterface $user
      * @param bool $bool
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function handlePublicStatusAction(TicketInterface $ticket, UserInterface $user, bool $bool)
     {
@@ -121,8 +111,6 @@ class TicketManager extends AbstractManager
     /**
      * @param TicketInterface $ticket
      * @param UserInterface $user
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function handleManageAction(TicketInterface $ticket, UserInterface $user)
     {
@@ -134,8 +122,6 @@ class TicketManager extends AbstractManager
 
     /**
      * @param TicketInterface $ticket
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function handleOpenAction(TicketInterface $ticket)
     {
@@ -159,8 +145,6 @@ class TicketManager extends AbstractManager
 
     /**
      * @param TicketInterface $ticket
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function handleStatusChange(TicketInterface $ticket)
     {
@@ -175,8 +159,6 @@ class TicketManager extends AbstractManager
     /**
      * @param TicketInterface $ticket
      * @param int $rating
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function handleRating(TicketInterface $ticket, int $rating)
     {
@@ -194,7 +176,6 @@ class TicketManager extends AbstractManager
      * @param string $type
      * @param UserInterface $user
      * @return array
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function handleDataTable(array $datas, string $status, string $type, UserInterface $user)
     {
@@ -323,6 +304,4 @@ class TicketManager extends AbstractManager
 
         return true;
     }
-
-
 }

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Maps_red
- * Date: 01/06/2018
- * Time: 21:20
- */
 
 namespace Maps_red\TicketingBundle\EventSubscriber;
 
@@ -51,7 +45,6 @@ class TicketHistorySubscriber implements EventSubscriberInterface
             TicketSeenEvent::NAME => 'onTicketingSeen',
             TicketUnseenEvent::NAME => 'onTicketingUnseen',
         ];
-
     }
 
     /**
@@ -73,5 +66,4 @@ class TicketHistorySubscriber implements EventSubscriberInterface
             $this->ticketHistoryManager->setUnseen($user, $event->getTicket());
         }
     }
-
 }

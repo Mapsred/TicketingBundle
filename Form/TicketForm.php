@@ -63,7 +63,6 @@ class TicketForm extends AbstractType
                 'attr' => ['data-provider' => 'select2'],
             ])
         ;
-
     }
 
     public function configureOptions(OptionsResolver $resolver)
