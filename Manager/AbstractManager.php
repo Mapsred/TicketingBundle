@@ -94,5 +94,4 @@ abstract class AbstractManager
     {
         return $this->form;
     }
-
 }

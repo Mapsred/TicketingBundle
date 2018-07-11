@@ -304,6 +304,4 @@ class TicketManager extends AbstractManager
 
         return true;
     }
-
-
 }

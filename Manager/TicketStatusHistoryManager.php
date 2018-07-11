@@ -32,5 +32,4 @@ class TicketStatusHistoryManager extends AbstractManager
     {
         return new ArrayCollection($this->getRepository()->getTicketStatusHistory($ticket));
     }
-
 }

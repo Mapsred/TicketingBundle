@@ -84,5 +84,4 @@ class TicketHistory implements TicketHistoryInterface
 
         return $this;
     }
-
 }

@@ -44,7 +44,7 @@ class TicketingRatingController extends Controller
             return $this->json('error', JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        if  (null === $ticket = $this->ticketManager->getRepository()->find($request->request->get("ticket"))) {
+        if (null === $ticket = $this->ticketManager->getRepository()->find($request->request->get("ticket"))) {
             return $this->json('error', JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
         }
 

@@ -45,7 +45,6 @@ class TicketHistorySubscriber implements EventSubscriberInterface
             TicketSeenEvent::NAME => 'onTicketingSeen',
             TicketUnseenEvent::NAME => 'onTicketingUnseen',
         ];
-
     }
 
     /**
@@ -67,5 +66,4 @@ class TicketHistorySubscriber implements EventSubscriberInterface
             $this->ticketHistoryManager->setUnseen($user, $event->getTicket());
         }
     }
-
 }

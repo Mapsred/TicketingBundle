@@ -59,11 +59,10 @@ class TicketStatusManager extends AbstractManager
                     "No %s found with the name %s. please check the ticketing.ticket_status.%s parameter.",
                     $this->getClass(),
                     $type,
-                    $type)
-            );
+                    $type
+            ));
         }
 
         return $status;
     }
-
 }

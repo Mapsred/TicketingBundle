@@ -43,5 +43,4 @@ class TicketCloseForm extends AbstractType
             'translation_domain' => 'TicketingBundle'
         ]);
     }
-
 }

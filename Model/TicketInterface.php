@@ -78,5 +78,4 @@ interface TicketInterface
     public function isPending(): bool;
 
     public function isWaiting(): bool;
-
 }

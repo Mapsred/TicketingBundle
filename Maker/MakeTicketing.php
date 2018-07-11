@@ -100,7 +100,6 @@ class MakeTicketing extends AbstractMaker
             }
 
             $generator->writeChanges();
-
         }
     }
 
@@ -117,7 +116,6 @@ class MakeTicketing extends AbstractMaker
                 $io->comment(sprintf('<fg=red>%s</>: %s', "removed", $targetPath));
             }
         }
-
     }
 
     /**
@@ -138,7 +136,6 @@ class MakeTicketing extends AbstractMaker
                 'parent_namespace' => $classFQN,
             ]
         );
-
     }
 
     /**

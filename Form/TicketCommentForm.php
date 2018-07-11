@@ -46,5 +46,4 @@ class TicketCommentForm extends AbstractType
             'translation_domain' => 'TicketingBundle'
         ]);
     }
-
 }

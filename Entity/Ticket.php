@@ -327,5 +327,4 @@ class Ticket implements TicketInterface
     {
         return $this->getStatus()->getName() == "waiting";
     }
-
 }

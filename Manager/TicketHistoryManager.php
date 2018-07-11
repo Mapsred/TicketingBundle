@@ -63,5 +63,4 @@ class TicketHistoryManager extends AbstractManager
 
         return $history;
     }
-
 }

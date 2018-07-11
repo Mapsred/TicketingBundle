@@ -161,5 +161,4 @@ class TicketRepository extends ServiceEntityRepository
 
         return isset($result) ? $result['nb'] : 0;
     }
-
 }

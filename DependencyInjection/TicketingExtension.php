@@ -77,5 +77,4 @@ class TicketingExtension extends Extension
         $container->setParameter('ticketing.javascripts', $config['assets']['javascripts']);
         $container->setParameter('ticketing.entities', $config['entities']);
     }
-
 }

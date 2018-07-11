@@ -48,5 +48,4 @@ class TicketStatusHistorySubscriber implements EventSubscriberInterface
 
         $this->ticketStatusHistoryManager->getManager()->persist($entity);
     }
-
 }

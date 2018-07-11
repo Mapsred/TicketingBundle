@@ -102,5 +102,4 @@ class TicketingAjaxController extends Controller
 
         return $this->json([], Response::HTTP_FORBIDDEN);
     }
-
 }

@@ -80,5 +80,4 @@ class RequestSubscriber implements EventSubscriberInterface
             throw new AuthenticationException();
         }
     }
-
 }

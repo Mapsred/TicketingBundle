@@ -55,5 +55,4 @@ trait Timestampable
 
         $this->updatedAt = $dateTime;
     }
-
 }
