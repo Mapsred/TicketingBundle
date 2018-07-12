@@ -1,4 +1,4 @@
-{% extends getTicketingLayoutTemplate() %}
+{% extends '@Ticketing/base.html.twig' %}
 
 {% block title %}{{ 'All Tickets'|trans({}, 'TicketingBundle') }} {% endblock %}
 {% block header %}<h1>{{ 'All Tickets'|trans({}, 'TicketingBundle') }} </h1>{% endblock %}
@@ -15,14 +15,14 @@
                 <table class="table table-bordered table-striped data-table" data-status="{{ status.name }}" data-type="list">
                     <thead>
                     <tr>
-                        <th>Numéro</th>
-                        <th>Auteur</th>
+                        <th>{{ 'number'|trans({}, 'TicketingBundle') }}</th>
+                        <th>{{ 'author'|trans({}, 'TicketingBundle') }}</th>
                         <th>Date</th>
-                        <th>Catégorie</th>
-                        <th>Statut</th>
+                        <th>{{ 'category'|trans({}, 'TicketingBundle') }}</th>
+                        <th>{{ 'status'|trans({}, 'TicketingBundle') }}</th>
                         <th>Type</th>
-                        <th>Assigné à</th>
-                        <th>Priorité</th>
+                        <th>{{ 'assignated_to'|trans({}, 'TicketingBundle') }}</th>
+                        <th>{{ 'label.priority'|trans({}, 'TicketingBundle') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -30,14 +30,14 @@
                     </tbody>
                     <tfoot>
                     <tr>
-                        <th>Numéro</th>
-                        <th>Auteur</th>
+                        <th>{{ 'number'|trans({}, 'TicketingBundle') }}</th>
+                        <th>{{ 'author'|trans({}, 'TicketingBundle') }}</th>
                         <th>Date</th>
-                        <th>Catégorie</th>
-                        <th class="disabled">Statut</th>
+                        <th>{{ 'category'|trans({}, 'TicketingBundle') }}</th>
+                        <th class="disabled">{{ 'status'|trans({}, 'TicketingBundle') }}</th>
                         <th class="disabled">Type</th>
-                        <th>Assigné à</th>
-                        <th>Priorité</th>
+                        <th>{{ 'assignated_to'|trans({}, 'TicketingBundle') }}</th>
+                        <th>{{ 'label.priority'|trans({}, 'TicketingBundle') }}</th>
                     </tr>
                     </tfoot>
                 </table>

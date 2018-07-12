@@ -72,9 +72,6 @@ class TicketingExtension extends Extension
     protected function setParameters(ContainerBuilder $container, array $config)
     {
         $container->setParameter('ticketing.enable_history', $config['enable_history']);
-        $container->setParameter('ticketing.templates', $config['templates']);
-        $container->setParameter('ticketing.stylesheets', $config['assets']['stylesheets']);
-        $container->setParameter('ticketing.javascripts', $config['assets']['javascripts']);
         $container->setParameter('ticketing.entities', $config['entities']);
     }
 }
