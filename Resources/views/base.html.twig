@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app.request.locale }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,11 +8,20 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     {#<link rel="icon" href="{{ asset('../favicon.ico') }}?" type="image/x-icon">#}
 
-    {% block stylesheet %}{% endblock %}
+    {% block stylesheet %}
+        <link rel="stylesheet" href="{{ asset('bundles/ticketing/vendor/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/ticketing/vendor/css/bootstrap-datepicker3.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/ticketing/vendor/css/font-awesome.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/ticketing/vendor/css/select2.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/ticketing/vendor/css/ionicons.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/ticketing/vendor/css/dataTables.bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/ticketing/vendor/css/star-rating.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/ticketing/vendor/css/star-rating-theme.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/ticketing/css/AdminLTE.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/ticketing/css/skin-ticketing.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/ticketing/css/helper.css') }}">
+    {% endblock %}
 
-    {% for stylesheet in getTicketingStylesheets() %}
-        <link rel="stylesheet" href="{{ asset(stylesheet) }}">
-    {% endfor %}
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -30,7 +39,6 @@
 
 <body class="hold-transition skin-ticketing layout-top-nav">
 <div class="wrapper">
-
     <header class="main-header">
         <nav class="navbar navbar-static-top">
             <div class="container">
@@ -135,11 +143,27 @@
 <!-- REQUIRED JS SCRIPTS -->
 <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
 <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
-{% for javascript in getTicketingJavascripts() %}
-    <script src="{{ asset(javascript) }}"></script>
-{% endfor %}
 
-{% block javascript %}{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('bundles/ticketing/vendor/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('bundles/ticketing/vendor/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bundles/ticketing/vendor/js/adminlte.min.js') }}"></script>
+    <script src="{{ asset('bundles/ticketing/vendor/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('bundles/ticketing/vendor/js/select2.min.js') }}"></script>
+    <script src="{{ asset('bundles/ticketing/vendor/js/dataTables.min.js') }}"></script>
+    <script src="{{ asset('bundles/ticketing/vendor/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bundles/ticketing/vendor/js/star-rating.min.js') }}"></script>
+
+    {% if app.request.locale == "fr" %}
+        <script src="{{ asset('bundles/ticketing/vendor/js/bootstrap-datepicker.fr.min.js') }}"></script>
+        <script src="{{ asset('bundles/ticketing/vendor/js/select2-fr.min.js') }}"></script>
+    {% else %}
+        <script src="{{ asset('bundles/ticketing/vendor/js/bootstrap-datepicker.en-GB.min.js') }}"></script>
+        <script src="{{ asset('bundles/ticketing/vendor/js/select2-en.min.js') }}"></script>
+    {% endif %}
+
+    <script src="{{ asset('bundles/ticketing/js/script.js') }}"></script>
+{% endblock %}
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the

@@ -1,8 +1,4 @@
 services:
-    _defaults:
-        bind:
-            $ticketingTemplates: '%ticketing.templates%'
-
     Maps_red\TicketingBundle\Controller\:
         resource: '../../Controller'
         autowire: true
@@ -81,7 +77,6 @@ services:
             - { name: doctrine.event_subscriber, connection: default }
 
     Maps_red\TicketingBundle\Twig\TicketingExtension:
-        arguments: ["%ticketing.templates%", "%ticketing.stylesheets%", "%ticketing.javascripts%"]
         autowire: true
         tags:
             - { name: twig.extension }

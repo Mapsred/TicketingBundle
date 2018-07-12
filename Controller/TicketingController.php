@@ -20,20 +20,15 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class TicketingController extends Controller
 {
-    /** @var array $ticketingTemplates */
-    private $ticketingTemplates;
-
     /** @var TranslatorInterface $translator */
     private $translator;
 
     /**
      * TicketingController constructor.
-     * @param array $ticketingTemplates
      * @param TranslatorInterface $translator
      */
-    public function __construct(array $ticketingTemplates, TranslatorInterface $translator)
+    public function __construct(TranslatorInterface $translator)
     {
-        $this->ticketingTemplates = $ticketingTemplates;
         $this->translator = $translator;
     }
 
@@ -45,7 +40,7 @@ class TicketingController extends Controller
      */
     public function listTickets(TicketStatusManager $ticketStatusManager)
     {
-        return $this->render($this->ticketingTemplates['list'], [
+        return $this->render('@Ticketing/ticketing/list.html.twig', [
             'status_list' => $ticketStatusManager->getRepository()->findAll()
         ]);
     }
@@ -58,7 +53,7 @@ class TicketingController extends Controller
      */
     public function persoTickets(TicketStatusManager $ticketStatusManager)
     {
-        return $this->render($this->ticketingTemplates['perso'], [
+        return $this->render('@Ticketing/ticketing/perso.html.twig', [
             'status_list' => $ticketStatusManager->getRepository()->findAll()
         ]);
     }
@@ -84,7 +79,7 @@ class TicketingController extends Controller
             return $this->redirectToRoute('ticketing_list');
         }
 
-        return $this->render($this->ticketingTemplates['new'], [
+        return $this->render('@Ticketing/ticketing/new.html.twig', [
             'form' => $ticketForm->createView(),
         ]);
     }
@@ -163,7 +158,7 @@ class TicketingController extends Controller
         }
 
 
-        return $this->render($this->ticketingTemplates['detail'], [
+        return $this->render('@Ticketing/ticketing/detail.html.twig', [
             'ticket' => $ticket,
             'form' => $commentForm->createView(),
             'close_form' => $closeForm->createView(),
