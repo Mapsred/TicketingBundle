@@ -15,11 +15,12 @@ TicketingBundle is a community-driven project, created and maintained by a group
 $ composer require maps_red/ticketing-bundle
 ```
 
+The bundle is auto-configured thanks to the [Symfony recipe](https://github.com/symfony/recipes-contrib/tree/master/maps_red/ticketing-bundle)
+
 ### Documentation
 
 1. [Setting up the bundle](docs/1-setting_up_the_bundle.md)
-2. [Setting up the entities](docs/2-setting_up_the_entities.md)
-3. [Default configuration](docs/3-setting_up_the_configuration.md)
+2. [Default configuration](docs/2-setting_up_the_configuration.md)
 
 ## Contribute
 
@@ -43,4 +44,4 @@ TicketingBundle is created and maintained by
 Special thanks to :
 * [Laurent Bassin](https://github.com/lbassin) for his feature request ["Add Status History"](https://github.com/Mapsred/TicketingBundle/issues/75).
 * You for reading this project.
-* The symfony community for it's help
+* The symfony community for it's help.

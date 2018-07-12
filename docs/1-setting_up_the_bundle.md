@@ -1,43 +1,24 @@
 Step 1 - Setting up the Bundle
 ======================
 
-### A - Enable the Bundle
+### Fill the doctrine configuration
 
-If you use Symfony 3.x enable the bundle by adding it to the list of registered bundles
-in the `app/AppKernel.php` file of your project:
-
-```php
-<?php
-// app/AppKernel.php
-
-// ...
-class AppKernel extends Kernel
-{
-    public function registerBundles()
-    {
-        $bundles = array(
-            // ...
-            new Maps_red\TicketingBundle\TicketingBundle(),
-        );
-
-        // ...
-    }
-
-    // ...
-}
-```
-
-If you use Symfony 4.x you don't need the previous step, thanks to Symfony Flex
-
-### B - Import the routing
-
-Import the ``routes.yaml`` routing file into your own routes file.
+You will need to explain to doctrine which Interface is which Class with the following configuration.
 
 ```yaml
-# app/config/routes.yaml
-  ticketing_routing:
-    resource: '@TicketingBundle/Resources/config/routing/routes.yaml' 
+# config/packages/doctrine.yaml
+doctrine:
+    # ...
+    orm:
+        # ...
+        resolve_target_entities:
+            Maps_red\TicketingBundle\Model\TicketInterface: App\Entity\Ticket
+            Maps_red\TicketingBundle\Model\TicketCategoryInterface: App\Entity\TicketCategory
+            Maps_red\TicketingBundle\Model\TicketCommentInterface: App\Entity\TicketComment
+            Maps_red\TicketingBundle\Model\TicketHistoryInterface: App\Entity\TicketHistory
+            Maps_red\TicketingBundle\Model\TicketKeywordInterface: App\Entity\TicketKeyword
+            Maps_red\TicketingBundle\Model\TicketStatusInterface: App\Entity\TicketStatus
+            Maps_red\TicketingBundle\Model\TicketPriorityInterface: App\Entity\TicketPriority
+            Maps_red\TicketingBundle\Model\TicketStatusHistoryInterface: App\Entity\TicketStatusHistory
+            Symfony\Component\Security\Core\User\UserInterface: App\Entity\User
 ```
-
-### Continue to the next step
-[Step 2 - Setting up the entities](2-setting_up_the_entities.md)

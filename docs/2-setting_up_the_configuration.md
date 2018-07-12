@@ -1,4 +1,4 @@
-Step 3 - Setting up the configuration
+Step 2 - Setting up the configuration
 =====================================
 
 ### A - Default configuration
@@ -37,43 +37,6 @@ ticketing:
         ticket_status:        App\Entity\TicketStatus
         ticket_priority:      App\Entity\TicketPriority
         ticket_status_history: App\Entity\TicketStatusHistory
-    templates:
-        list:                 '@Ticketing/ticketing/list.html.twig'
-        layout:               '@Ticketing/base.html.twig'
-        perso:                '@Ticketing/ticketing/perso.html.twig'
-        new:                  '@Ticketing/ticketing/new.html.twig'
-        detail:               '@Ticketing/ticketing/detail.html.twig'
-        rating_rating:        '@Ticketing/ticketing/rating/rating.html.twig'
-        rating_closed:        '@Ticketing/ticketing/rating/closed.html.twig'
-    assets:
-        stylesheets:
-
-            # Defaults:
-            - bundles/ticketing/vendor/css/bootstrap.min.css
-            - bundles/ticketing/vendor/css/bootstrap-datepicker3.min.css
-            - bundles/ticketing/vendor/css/font-awesome.min.css
-            - bundles/ticketing/vendor/css/select2.min.css
-            - bundles/ticketing/vendor/css/ionicons.min.css
-            - bundles/ticketing/vendor/css/dataTables.bootstrap.min.css
-            - bundles/ticketing/vendor/css/star-rating.min.css
-            - bundles/ticketing/vendor/css/star-rating-theme.min.css
-            - bundles/ticketing/css/AdminLTE.min.css
-            - bundles/ticketing/css/skin-ticketing.min.css
-            - bundles/ticketing/css/helper.css
-        javascripts:
-
-            # Defaults:
-            - bundles/ticketing/vendor/js/jquery.min.js
-            - bundles/ticketing/vendor/js/bootstrap.min.js
-            - bundles/ticketing/vendor/js/adminlte.min.js
-            - bundles/ticketing/vendor/js/bootstrap-datepicker.min.js
-            - bundles/ticketing/vendor/js/bootstrap-datepicker.fr.min.js
-            - bundles/ticketing/vendor/js/select2.min.js
-            - bundles/ticketing/vendor/js/select2-fr.min.js
-            - bundles/ticketing/vendor/js/dataTables.min.js
-            - bundles/ticketing/vendor/js/dataTables.bootstrap.min.js
-            - bundles/ticketing/vendor/js/star-rating.min.js
-            - bundles/ticketing/js/script.js
 ```
 
 ### B - Parameters explaination
@@ -96,12 +59,6 @@ be accessible for all users.
 ``enable_ticket_restriction`` parameter is to true.
 * ``entities`` : A list of all the TicketingBundle Entities. It will be used in the bundle to work properly with your 
 self-created class.
-* ``templates`` : A list of all the templates used by the bundle. It is not recommended to override this parameter but 
-you could do it to easily override the default layout as example.  
-* ``stylesheets`` : All the stylesheets used by the bundle. It is not recommended to override this parameter because
-it might break some styling.
-* ``javascripts`` : All the javascripts used by the bundle. It is not recommended to override this parameter because
-it might break some code.
 
 
 [return to the index](../README.md)
