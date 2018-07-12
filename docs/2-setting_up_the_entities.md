@@ -25,6 +25,4 @@ doctrine:
             Symfony\Component\Security\Core\User\UserInterface: App\Entity\User
 ```
 
-
-### Continue to the next step
-[Step 3 - Configuration explaination](3-setting_up_the_configuration.md)
+[return to the index](../README.md)

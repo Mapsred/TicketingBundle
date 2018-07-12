@@ -19,8 +19,9 @@ The bundle is auto-configured thanks to the [Symfony recipe](https://github.com/
 
 ### Documentation
 
-1. [Setting up the bundle](docs/1-setting_up_the_bundle.md)
-2. [Default configuration](docs/2-setting_up_the_configuration.md)
+1) [Setting up the bundle](docs/1-setting_up_the_bundle.md)
+2) [Default configuration](docs/2-setting_up_the_configuration.md)
+3) [How does it work](docs/3-how-does-it-work.md)
 
 ## Contribute
 
