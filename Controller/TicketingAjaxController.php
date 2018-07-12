@@ -26,7 +26,7 @@ class TicketingAjaxController extends Controller
     /**
      * @Route("/{status}/{type}", name="ticketing_ajax_datatable", options={"expose": "true"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
-     * @Method({"GET"})
+     * @Method({"POST"})
      * @param Request $request
      * @param TicketManager $ticketManager
      * @param string $status
@@ -36,7 +36,7 @@ class TicketingAjaxController extends Controller
      */
     public function dataTableProcessing(Request $request, TicketManager $ticketManager, string $status, string $type)
     {
-        $results = $ticketManager->handleDataTable($request->query->all(), $status, $type, $this->getUser());
+        $results = $ticketManager->handleDataTable($request->request->all(), $status, $type, $this->getUser());
 
         return $this->json([
             'draw' => $request->query->getInt('draw'),
