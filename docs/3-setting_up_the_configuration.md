@@ -104,4 +104,13 @@ it might break some styling.
 it might break some code.
 
 
+###C - Fixture
+
+Move the folder DataFixtures of the bundle to your project at src/
+run the command :
+
+```
+$ php bin/console doctrine:fixtures:load
+```
+
 [return to the index](../README.md)
